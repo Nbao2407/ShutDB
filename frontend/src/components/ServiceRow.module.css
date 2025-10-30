@@ -4,13 +4,14 @@
   display: flex;
   align-items: center;
   padding: var(--fluent-space-lg) var(--fluent-space-xl);
-  border-bottom: 1px solid var(--fluent-border-primary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   gap: var(--fluent-space-xl);
   transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
-  background: transparent;
-  border-left: 2px solid transparent;
+  background: rgba(0, 0, 0, 0.2);
+  border-left: 3px solid transparent;
   position: relative;
   overflow: hidden;
+  margin-bottom: 2px;
 }
 
 .serviceRow:last-child {
@@ -18,7 +19,8 @@
 }
 
 .serviceRow:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 120, 212, 0.08);
+  border-left-color: var(--fluent-accent);
 }
 
 .serviceInfo {
@@ -29,20 +31,19 @@
 }
 
 .serviceName {
-  font-weight: 500;
-  font-size: 14px;
-  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--fluent-text-primary);
   margin-bottom: 4px;
   line-height: 1.4;
-  font-family: var(--font-mono);
   letter-spacing: -0.01em;
 }
 
 .serviceSubtext {
-  font-size: 11px;
-  color: var(--text-tertiary);
-  font-family: var(--font-mono);
-  opacity: 0.8;
+  font-size: 12px;
+  color: var(--fluent-text-tertiary);
+  font-family: var(--fluent-font-mono);
+  opacity: 0.7;
 }
 
 .statusBadge {
@@ -177,21 +178,13 @@
 }
 
 .button:hover:not(:disabled) {
-  background: rgba(0, 120, 212, 0.15);
-  border-color: var(--accent-blue);
-  color: var(--text-primary);
-  box-shadow: 0 0 12px rgba(0, 120, 212, 0.3);
-  transform: translateY(-1px);
-}
-
-.button:hover:not(:disabled)::after {
-  width: 200px;
-  height: 200px;
+  background: rgba(0, 120, 212, 0.2);
+  border-color: var(--fluent-accent);
+  color: var(--fluent-text-primary);
 }
 
 .button:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: 0 0 8px rgba(0, 120, 212, 0.2);
+  background: rgba(0, 120, 212, 0.15);
 }
 
 .button:disabled {
@@ -200,4 +193,24 @@
   background: rgba(22, 27, 34, 0.3);
   color: var(--text-disabled);
   filter: grayscale(1);
+}
+
+.buttonDanger {
+  border-color: rgba(218, 54, 51, 0.5);
+}
+
+.buttonDanger:hover:not(:disabled) {
+  background: rgba(218, 54, 51, 0.2);
+  border-color: var(--fluent-error);
+  color: var(--fluent-error);
+}
+
+.buttonSuccess {
+  border-color: rgba(35, 134, 54, 0.5);
+}
+
+.buttonSuccess:hover:not(:disabled) {
+  background: rgba(35, 134, 54, 0.2);
+  border-color: var(--fluent-success);
+  color: var(--fluent-success);
 }

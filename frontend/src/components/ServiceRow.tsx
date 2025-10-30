@@ -7,9 +7,11 @@ interface ServiceRowProps {
   onStart: () => Promise<void>;
   onStop: () => Promise<void>;
   onRestart: () => Promise<void>;
+  onDisable?: () => Promise<void>;
+  onEnable?: () => Promise<void>;
 }
 
-export function ServiceRow({ service, onStart, onStop, onRestart }: ServiceRowProps) {
+export function ServiceRow({ service, onStart, onStop, onRestart, onDisable, onEnable }: ServiceRowProps) {
   const [loading, setLoading] = useState(false);
 
   const isTransitioning = 
@@ -42,6 +44,26 @@ export function ServiceRow({ service, onStart, onStop, onRestart }: ServiceRowPr
     setLoading(true);
     try {
       await onRestart();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDisable = async () => {
+    if (!onDisable) return;
+    setLoading(true);
+    try {
+      await onDisable();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEnable = async () => {
+    if (!onEnable) return;
+    setLoading(true);
+    try {
+      await onEnable();
     } finally {
       setLoading(false);
     }
@@ -109,6 +131,28 @@ export function ServiceRow({ service, onStart, onStop, onRestart }: ServiceRowPr
         >
           Restart
         </button>
+        {onDisable && (
+          <button
+            type="button"
+            className={`${styles.button} ${styles.buttonDanger}`}
+            onClick={handleDisable}
+            disabled={isButtonDisabled}
+            title="Disable service"
+          >
+            Disable
+          </button>
+        )}
+        {onEnable && (
+          <button
+            type="button"
+            className={`${styles.button} ${styles.buttonSuccess}`}
+            onClick={handleEnable}
+            disabled={isButtonDisabled}
+            title="Enable service"
+          >
+            Enable
+          </button>
+        )}
       </div>
     </div>
   );
