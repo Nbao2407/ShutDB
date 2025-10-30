@@ -1,0 +1,169 @@
+.tabbar {
+  display: flex;
+  align-items: center;
+  height: var(--tab-height);
+  background: var(--acrylic-bg-header);
+  backdrop-filter: blur(var(--blur-background)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--blur-background)) saturate(180%);
+  border-bottom: 1px solid var(--fluent-border-primary);
+  padding: 0 var(--fluent-space-sm);
+  gap: 2px;
+  position: relative;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: var(--fluent-space-sm);
+  height: calc(var(--tab-height) - 8px);
+  min-width: var(--tab-min-width);
+  max-width: var(--tab-max-width);
+  padding: 0 var(--fluent-space-md);
+  font-size: var(--fluent-font-size-sm);
+  font-weight: var(--fluent-font-weight-medium);
+  color: var(--fluent-text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--fluent-radius-medium) var(--fluent-radius-medium) 0 0;
+  cursor: pointer;
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+  position: relative;
+  user-select: none;
+}
+
+.tab::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--reveal-gradient);
+  opacity: 0;
+  transition: opacity var(--fluent-duration-fast);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.tab:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--fluent-text-primary);
+}
+
+.tab:hover::before {
+  opacity: 1;
+}
+
+.tab.active {
+  background: var(--fluent-bg-primary);
+  color: var(--fluent-text-primary);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--fluent-accent) 0%, var(--fluent-accent-alt) 100%);
+  box-shadow: 0 0 8px var(--fluent-accent);
+}
+
+.tabIcon {
+  font-size: 16px;
+  line-height: 1;
+  opacity: 0.8;
+}
+
+.tab.active .tabIcon {
+  opacity: 1;
+}
+
+.tabTitle {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tabClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--fluent-radius-small);
+  color: currentColor;
+  cursor: pointer;
+  opacity: 0;
+  transition: all var(--fluent-duration-fast);
+  flex-shrink: 0;
+}
+
+.tab:hover .tabClose {
+  opacity: 0.6;
+}
+
+.tabClose:hover {
+  background: rgba(255, 255, 255, 0.15);
+  opacity: 1 !important;
+}
+
+.tabClose:active {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(0.9);
+}
+
+.newTabButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--fluent-border-primary);
+  border-radius: var(--fluent-radius-small);
+  color: var(--fluent-text-secondary);
+  cursor: pointer;
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+  margin-left: var(--fluent-space-sm);
+  flex-shrink: 0;
+}
+
+.newTabButton:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--fluent-border-secondary);
+  color: var(--fluent-text-primary);
+}
+
+.newTabButton:active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Focus states for accessibility */
+.tab:focus-visible,
+.newTabButton:focus-visible {
+  outline: 2px solid var(--fluent-accent);
+  outline-offset: -2px;
+}

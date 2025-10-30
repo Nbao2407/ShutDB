@@ -1,3 +1,7 @@
+/* Import Fluent Design System */
+@import './styles/fluent-variables.css';
+@import './styles/fluent-components.css';
+
 /* Global Reset */
 * {
   margin: 0;
@@ -54,23 +58,37 @@
 
 /* Body Styles */
 body {
-  font-family: var(--font-primary);
+  font-family: var(--fluent-font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
-  color: var(--text-secondary);
-  font-size: 14px;
+  background: linear-gradient(135deg, #0d1117 0%, #1a1a1a 50%, #0d1117 100%);
+  background-attachment: fixed;
+  color: var(--fluent-text-secondary);
+  font-size: var(--fluent-font-size-base);
   line-height: 1.6;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 /* Main App Container */
 .app {
-  padding: var(--spacing-2xl);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  animation: fadeIn 0.4s var(--fluent-easing-decelerate);
+}
+
+.app-header {
+  flex-shrink: 0;
+}
+
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--fluent-space-2xl);
   max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
-  min-height: 100vh;
-  animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes fadeIn {

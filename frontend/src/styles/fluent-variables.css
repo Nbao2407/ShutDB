@@ -1,0 +1,173 @@
+/* Fluent Design System Variables */
+
+:root {
+  /* Acrylic Material Colors */
+  --acrylic-bg-primary: rgba(32, 32, 32, 0.75);
+  --acrylic-bg-secondary: rgba(42, 42, 42, 0.85);
+  --acrylic-bg-tertiary: rgba(52, 52, 52, 0.7);
+  --acrylic-bg-header: rgba(28, 28, 28, 0.9);
+
+  /* Blur Effects */
+  --blur-background: 40px;
+  --blur-subtle: 20px;
+  --blur-strong: 60px;
+
+  /* Fluent Colors - Dark Theme */
+  --fluent-bg-primary: #1e1e1e;
+  --fluent-bg-secondary: #252525;
+  --fluent-bg-tertiary: #2d2d30;
+  --fluent-bg-elevated: #3e3e42;
+
+  /* Text Colors */
+  --fluent-text-primary: #ffffff;
+  --fluent-text-secondary: #cccccc;
+  --fluent-text-tertiary: #999999;
+  --fluent-text-disabled: #656565;
+
+  /* Accent Colors - Windows 11 Blue */
+  --fluent-accent: #0078d4;
+  --fluent-accent-hover: #1082da;
+  --fluent-accent-pressed: #005a9e;
+  --fluent-accent-secondary: rgba(0, 120, 212, 0.2);
+  --fluent-accent-tertiary: rgba(0, 120, 212, 0.1);
+
+  /* Alternative Accent - Purple (customizable) */
+  --fluent-accent-alt: #8b5cf6;
+  --fluent-accent-alt-hover: #9d6ff7;
+
+  /* Status Colors */
+  --fluent-success: #10b981;
+  --fluent-success-bg: rgba(16, 185, 129, 0.15);
+  --fluent-error: #ef4444;
+  --fluent-error-bg: rgba(239, 68, 68, 0.15);
+  --fluent-warning: #f59e0b;
+  --fluent-warning-bg: rgba(245, 158, 11, 0.15);
+
+  /* Borders & Dividers */
+  --fluent-border-primary: rgba(255, 255, 255, 0.08);
+  --fluent-border-secondary: rgba(255, 255, 255, 0.12);
+  --fluent-border-focus: var(--fluent-accent);
+
+  /* Shadows & Depth */
+  --fluent-shadow-flyout: 0 8px 32px rgba(0, 0, 0, 0.56);
+  --fluent-shadow-popup: 0 4px 24px rgba(0, 0, 0, 0.48);
+  --fluent-shadow-card: 0 2px 16px rgba(0, 0, 0, 0.32);
+  --fluent-shadow-subtle: 0 1px 4px rgba(0, 0, 0, 0.24);
+
+  /* Reveal Highlight */
+  --reveal-size: 200px;
+  --reveal-opacity: 0.25;
+  --reveal-gradient: radial-gradient(
+    circle var(--reveal-size) at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, var(--reveal-opacity)) 0%,
+    transparent 100%
+  );
+
+  /* Border Reveal */
+  --reveal-border-gradient: radial-gradient(
+    circle var(--reveal-size) at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    var(--fluent-accent) 0%,
+    transparent 100%
+  );
+
+  /* Border Radius */
+  --fluent-radius-small: 4px;
+  --fluent-radius-medium: 6px;
+  --fluent-radius-large: 8px;
+  --fluent-radius-xlarge: 12px;
+
+  /* Spacing System */
+  --fluent-space-xs: 4px;
+  --fluent-space-sm: 8px;
+  --fluent-space-md: 12px;
+  --fluent-space-lg: 16px;
+  --fluent-space-xl: 24px;
+  --fluent-space-2xl: 32px;
+  --fluent-space-3xl: 48px;
+
+  /* Typography */
+  --fluent-font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --fluent-font-mono: 'Cascadia Code', 'Cascadia Mono', 'Consolas', monospace;
+
+  --fluent-font-size-xs: 11px;
+  --fluent-font-size-sm: 12px;
+  --fluent-font-size-base: 14px;
+  --fluent-font-size-lg: 16px;
+  --fluent-font-size-xl: 20px;
+  --fluent-font-size-2xl: 24px;
+
+  --fluent-font-weight-normal: 400;
+  --fluent-font-weight-medium: 500;
+  --fluent-font-weight-semibold: 600;
+  --fluent-font-weight-bold: 700;
+
+  /* Animation Timings */
+  --fluent-duration-fast: 150ms;
+  --fluent-duration-normal: 250ms;
+  --fluent-duration-slow: 350ms;
+
+  --fluent-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --fluent-easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --fluent-easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+
+  /* Z-index Layers */
+  --z-base: 0;
+  --z-elevated: 1;
+  --z-dropdown: 1000;
+  --z-sticky: 1100;
+  --z-overlay: 1300;
+  --z-modal: 1400;
+  --z-toast: 1500;
+  --z-tooltip: 1600;
+
+  /* Tab Bar */
+  --tab-height: 40px;
+  --tab-min-width: 160px;
+  --tab-max-width: 240px;
+
+  /* Title Bar */
+  --titlebar-height: 32px;
+
+  /* Transparency Levels (customizable) */
+  --acrylic-opacity: 0.75;
+  --acrylic-tint-opacity: 0.15;
+}
+
+/* Light Theme Overrides */
+[data-theme="light"] {
+  --acrylic-bg-primary: rgba(243, 243, 243, 0.75);
+  --acrylic-bg-secondary: rgba(249, 249, 249, 0.85);
+  --acrylic-bg-tertiary: rgba(255, 255, 255, 0.7);
+
+  --fluent-bg-primary: #f3f3f3;
+  --fluent-bg-secondary: #f9f9f9;
+  --fluent-bg-tertiary: #ffffff;
+  --fluent-bg-elevated: #ffffff;
+
+  --fluent-text-primary: #000000;
+  --fluent-text-secondary: #333333;
+  --fluent-text-tertiary: #666666;
+  --fluent-text-disabled: #999999;
+
+  --fluent-border-primary: rgba(0, 0, 0, 0.08);
+  --fluent-border-secondary: rgba(0, 0, 0, 0.12);
+}
+
+/* High Contrast Theme */
+[data-theme="high-contrast"] {
+  --fluent-bg-primary: #000000;
+  --fluent-bg-secondary: #000000;
+  --fluent-text-primary: #ffffff;
+  --fluent-border-primary: #ffffff;
+  --blur-background: 0px;
+  --blur-subtle: 0px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --fluent-duration-fast: 0ms;
+    --fluent-duration-normal: 0ms;
+    --fluent-duration-slow: 0ms;
+  }
+}

@@ -3,11 +3,11 @@
 .serviceRow {
   display: flex;
   align-items: center;
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border-primary);
-  gap: 20px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  background: rgba(22, 27, 34, 0.4);
+  padding: var(--fluent-space-lg) var(--fluent-space-xl);
+  border-bottom: 1px solid var(--fluent-border-primary);
+  gap: var(--fluent-space-xl);
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+  background: transparent;
   border-left: 2px solid transparent;
   position: relative;
   overflow: hidden;
@@ -20,8 +20,9 @@
   top: 0;
   width: 0;
   height: 100%;
-  background: linear-gradient(90deg, rgba(0, 120, 212, 0.1) 0%, transparent 100%);
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--reveal-gradient);
+  transition: width var(--fluent-duration-normal) var(--fluent-easing-standard);
+  pointer-events: none;
 }
 
 .serviceRow:last-child {
@@ -29,9 +30,9 @@
 }
 
 .serviceRow:hover {
-  background: rgba(45, 51, 59, 0.6);
+  background: rgba(255, 255, 255, 0.03);
   transform: translateX(4px);
-  border-left-color: var(--accent-blue);
+  border-left-color: var(--fluent-accent);
   box-shadow: 0 2px 8px rgba(0, 120, 212, 0.2);
 }
 
