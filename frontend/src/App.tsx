@@ -5,7 +5,6 @@ import { parseServiceError } from './utils/errorHandler'
 import ErrorNotification from './components/ErrorNotification'
 import { ServiceList } from './components/ServiceList'
 import { ServiceControlToggle } from './components/ServiceControlToggle'
-import { ServerInfo } from './components/ServerInfo'
 import './App.css'
 
 interface AppState {
@@ -161,15 +160,6 @@ function App() {
     await loadServices();
   };
 
-  // Calculate server metrics
-  const serverMetrics = {
-    hostname: 'localhost',
-    platform: 'Windows',
-    uptime: 3600,
-    totalServices: state.services.length,
-    runningServices: state.services.filter(s => s.Status === 'running').length,
-    stoppedServices: state.services.filter(s => s.Status === 'stopped').length
-  };
 
   return (
     <div className="app">
@@ -185,9 +175,8 @@ function App() {
               onStartAll={handleStartAll}
               isProcessing={state.loading}
             />
+          </div> 
           </div>
-        </div>
-
         {/* Error notification with dismissal */}
         {state.error && (
           <ErrorNotification
@@ -210,8 +199,6 @@ function App() {
             onRestart={handleRestart}
           />
         )}
-         {/* Server Info */}
-        <ServerInfo metrics={serverMetrics} />
       </div>
     </div>
   )

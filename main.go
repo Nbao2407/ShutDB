@@ -19,13 +19,13 @@ func main() {
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:  "Service Database Dashboard",
-		Width:  1000,
-		Height: 800,
-		MinWidth: 1000,
-		MinHeight: 800,
-		MaxWidth: 1000,
-		MaxHeight: 800,
+		Title:  "ShutDB",
+		Width:  800,
+		Height: 900,
+		MinWidth: 800,
+		MinHeight: 900,
+		MaxWidth: 800,
+		MaxHeight: 900,
 		DisableResize: true,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
