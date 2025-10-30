@@ -4,6 +4,8 @@ import { Service, ServiceStatus, ErrorState } from './types/service'
 import { parseServiceError } from './utils/errorHandler'
 import ErrorNotification from './components/ErrorNotification'
 import { ServiceList } from './components/ServiceList'
+import { ServiceControlToggle } from './components/ServiceControlToggle'
+import { ServerInfo } from './components/ServerInfo'
 import './App.css'
 
 interface AppState {
@@ -114,10 +116,10 @@ function App() {
     try {
       // Optimistic UI update
       updateServiceStatus(serviceName, 'restarting');
-      
+
       // Call backend
       await RestartService(serviceName);
-      
+
       // Refresh service list after operation completes
       await loadServices();
     } catch (err) {
@@ -127,16 +129,67 @@ function App() {
         ...prev,
         error: errorState
       }));
-      
+
       // Refresh to get actual state
       await loadServices();
     }
   };
 
+  // Handle stop all services
+  const handleStopAll = async () => {
+    const runningServices = state.services.filter(s => s.Status === 'running');
+    for (const service of runningServices) {
+      try {
+        await StopService(service.Name);
+      } catch (err) {
+        console.error(`Failed to stop ${service.Name}:`, err);
+      }
+    }
+    await loadServices();
+  };
+
+  // Handle start all services
+  const handleStartAll = async () => {
+    const stoppedServices = state.services.filter(s => s.Status === 'stopped');
+    for (const service of stoppedServices) {
+      try {
+        await StartService(service.Name);
+      } catch (err) {
+        console.error(`Failed to start ${service.Name}:`, err);
+      }
+    }
+    await loadServices();
+  };
+
+  // Calculate server metrics
+  const serverMetrics = {
+    hostname: 'localhost',
+    platform: 'Windows',
+    uptime: 3600,
+    totalServices: state.services.length,
+    runningServices: state.services.filter(s => s.Status === 'running').length,
+    stoppedServices: state.services.filter(s => s.Status === 'stopped').length
+  };
+
   return (
     <div className="app">
       <div className="app-content fluent-scroll">
-        <h1>ShutDB</h1>
+        {/* Toolbar */}
+        <div className="app-toolbar">
+          <div className="app-toolbar-left">
+            <h1>ShutDB</h1>
+          </div>
+          <div className="app-toolbar-right">
+            <ServiceControlToggle
+              onStopAll={handleStopAll}
+              onStartAll={handleStartAll}
+              isProcessing={state.loading}
+            />
+          </div>
+        </div>
+
+        {/* Server Info */}
+        <ServerInfo metrics={serverMetrics} />
 
         {/* Error notification with dismissal */}
         {state.error && (

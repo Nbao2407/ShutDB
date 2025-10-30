@@ -1,0 +1,123 @@
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fluent-space-sm);
+  padding: var(--fluent-space-sm) var(--fluent-space-lg);
+  background: var(--fluent-bg-tertiary);
+  border: 1px solid var(--fluent-border-primary);
+  border-radius: var(--fluent-radius-medium);
+  color: var(--fluent-text-primary);
+  font-family: var(--fluent-font-family);
+  font-size: var(--fluent-font-size-base);
+  font-weight: var(--fluent-font-weight-medium);
+  cursor: pointer;
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+  position: relative;
+  overflow: hidden;
+}
+
+.toggle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--reveal-gradient);
+  opacity: 0;
+  transition: opacity var(--fluent-duration-fast);
+  pointer-events: none;
+}
+
+.toggle:hover:not(:disabled) {
+  background: var(--fluent-bg-elevated);
+  border-color: var(--fluent-border-secondary);
+  transform: translateY(-1px);
+  box-shadow: var(--fluent-shadow-subtle);
+}
+
+.toggle:hover:not(:disabled)::before {
+  opacity: 1;
+}
+
+.toggle:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--fluent-accent);
+  outline-offset: 2px;
+}
+
+/* State-specific colors */
+.toggle.running {
+  border-color: var(--fluent-success);
+  color: var(--fluent-success);
+}
+
+.toggle.running:hover:not(:disabled) {
+  background: var(--fluent-success-bg);
+  border-color: var(--fluent-success);
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.2);
+}
+
+.toggle.stopped {
+  border-color: var(--fluent-accent);
+  color: var(--fluent-accent);
+}
+
+.toggle.stopped:hover:not(:disabled) {
+  background: var(--fluent-accent-tertiary);
+  border-color: var(--fluent-accent);
+  box-shadow: 0 0 16px rgba(0, 120, 212, 0.2);
+}
+
+.toggle.loading {
+  cursor: wait;
+}
+
+.icon {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.label {
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--fluent-border-primary);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pulse animation when stopped */
+.toggle.stopped .icon {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
