@@ -147,7 +147,7 @@ function App() {
 
       {/* Loading state */}
       {state.loading && (
-        <p>Loading services...</p>
+        <div className="loading">Loading services...</div>
       )}
 
       {/* Service list */}
