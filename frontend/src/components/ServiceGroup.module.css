@@ -1,0 +1,92 @@
+.serviceGroup {
+  margin-bottom: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease;
+}
+
+.serviceGroup:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.groupHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.groupHeader:hover {
+  background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+}
+
+.groupHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.groupHeaderRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.expandIcon {
+  display: inline-block;
+  font-size: 10px;
+  transition: transform 0.2s;
+  color: #666;
+}
+
+.expandIcon.expanded {
+  transform: rotate(90deg);
+}
+
+.groupTitle {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.serviceCount {
+  font-size: 12px;
+  color: #999;
+  font-weight: normal;
+}
+
+.statusBadge {
+  display: flex;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.runningBadge {
+  padding: 2px 8px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.stoppedBadge {
+  padding: 2px 8px;
+  background: #ffebee;
+  color: #c62828;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.groupContent {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #fafafa;
+}

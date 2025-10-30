@@ -1,0 +1,150 @@
+/* ServiceRow Component Styles */
+
+.serviceRow {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 20px;
+  transition: all 0.2s ease;
+  background: #ffffff;
+}
+
+.serviceRow:last-child {
+  border-bottom: none;
+}
+
+.serviceRow:hover {
+  background-color: #f8f9ff;
+  transform: translateX(4px);
+}
+
+.serviceInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.serviceName {
+  font-weight: 600;
+  font-size: 14px;
+  color: #2d3748;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+.serviceSubtext {
+  font-size: 12px;
+  color: #718096;
+  font-family: 'Courier New', monospace;
+}
+
+.statusBadge {
+  min-width: 100px;
+  text-align: center;
+}
+
+.statusIndicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+  letter-spacing: 0.3px;
+}
+
+.statusIndicator::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.statusRunning {
+  background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+  color: #155724;
+  box-shadow: 0 2px 4px rgba(21, 87, 36, 0.2);
+}
+
+.statusRunning::before {
+  background-color: #155724;
+  box-shadow: 0 0 6px rgba(21, 87, 36, 0.6);
+}
+
+.statusStopped {
+  background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+  color: #721c24;
+  box-shadow: 0 2px 4px rgba(114, 28, 36, 0.2);
+}
+
+.statusStopped::before {
+  background-color: #721c24;
+}
+
+.statusTransitioning {
+  background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+  color: #856404;
+  box-shadow: 0 2px 4px rgba(133, 100, 4, 0.2);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.statusTransitioning::before {
+  background-color: #856404;
+  animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+}
+
+.button {
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.button:hover:not(:disabled) {
+  background-color: #f0f0f0;
+  border-color: #999;
+}
+
+.button:active:not(:disabled) {
+  background-color: #e0e0e0;
+  transform: translateY(1px);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+  color: #999;
+}
