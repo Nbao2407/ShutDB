@@ -1,3 +1,14 @@
+/* ============================================
+   ShutDB Application Styles
+
+   Features:
+   - Acrylic (frosted glass) background effect with #302B2F base color
+   - 0.8 opacity for layered transparency
+   - Proper z-index hierarchy to prevent overlay issues
+   - Fluent Design System integration
+   - Responsive and accessible design patterns
+   ============================================ */
+
 /* Import Fluent Design System */
 @import './styles/fluent-variables.css';
 @import './styles/fluent-components.css';
@@ -11,21 +22,25 @@
 
 /* CSS Variables */
 :root {
+  /* Background Colors */
   --bg-primary: #0d1117;
   --bg-secondary: #161b22;
   --bg-tertiary: #1f2937;
   --bg-hover: #2d333b;
 
+  /* Text Colors */
   --text-primary: #f0f6fc;
   --text-secondary: #c9d1d9;
   --text-tertiary: #8b949e;
   --text-disabled: #6e7681;
 
+  /* Accent Colors */
   --accent-blue: #0078d4;
   --accent-blue-hover: #106ebe;
   --accent-blue-active: #005a9e;
   --accent-purple: #7b68ee;
 
+  /* Status Colors */
   --status-running: #238636;
   --status-running-text: #3fb950;
   --status-stopped: #da3633;
@@ -33,44 +48,64 @@
   --status-warning: #d29922;
   --status-warning-text: #f0c84a;
 
+  /* Border Colors */
   --border-primary: rgba(240, 246, 252, 0.1);
   --border-secondary: rgba(240, 246, 252, 0.15);
   --border-accent: rgba(88, 166, 255, 0.4);
 
+  /* Fonts */
   --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
   --font-mono: "Cascadia Code", "Fira Code", "Consolas", "Courier New", monospace;
 
+  /* Shadows */
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
 
+  /* Border Radius */
   --radius-sm: 6px;
   --radius-md: 8px;
   --radius-lg: 12px;
 
+  /* Spacing */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 12px;
   --spacing-lg: 16px;
   --spacing-xl: 24px;
   --spacing-2xl: 32px;
+
+  /* Acrylic Effect Base Color */
+  --acrylic-base: #302B2F;
+  --acrylic-opacity: 0.8;
 }
 
-/* Body Styles */
+/* ============================================
+   Body Styles with Acrylic Background Effect
+
+   Implementation:
+   - Base color: #302B2F (warm dark brown-gray)
+   - Overlay with 0.8 opacity for depth
+   - backdrop-filter for frosted glass effect
+   - Layered approach for better visual hierarchy
+   ============================================ */
 body {
   font-family: var(--fluent-font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #0d1117 0%, #1a1a1a 50%, #0d1117 100%);
-  background-attachment: fixed;
+  /* Base background color #302B2F */
+  background: var(--acrylic-base);
   color: var(--fluent-text-secondary);
   font-size: var(--fluent-font-size-base);
   line-height: 1.6;
   min-height: 100vh;
   overflow: hidden;
+  position: relative;
 }
 
-/* Acrylic overlay with 0.8 opacity */
+/* Acrylic Overlay Layer
+   Creates frosted glass effect with 0.8 opacity
+   Uses backdrop-filter for the blur effect */
 body::before {
   content: '';
   position: fixed;
@@ -78,19 +113,48 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(13, 17, 23, 0.8);
-  backdrop-filter: blur(60px) saturate(150%);
-  -webkit-backdrop-filter: blur(60px) saturate(150%);
+  /* Acrylic effect with 0.8 opacity as requested */
+  background: rgba(48, 43, 47, var(--acrylic-opacity));
+  /* Frosted glass blur effect */
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
   pointer-events: none;
-  z-index: -1;
+  /* Below app content but above body background */
+  z-index: 0;
 }
 
-/* Main App Container */
+/* Subtle texture overlay for depth */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Add subtle noise texture for realistic glass effect */
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.015) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================
+   Main App Container
+
+   Positioned above the acrylic background layers
+   with proper z-index hierarchy
+   ============================================ */
 .app {
   display: flex;
   flex-direction: column;
   height: 100vh;
   animation: fadeIn 0.4s var(--fluent-easing-decelerate);
+  /* Position above background layers */
+  position: relative;
+  z-index: 1;
+  /* Create new stacking context for app content */
+  isolation: isolate;
 }
 
 .app-header {
@@ -104,8 +168,12 @@ body::before {
   max-width: 1400px;
   width: 100%;
   margin: 0 auto;
+  /* Ensure content is above background */
+  position: relative;
+  z-index: 1;
 }
 
+/* Toolbar */
 .app-toolbar {
   display: flex;
   align-items: center;
@@ -139,7 +207,9 @@ body::before {
   }
 }
 
-/* Typography */
+/* ============================================
+   Typography
+   ============================================ */
 h1 {
   font-size: 28px;
   font-weight: 600;
@@ -151,6 +221,7 @@ h1 {
   gap: var(--spacing-md);
 }
 
+/* Accent bar before heading */
 h1::before {
   content: '';
   display: inline-block;
@@ -167,7 +238,9 @@ p {
   font-size: 14px;
 }
 
-/* Button Base Styles */
+/* ============================================
+   Button Base Styles
+   ============================================ */
 button {
   font-family: var(--font-primary);
   font-size: 13px;
@@ -221,29 +294,34 @@ button:focus-visible {
   box-shadow: 0 0 0 4px rgba(88, 166, 255, 0.2);
 }
 
-/* Scrollbar Styling */
+/* ============================================
+   Scrollbar Styling
+   Consistent with Acrylic theme
+   ============================================ */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
+  background: rgba(48, 43, 47, 0.3);
   border-radius: var(--radius-sm);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #2d333b 0%, #1f2937 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
   border-radius: var(--radius-sm);
-  border: 2px solid var(--bg-secondary);
+  border: 2px solid rgba(48, 43, 47, 0.3);
   transition: background 0.2s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #3d434b 0%, #2f3947 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
 }
 
-/* Loading State */
+/* ============================================
+   Loading State
+   ============================================ */
 .loading {
   display: flex;
   align-items: center;
@@ -270,14 +348,52 @@ button:focus-visible {
   }
 }
 
-/* Selection */
+/* ============================================
+   Selection
+   ============================================ */
 ::selection {
   background: rgba(0, 120, 212, 0.3);
   color: var(--text-primary);
 }
 
-/* Focus Visible Global */
+/* ============================================
+   Focus Visible Global
+   Accessibility enhancement
+   ============================================ */
 *:focus-visible {
   outline: 2px solid var(--border-accent);
   outline-offset: 2px;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 768px) {
+  .app-content {
+    padding: var(--fluent-space-lg);
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .app-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+@media print {
+  body::before,
+  body::after {
+    display: none;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
 }

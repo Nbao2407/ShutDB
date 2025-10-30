@@ -19,9 +19,12 @@ type OSService struct {
 type OSServiceAdapter interface {
 	ListServices() ([]OSService, error)
 	GetServiceStatus(name string) (ServiceStatus, error)
+	GetStartupType(name string) (StartupType, error)
 	StartService(name string) error
 	StopService(name string) error
 	RestartService(name string) error
+	DisableService(name string) error
+	EnableService(name string) error
 }
 
 // WindowsServiceAdapter implements OSServiceAdapter for Windows
@@ -421,5 +424,40 @@ func (w *WindowsServiceAdapter) RestartService(name string) error {
 		Code:    ErrOperationTimeout,
 		Message: "Service start operation timed out during restart",
 		Service: name,
+	}
+}
+
+// GetStartupType retrieves the startup type of a service
+func (w *WindowsServiceAdapter) GetStartupType(name string) (StartupType, error) {
+	m, err := w.connectSCM()
+	if err != nil {
+		return StartupDisabled, err
+	}
+	defer m.Disconnect()
+
+	s, err := w.openService(m, name)
+	if err != nil {
+		return StartupDisabled, err
+	}
+	defer s.Close()
+
+	config, err := s.Config()
+	if err != nil {
+		return StartupDisabled, &ServiceError{
+			Code:    ErrSystemError,
+			Message: fmt.Sprintf("Failed to get service configuration: %v", err),
+			Service: name,
+		}
+	}
+
+	switch config.StartType {
+	case mgr.StartAutomatic:
+		return StartupAutomatic, nil
+	case mgr.StartManual:
+		return StartupManual, nil
+	case mgr.StartDisabled:
+		return StartupDisabled, nil
+	default:
+		return StartupManual, nil
 	}
 }

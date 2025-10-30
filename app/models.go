@@ -34,10 +34,20 @@ const (
 	TypeFirebird   ServiceType = "firebird"
 )
 
+// StartupType represents the service startup configuration
+type StartupType string
+
+const (
+	StartupAutomatic StartupType = "automatic"
+	StartupManual    StartupType = "manual"
+	StartupDisabled  StartupType = "disabled"
+)
+
 // Service represents a database service with its current state
 type Service struct {
 	Name        string        `json:"Name"`
 	DisplayName string        `json:"DisplayName"`
 	Status      ServiceStatus `json:"Status"`
 	Type        ServiceType   `json:"Type"`
+	StartupType StartupType   `json:"StartupType"`
 }

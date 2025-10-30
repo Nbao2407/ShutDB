@@ -1,12 +1,20 @@
 /**
  * ServiceStatus represents the current operational state of a database service
  */
-export type ServiceStatus = 
-  | "running" 
-  | "stopped" 
-  | "starting" 
-  | "stopping" 
+export type ServiceStatus =
+  | "running"
+  | "stopped"
+  | "starting"
+  | "stopping"
   | "restarting";
+
+/**
+ * StartupType represents the service startup configuration
+ */
+export type StartupType =
+  | "automatic"
+  | "manual"
+  | "disabled";
 
 /**
  * ServiceType represents the type of database service
@@ -39,6 +47,7 @@ export interface Service {
   DisplayName: string;
   Status: ServiceStatus;
   Type: ServiceType;
+  StartupType: StartupType;
 }
 
 /**

@@ -74,11 +74,18 @@ func (d *WindowsServiceDetector) DetectServices() ([]Service, error) {
 	for _, osService := range osServices {
 		serviceType, matched := d.matchServiceType(osService.Name)
 		if matched {
+			// Get startup type
+			startupType, err := d.adapter.GetStartupType(osService.Name)
+			if err != nil {
+				startupType = StartupManual // Default to manual if unable to retrieve
+			}
+
 			detectedServices = append(detectedServices, Service{
 				Name:        osService.Name,
 				DisplayName: osService.DisplayName,
 				Status:      mapWindowsStateToStatus(osService.State),
 				Type:        serviceType,
+				StartupType: startupType,
 			})
 		}
 	}

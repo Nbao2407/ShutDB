@@ -1,5 +1,15 @@
-/* ServiceRow Component Styles */
+/* ============================================
+   ServiceRow Component Styles
 
+   Features:
+   - Enhanced visual hierarchy with improved spacing
+   - Toggle button with clear state indicators
+   - Proper z-index management to prevent overlay issues
+   - Accessible button states with clear feedback
+   - Responsive design with proper overflow handling
+   ============================================ */
+
+/* Main Row Container */
 .serviceRow {
   display: flex;
   align-items: center;
@@ -10,19 +20,36 @@
   background: rgba(0, 0, 0, 0.2);
   border-left: 3px solid transparent;
   position: relative;
-  overflow: hidden;
+  overflow: visible; /* Allow dropdowns and tooltips to overflow */
   margin-bottom: 2px;
+  /* Proper z-index to ensure rows don't overlap incorrectly */
+  z-index: 1;
 }
 
 .serviceRow:last-child {
   border-bottom: none;
 }
 
+/* Hover effect with accent border */
 .serviceRow:hover {
   background: rgba(0, 120, 212, 0.08);
   border-left-color: var(--fluent-accent);
+  /* Slightly elevate on hover for better interaction feedback */
+  z-index: 2;
 }
 
+/* Disabled service row styling */
+.serviceRowDisabled {
+  opacity: 0.6;
+  background: rgba(100, 100, 100, 0.1);
+}
+
+.serviceRowDisabled:hover {
+  background: rgba(100, 100, 100, 0.15);
+  border-left-color: rgba(150, 150, 150, 0.5);
+}
+
+/* Service Information Section */
 .serviceInfo {
   flex: 1;
   min-width: 0;
@@ -44,8 +71,49 @@
   color: var(--fluent-text-tertiary);
   font-family: var(--fluent-font-mono);
   opacity: 0.7;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
+.separator {
+  color: var(--fluent-text-tertiary);
+  opacity: 0.5;
+}
+
+/* Startup Type Badges */
+.startupAuto {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(35, 134, 54, 0.2);
+  color: var(--fluent-success);
+  border: 1px solid rgba(35, 134, 54, 0.4);
+}
+
+.startupManual {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(0, 120, 212, 0.2);
+  color: var(--fluent-accent);
+  border: 1px solid rgba(0, 120, 212, 0.4);
+}
+
+.startupDisabled {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(150, 150, 150, 0.2);
+  color: rgba(200, 200, 200, 0.8);
+  border: 1px solid rgba(150, 150, 150, 0.4);
+}
+
+/* Status Badge Section */
 .statusBadge {
   min-width: 120px;
   text-align: center;
@@ -64,7 +132,6 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-family: var(--font-mono);
-
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border: 1px solid;
@@ -82,6 +149,7 @@
   z-index: 1;
 }
 
+/* Status States */
 .statusRunning {
   background: rgba(35, 134, 54, 0.15);
   border-color: rgba(35, 134, 54, 0.5);
@@ -140,13 +208,16 @@
   }
 }
 
+/* Controls Section */
 .controls {
   display: flex;
   gap: 8px;
   position: relative;
   z-index: 1;
+  flex-wrap: wrap;
 }
 
+/* Base Button Styles */
 .button {
   padding: 8px 16px;
   font-size: 13px;
@@ -162,19 +233,8 @@
   backdrop-filter: blur(8px);
   position: relative;
   overflow: hidden;
-}
-
-.button::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: radial-gradient(circle, rgba(0, 120, 212, 0.3) 0%, transparent 70%);
-  transform: translate(-50%, -50%);
-  transition: width 0.4s, height 0.4s;
-  border-radius: 50%;
+  /* Ensure buttons are always clickable */
+  z-index: 2;
 }
 
 .button:hover:not(:disabled) {
@@ -195,22 +255,98 @@
   filter: grayscale(1);
 }
 
-.buttonDanger {
-  border-color: rgba(218, 54, 51, 0.5);
+/* Toggle Button Specific Styles */
+.toggleButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-weight: 600;
+  min-width: 100px;
+  justify-content: center;
 }
 
-.buttonDanger:hover:not(:disabled) {
-  background: rgba(218, 54, 51, 0.2);
-  border-color: var(--fluent-error);
+.toggleIcon {
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Enable Button State */
+.enableButton {
+  background: rgba(35, 134, 54, 0.15);
+  border-color: rgba(35, 134, 54, 0.5);
+  color: var(--fluent-success);
+}
+
+.enableButton:hover:not(:disabled) {
+  background: rgba(35, 134, 54, 0.25);
+  border-color: var(--fluent-success);
+  box-shadow: 0 0 12px rgba(35, 134, 54, 0.3);
+}
+
+.enableButton:active:not(:disabled) {
+  background: rgba(35, 134, 54, 0.2);
+  transform: scale(0.98);
+}
+
+/* Disable Button State */
+.disableButton {
+  background: rgba(218, 54, 51, 0.15);
+  border-color: rgba(218, 54, 51, 0.5);
   color: var(--fluent-error);
 }
 
-.buttonSuccess {
-  border-color: rgba(35, 134, 54, 0.5);
+.disableButton:hover:not(:disabled) {
+  background: rgba(218, 54, 51, 0.25);
+  border-color: var(--fluent-error);
+  box-shadow: 0 0 12px rgba(218, 54, 51, 0.3);
 }
 
-.buttonSuccess:hover:not(:disabled) {
-  background: rgba(35, 134, 54, 0.2);
-  border-color: var(--fluent-success);
-  color: var(--fluent-success);
+.disableButton:active:not(:disabled) {
+  background: rgba(218, 54, 51, 0.2);
+  transform: scale(0.98);
+}
+
+/* Focus States for Accessibility */
+.button:focus-visible {
+  outline: 2px solid var(--fluent-accent);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(0, 120, 212, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .serviceRow {
+    flex-wrap: wrap;
+    gap: var(--fluent-space-md);
+  }
+
+  .statusBadge {
+    min-width: 100px;
+  }
+
+  .controls {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .button {
+    flex: 1;
+    min-width: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .serviceRow {
+    padding: var(--fluent-space-md);
+  }
+
+  .button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .toggleButton {
+    min-width: 90px;
+  }
 }
