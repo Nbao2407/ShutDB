@@ -16,28 +16,9 @@
   overflow: hidden;
 }
 
-.toggle::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--reveal-gradient);
-  opacity: 0;
-  transition: opacity var(--fluent-duration-fast);
-  pointer-events: none;
-}
-
 .toggle:hover:not(:disabled) {
   background: var(--fluent-bg-elevated);
   border-color: var(--fluent-border-secondary);
-  transform: translateY(-1px);
-  box-shadow: var(--fluent-shadow-subtle);
-}
-
-.toggle:hover:not(:disabled)::before {
-  opacity: 1;
 }
 
 .toggle:active:not(:disabled) {

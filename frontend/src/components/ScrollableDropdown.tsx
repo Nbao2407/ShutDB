@@ -24,7 +24,9 @@ export const ScrollableDropdown: FC<ScrollableDropdownProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0, width: 0 });
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   const selectedOption = options.find(opt => opt.value === selectedValue);
 
@@ -38,6 +40,17 @@ export const ScrollableDropdown: FC<ScrollableDropdownProps> = ({
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (isOpen && triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setMenuPosition({
+        top: rect.bottom + 4,
+        left: rect.left,
+        width: rect.width
+      });
+    }
+  }, [isOpen]);
 
   const handleSelect = (optionValue: string) => {
     setSelectedValue(optionValue);
@@ -57,6 +70,7 @@ export const ScrollableDropdown: FC<ScrollableDropdownProps> = ({
   return (
     <div className={styles.dropdown} ref={dropdownRef}>
       <button
+        ref={triggerRef}
         className={`${styles.trigger} ${isOpen ? styles.open : ''}`}
         onClick={() => setIsOpen(!isOpen)}
         onKeyDown={handleKeyDown}
@@ -92,7 +106,12 @@ export const ScrollableDropdown: FC<ScrollableDropdownProps> = ({
       {isOpen && (
         <div
           className={styles.menu}
-          style={{ maxHeight: `${maxHeight}px` }}
+          style={{
+            maxHeight: `${maxHeight}px`,
+            top: `${menuPosition.top}px`,
+            left: `${menuPosition.left}px`,
+            width: `${menuPosition.width}px`
+          }}
           role="listbox"
         >
           <div className={styles.menuScroll}>

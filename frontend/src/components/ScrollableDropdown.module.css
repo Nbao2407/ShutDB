@@ -23,26 +23,8 @@
   overflow: hidden;
 }
 
-.trigger::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--reveal-gradient);
-  opacity: 0;
-  transition: opacity var(--fluent-duration-fast);
-  pointer-events: none;
-}
-
 .trigger:hover {
   background: var(--fluent-bg-elevated);
-  border-color: var(--fluent-border-secondary);
-}
-
-.trigger:hover::before {
-  opacity: 1;
 }
 
 .trigger:focus-visible {
@@ -87,10 +69,7 @@
 }
 
 .menu {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
+  position: fixed;
   background: var(--acrylic-bg-secondary);
   backdrop-filter: blur(var(--blur-background)) saturate(180%);
   -webkit-backdrop-filter: blur(var(--blur-background)) saturate(180%);
@@ -100,6 +79,7 @@
   overflow: hidden;
   z-index: var(--z-dropdown);
   animation: dropdownSlideIn var(--fluent-duration-normal) var(--fluent-easing-decelerate);
+  min-width: 200px;
 }
 
 @keyframes dropdownSlideIn {

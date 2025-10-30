@@ -13,31 +13,12 @@
   overflow: hidden;
 }
 
-.serviceRow::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 0;
-  height: 100%;
-  background: var(--reveal-gradient);
-  transition: width var(--fluent-duration-normal) var(--fluent-easing-standard);
-  pointer-events: none;
-}
-
 .serviceRow:last-child {
   border-bottom: none;
 }
 
 .serviceRow:hover {
-  background: rgba(255, 255, 255, 0.03);
-  transform: translateX(4px);
-  border-left-color: var(--fluent-accent);
-  box-shadow: 0 2px 8px rgba(0, 120, 212, 0.2);
-}
-
-.serviceRow:hover::before {
-  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .serviceInfo {
