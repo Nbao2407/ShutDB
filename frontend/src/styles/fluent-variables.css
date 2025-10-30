@@ -1,82 +1,119 @@
-/* Fluent Design System Variables */
+/* ============================================
+   Modern Dark Mode Design System
+
+   Inspired by: Microsoft Outlook, VS Code, Windows 11
+   Base Colors: Dark gray/black with blue accents
+   Typography: Segoe UI, Roboto (Sans-serif)
+   Style: Minimalist, modern, content-focused
+   ============================================ */
 
 :root {
+  /* ============================================
+     CORE BACKGROUND COLORS
+     Modern dark mode palette
+     ============================================ */
+  --fluent-bg-primary: #1e1e1e;           /* Main background */
+  --fluent-bg-secondary: #252526;         /* Sidebar background */
+  --fluent-bg-tertiary: #2d2d30;          /* Elevated surfaces */
+  --fluent-bg-elevated: #3e3e42;          /* Cards, modals */
+  --fluent-bg-hover: #2a2d2e;             /* Hover states */
+  --fluent-bg-selected: #094771;          /* Selected item (blue-ish) */
+  --fluent-bg-selected-hover: #0e5a8e;    /* Selected + hover */
+
   /* Acrylic Material Colors */
-  --acrylic-bg-primary: rgba(32, 32, 32, 0.75);
-  --acrylic-bg-secondary: rgba(42, 42, 42, 0.85);
-  --acrylic-bg-tertiary: rgba(52, 52, 52, 0.7);
-  --acrylic-bg-header: rgba(28, 28, 28, 0.9);
+  --acrylic-bg-primary: rgba(30, 30, 30, 0.85);
+  --acrylic-bg-secondary: rgba(37, 37, 38, 0.9);
+  --acrylic-bg-tertiary: rgba(45, 45, 48, 0.8);
+  --acrylic-bg-header: rgba(28, 28, 28, 0.95);
 
   /* Blur Effects */
-  --blur-background: 40px;
-  --blur-subtle: 20px;
-  --blur-strong: 60px;
+  --blur-background: 30px;
+  --blur-subtle: 15px;
+  --blur-strong: 50px;
 
-  /* Fluent Colors - Dark Theme */
-  --fluent-bg-primary: #1e1e1e;
-  --fluent-bg-secondary: #252525;
-  --fluent-bg-tertiary: #2d2d30;
-  --fluent-bg-elevated: #3e3e42;
+  /* ============================================
+     TEXT COLORS
+     High contrast for readability on dark background
+     ============================================ */
+  --fluent-text-primary: #ffffff;         /* Main text - white */
+  --fluent-text-secondary: #cccccc;       /* Secondary text - light gray */
+  --fluent-text-tertiary: #9d9d9d;        /* Tertiary text - medium gray */
+  --fluent-text-disabled: #6e6e6e;        /* Disabled text */
+  --fluent-text-placeholder: #717171;     /* Placeholder text */
 
-  /* Text Colors */
-  --fluent-text-primary: #ffffff;
-  --fluent-text-secondary: #cccccc;
-  --fluent-text-tertiary: #999999;
-  --fluent-text-disabled: #656565;
+  /* ============================================
+     ACCENT COLORS
+     Blue as primary accent (like in the image)
+     Yellow and red for status indicators
+     ============================================ */
 
-  /* Accent Colors - Windows 11 Blue */
-  --fluent-accent: #0078d4;
-  --fluent-accent-hover: #1082da;
+  /* Primary Accent - Blue */
+  --fluent-accent: #0078d4;               /* Primary blue */
+  --fluent-accent-hover: #1a86d9;
   --fluent-accent-pressed: #005a9e;
   --fluent-accent-secondary: rgba(0, 120, 212, 0.2);
   --fluent-accent-tertiary: rgba(0, 120, 212, 0.1);
 
-  /* Alternative Accent - Purple (customizable) */
+  /* Selected item highlight */
+  --fluent-accent-selected: #0078d4;
+
+  /* Alternative Accent */
   --fluent-accent-alt: #8b5cf6;
   --fluent-accent-alt-hover: #9d6ff7;
 
-  /* Status Colors */
+  /* ============================================
+     STATUS COLORS
+     Yellow for important/starred
+     Red for alerts/warnings
+     Green for success
+     ============================================ */
   --fluent-success: #10b981;
   --fluent-success-bg: rgba(16, 185, 129, 0.15);
+
   --fluent-error: #ef4444;
   --fluent-error-bg: rgba(239, 68, 68, 0.15);
-  --fluent-warning: #f59e0b;
+
+  --fluent-warning: #f59e0b;              /* Yellow for starred/important */
   --fluent-warning-bg: rgba(245, 158, 11, 0.15);
 
-  /* Borders & Dividers */
-  --fluent-border-primary: rgba(255, 255, 255, 0.08);
-  --fluent-border-secondary: rgba(255, 255, 255, 0.12);
+  /* Star/Important indicator */
+  --fluent-star-yellow: #fbbf24;
+  --fluent-alert-red: #dc2626;
+
+  /* ============================================
+     BORDERS & DIVIDERS
+     Subtle separators instead of thick borders
+     ============================================ */
+  --fluent-border-primary: rgba(255, 255, 255, 0.06);
+  --fluent-border-secondary: rgba(255, 255, 255, 0.1);
   --fluent-border-focus: var(--fluent-accent);
+  --fluent-border-subtle: rgba(255, 255, 255, 0.04);
 
-  /* Shadows & Depth */
-  --fluent-shadow-flyout: 0 8px 32px rgba(0, 0, 0, 0.56);
-  --fluent-shadow-popup: 0 4px 24px rgba(0, 0, 0, 0.48);
-  --fluent-shadow-card: 0 2px 16px rgba(0, 0, 0, 0.32);
-  --fluent-shadow-subtle: 0 1px 4px rgba(0, 0, 0, 0.24);
+  /* Divider lines */
+  --fluent-divider: rgba(255, 255, 255, 0.08);
 
-  /* Reveal Highlight */
-  --reveal-size: 200px;
-  --reveal-opacity: 0.25;
-  --reveal-gradient: radial-gradient(
-    circle var(--reveal-size) at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(255, 255, 255, var(--reveal-opacity)) 0%,
-    transparent 100%
-  );
+  /* ============================================
+     SHADOWS & DEPTH
+     Subtle depth without overdoing it
+     ============================================ */
+  --fluent-shadow-flyout: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --fluent-shadow-popup: 0 4px 24px rgba(0, 0, 0, 0.5);
+  --fluent-shadow-card: 0 2px 16px rgba(0, 0, 0, 0.4);
+  --fluent-shadow-subtle: 0 1px 4px rgba(0, 0, 0, 0.3);
 
-  /* Border Reveal */
-  --reveal-border-gradient: radial-gradient(
-    circle var(--reveal-size) at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    var(--fluent-accent) 0%,
-    transparent 100%
-  );
-
-  /* Border Radius */
+  /* ============================================
+     BORDER RADIUS
+     Modern, subtle rounding
+     ============================================ */
   --fluent-radius-small: 4px;
   --fluent-radius-medium: 6px;
   --fluent-radius-large: 8px;
   --fluent-radius-xlarge: 12px;
 
-  /* Spacing System */
+  /* ============================================
+     SPACING SYSTEM
+     Consistent 4px/8px grid
+     ============================================ */
   --fluent-space-xs: 4px;
   --fluent-space-sm: 8px;
   --fluent-space-md: 12px;
@@ -85,23 +122,32 @@
   --fluent-space-2xl: 32px;
   --fluent-space-3xl: 48px;
 
-  /* Typography */
-  --fluent-font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  --fluent-font-mono: 'Cascadia Code', 'Cascadia Mono', 'Consolas', monospace;
+  /* ============================================
+     TYPOGRAPHY
+     Modern sans-serif (Segoe UI, Roboto)
+     ============================================ */
+  --fluent-font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --fluent-font-mono: 'Cascadia Code', 'Cascadia Mono', 'Consolas', 'Courier New', monospace;
 
+  /* Font Sizes */
   --fluent-font-size-xs: 11px;
   --fluent-font-size-sm: 12px;
   --fluent-font-size-base: 14px;
   --fluent-font-size-lg: 16px;
   --fluent-font-size-xl: 20px;
   --fluent-font-size-2xl: 24px;
+  --fluent-font-size-3xl: 28px;
 
+  /* Font Weights */
   --fluent-font-weight-normal: 400;
   --fluent-font-weight-medium: 500;
   --fluent-font-weight-semibold: 600;
   --fluent-font-weight-bold: 700;
 
-  /* Animation Timings */
+  /* ============================================
+     ANIMATION TIMINGS
+     Smooth, modern transitions
+     ============================================ */
   --fluent-duration-fast: 150ms;
   --fluent-duration-normal: 250ms;
   --fluent-duration-slow: 350ms;
@@ -110,7 +156,10 @@
   --fluent-easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
   --fluent-easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
 
-  /* Z-index Layers */
+  /* ============================================
+     Z-INDEX LAYERS
+     Proper stacking hierarchy
+     ============================================ */
   --z-base: 0;
   --z-elevated: 1;
   --z-dropdown: 1000;
@@ -120,50 +169,27 @@
   --z-toast: 1500;
   --z-tooltip: 1600;
 
-  /* Tab Bar */
+  /* ============================================
+     COMPONENT SPECIFIC
+     ============================================ */
   --tab-height: 40px;
   --tab-min-width: 160px;
   --tab-max-width: 240px;
-
-  /* Title Bar */
   --titlebar-height: 32px;
 
-  /* Transparency Levels (customizable) */
-  --acrylic-opacity: 0.75;
+  /* Transparency Levels */
+  --acrylic-opacity: 0.85;
   --acrylic-tint-opacity: 0.15;
+
+  /* Reveal Effects */
+  --reveal-size: 200px;
+  --reveal-opacity: 0.15;
 }
 
-/* Light Theme Overrides */
-[data-theme="light"] {
-  --acrylic-bg-primary: rgba(243, 243, 243, 0.75);
-  --acrylic-bg-secondary: rgba(249, 249, 249, 0.85);
-  --acrylic-bg-tertiary: rgba(255, 255, 255, 0.7);
-
-  --fluent-bg-primary: #f3f3f3;
-  --fluent-bg-secondary: #f9f9f9;
-  --fluent-bg-tertiary: #ffffff;
-  --fluent-bg-elevated: #ffffff;
-
-  --fluent-text-primary: #000000;
-  --fluent-text-secondary: #333333;
-  --fluent-text-tertiary: #666666;
-  --fluent-text-disabled: #999999;
-
-  --fluent-border-primary: rgba(0, 0, 0, 0.08);
-  --fluent-border-secondary: rgba(0, 0, 0, 0.12);
-}
-
-/* High Contrast Theme */
-[data-theme="high-contrast"] {
-  --fluent-bg-primary: #000000;
-  --fluent-bg-secondary: #000000;
-  --fluent-text-primary: #ffffff;
-  --fluent-border-primary: #ffffff;
-  --blur-background: 0px;
-  --blur-subtle: 0px;
-}
-
-/* Reduced Motion */
+/* ============================================
+   REDUCED MOTION
+   Accessibility for users who prefer less motion
+   ============================================ */
 @media (prefers-reduced-motion: reduce) {
   :root {
     --fluent-duration-fast: 0ms;

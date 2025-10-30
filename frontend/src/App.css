@@ -95,8 +95,8 @@ body {
   font-family: var(--fluent-font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Base background color #302B2F */
-  background: var(--acrylic-base);
+  /* Modern dark background */
+  background: var(--fluent-bg-primary);
   color: var(--fluent-text-secondary);
   font-size: var(--fluent-font-size-base);
   line-height: 1.6;
@@ -115,11 +115,11 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;
-  /* Acrylic effect with 0.8 opacity as requested */
-  background: rgba(48, 43, 47, var(--acrylic-opacity));
+  /* Acrylic effect with modern dark theme */
+  background: rgba(30, 30, 30, 0.85);
   /* Frosted glass blur effect */
-  backdrop-filter: blur(40px) saturate(180%);
-  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  backdrop-filter: blur(30px) saturate(160%);
+  -webkit-backdrop-filter: blur(30px) saturate(160%);
   pointer-events: none;
   /* Below app content but above body background */
   z-index: 0;
@@ -156,13 +156,15 @@ body::after {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  height: 32px;
-  background: var(--acrylic-base);
+  height: var(--titlebar-height);
+  background: var(--fluent-bg-secondary);
+  border-bottom: 1px solid var(--fluent-divider);
   flex-shrink: 0;
   position: relative;
-  z-index: 100;
+  z-index: var(--z-sticky);
   -webkit-app-region: drag;
   user-select: none;
+  padding: 0;
 }
 
 .title-bar-drag-region {
