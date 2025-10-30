@@ -81,6 +81,8 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-family: var(--font-mono);
+
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border: 1px solid;
   position: relative;
@@ -173,6 +175,7 @@
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   position: relative;
   overflow: hidden;
