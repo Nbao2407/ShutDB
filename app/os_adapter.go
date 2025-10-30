@@ -461,3 +461,79 @@ func (w *WindowsServiceAdapter) GetStartupType(name string) (StartupType, error)
 		return StartupManual, nil
 	}
 }
+
+// DisableService disables a Windows service (sets startup type to disabled)
+func (w *WindowsServiceAdapter) DisableService(name string) error {
+	m, err := w.connectSCM()
+	if err != nil {
+		return err
+	}
+	defer m.Disconnect()
+
+	s, err := w.openService(m, name)
+	if err != nil {
+		return err
+	}
+	defer s.Close()
+
+	// Get current config
+	config, err := s.Config()
+	if err != nil {
+		return &ServiceError{
+			Code:    ErrSystemError,
+			Message: fmt.Sprintf("Failed to get service configuration: %v", err),
+			Service: name,
+		}
+	}
+
+	// Update config to disable the service
+	config.StartType = mgr.StartDisabled
+	err = s.UpdateConfig(config)
+	if err != nil {
+		return &ServiceError{
+			Code:    ErrSystemError,
+			Message: fmt.Sprintf("Failed to disable service: %v", err),
+			Service: name,
+		}
+	}
+
+	return nil
+}
+
+// EnableService enables a Windows service (sets startup type to manual)
+func (w *WindowsServiceAdapter) EnableService(name string) error {
+	m, err := w.connectSCM()
+	if err != nil {
+		return err
+	}
+	defer m.Disconnect()
+
+	s, err := w.openService(m, name)
+	if err != nil {
+		return err
+	}
+	defer s.Close()
+
+	// Get current config
+	config, err := s.Config()
+	if err != nil {
+		return &ServiceError{
+			Code:    ErrSystemError,
+			Message: fmt.Sprintf("Failed to get service configuration: %v", err),
+			Service: name,
+		}
+	}
+
+	// Update config to enable the service (set to manual start)
+	config.StartType = mgr.StartManual
+	err = s.UpdateConfig(config)
+	if err != nil {
+		return &ServiceError{
+			Code:    ErrSystemError,
+			Message: fmt.Sprintf("Failed to enable service: %v", err),
+			Service: name,
+		}
+	}
+
+	return nil
+}

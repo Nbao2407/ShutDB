@@ -5,6 +5,7 @@ export namespace app {
 	    DisplayName: string;
 	    Status: string;
 	    Type: string;
+	    StartupType: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new Service(source);
@@ -16,6 +17,7 @@ export namespace app {
 	        this.DisplayName = source["DisplayName"];
 	        this.Status = source["Status"];
 	        this.Type = source["Type"];
+	        this.StartupType = source["StartupType"];
 	    }
 	}
 

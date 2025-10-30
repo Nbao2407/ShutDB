@@ -27,6 +27,7 @@ func main() {
 		MaxWidth: 800,
 		MaxHeight: 900,
 		DisableResize: true,
+		Frameless: true,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},

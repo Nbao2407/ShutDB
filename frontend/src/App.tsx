@@ -5,6 +5,7 @@ import { parseServiceError } from './utils/errorHandler'
 import ErrorNotification from './components/ErrorNotification'
 import { ServiceList } from './components/ServiceList'
 import { ServiceControlToggle } from './components/ServiceControlToggle'
+import { WindowControls } from './components/WindowControls'
 import './App.css'
 
 interface AppState {
@@ -163,11 +164,17 @@ function App() {
 
   return (
     <div className="app">
+      {/* Custom title bar */}
+      <div className="title-bar">
+        <div className="title-bar-drag-region"></div>
+        <WindowControls />
+      </div>
+      
       <div className="app-content fluent-scroll">
         {/* Toolbar */}
         <div className="app-toolbar">
           <div className="app-toolbar-left">
-            <h1>ShutDB</h1>
+            <h1>Database Services</h1>
           </div>
           <div className="app-toolbar-right">
             <ServiceControlToggle
