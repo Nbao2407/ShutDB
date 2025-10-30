@@ -188,9 +188,6 @@ function App() {
           </div>
         </div>
 
-        {/* Server Info */}
-        <ServerInfo metrics={serverMetrics} />
-
         {/* Error notification with dismissal */}
         {state.error && (
           <ErrorNotification
@@ -213,6 +210,8 @@ function App() {
             onRestart={handleRestart}
           />
         )}
+         {/* Server Info */}
+        <ServerInfo metrics={serverMetrics} />
       </div>
     </div>
   )

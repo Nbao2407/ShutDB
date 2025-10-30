@@ -26,7 +26,6 @@ func NewWindowsServiceDetector(adapter OSServiceAdapter) *WindowsServiceDetector
 			TypeMariaDB:    {"mariadb"},
 			TypeMSSQL:      {
 				"mssql", "sqlserver", "mssqlserver",
-				// SQL Server related services
 				"sqlagent",           // SQL Server Agent
 				"sqlbrowser",         // SQL Server Browser
 				"sqlwriter",          // SQL Server VSS Writer

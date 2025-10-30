@@ -1,60 +1,58 @@
 .container {
-  background: var(--acrylic-bg-secondary);
-  backdrop-filter: blur(var(--blur-subtle)) saturate(180%);
-  -webkit-backdrop-filter: blur(var(--blur-subtle)) saturate(180%);
-  border: 1px solid var(--fluent-border-primary);
-  border-radius: var(--fluent-radius-large);
-  padding: var(--fluent-space-xl);
-  box-shadow: var(--fluent-shadow-card);
-  opacity: 0.8;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--fluent-space-xl);
+  margin-bottom: 16px;
 }
 
 .title {
-  font-size: var(--fluent-font-size-lg);
-  font-weight: var(--fluent-font-weight-semibold);
-  color: var(--fluent-text-primary);
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
   margin: 0;
 }
 
 .time {
-  font-family: var(--fluent-font-mono);
-  font-size: var(--fluent-font-size-base);
-  color: var(--fluent-text-tertiary);
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: #666;
   background: rgba(0, 120, 212, 0.1);
-  padding: var(--fluent-space-xs) var(--fluent-space-md);
-  border-radius: var(--fluent-radius-medium);
+  padding: 4px 8px;
+  border-radius: 4px;
   border: 1px solid rgba(0, 120, 212, 0.2);
 }
 
-.grid {
+.cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: var(--fluent-space-md);
-  margin-bottom: var(--fluent-space-xl);
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
 .card {
   display: flex;
   align-items: center;
-  gap: var(--fluent-space-md);
-  padding: var(--fluent-space-md);
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--fluent-border-primary);
-  border-radius: var(--fluent-radius-medium);
-  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+  gap: 12px;
+  padding: 12px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  transition: all 0.2s ease;
 }
 
 .card:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: var(--fluent-border-secondary);
-  transform: translateY(-2px);
+  background: #f1f3f4;
+  border-color: #dee2e6;
+  transform: translateY(-1px);
 }
 
 .cardIcon {
@@ -69,17 +67,17 @@
 }
 
 .cardLabel {
-  font-size: var(--fluent-font-size-xs);
-  color: var(--fluent-text-tertiary);
+  font-size: 11px;
+  color: #666;
   margin-bottom: 2px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .cardValue {
-  font-size: var(--fluent-font-size-base);
-  font-weight: var(--fluent-font-weight-semibold);
-  color: var(--fluent-text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -88,17 +86,17 @@
 .statusBar {
   display: flex;
   align-items: center;
-  gap: var(--fluent-space-lg);
-  padding: var(--fluent-space-md);
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: var(--fluent-radius-medium);
-  margin-bottom: var(--fluent-space-lg);
+  gap: 16px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  margin-bottom: 16px;
 }
 
 .statusItem {
   display: flex;
   align-items: center;
-  gap: var(--fluent-space-sm);
+  gap: 8px;
   flex: 1;
 }
 
@@ -110,13 +108,13 @@
 }
 
 .statusDot[data-status="running"] {
-  background: var(--fluent-success);
-  box-shadow: 0 0 8px var(--fluent-success);
+  background: #28a745;
+  box-shadow: 0 0 8px rgba(40, 167, 69, 0.5);
   animation: statusPulse 2s ease-in-out infinite;
 }
 
 .statusDot[data-status="stopped"] {
-  background: var(--fluent-error);
+  background: #dc3545;
 }
 
 @keyframes statusPulse {
@@ -129,34 +127,34 @@
 }
 
 .statusLabel {
-  font-size: var(--fluent-font-size-sm);
-  color: var(--fluent-text-secondary);
+  font-size: 13px;
+  color: #666;
 }
 
 .statusCount {
-  font-size: var(--fluent-font-size-lg);
-  font-weight: var(--fluent-font-weight-semibold);
-  color: var(--fluent-text-primary);
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
   margin-left: auto;
-  font-family: var(--fluent-font-mono);
+  font-family: 'Courier New', monospace;
 }
 
 .statusDivider {
   width: 1px;
   height: 24px;
-  background: var(--fluent-border-primary);
+  background: #dee2e6;
 }
 
 .metrics {
   display: flex;
   flex-direction: column;
-  gap: var(--fluent-space-lg);
+  gap: 16px;
 }
 
 .metric {
   display: flex;
   flex-direction: column;
-  gap: var(--fluent-space-sm);
+  gap: 8px;
 }
 
 .metricHeader {
@@ -166,20 +164,20 @@
 }
 
 .metricLabel {
-  font-size: var(--fluent-font-size-sm);
-  color: var(--fluent-text-secondary);
+  font-size: 13px;
+  color: #666;
 }
 
 .metricValue {
-  font-size: var(--fluent-font-size-sm);
-  font-weight: var(--fluent-font-weight-semibold);
-  color: var(--fluent-text-primary);
-  font-family: var(--fluent-font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  font-family: 'Courier New', monospace;
 }
 
 .progressBar {
   height: 6px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.1);
   border-radius: 3px;
   overflow: hidden;
   position: relative;
@@ -188,44 +186,19 @@
 .progressFill {
   height: 100%;
   border-radius: 3px;
-  transition: width var(--fluent-duration-slow) var(--fluent-easing-standard);
+  transition: width 0.3s ease;
   position: relative;
   overflow: hidden;
 }
 
-.progressFill::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.3) 50%,
-    transparent 100%
-  );
-  animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
 .progressFill[data-level="low"] {
-  background: linear-gradient(90deg, var(--fluent-success) 0%, #059669 100%);
+  background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
 }
 
 .progressFill[data-level="medium"] {
-  background: linear-gradient(90deg, var(--fluent-warning) 0%, #d97706 100%);
+  background: linear-gradient(90deg, #ffc107 0%, #fd7e14 100%);
 }
 
 .progressFill[data-level="high"] {
-  background: linear-gradient(90deg, var(--fluent-error) 0%, #dc2626 100%);
+  background: linear-gradient(90deg, #dc3545 0%, #e74c3c 100%);
 }

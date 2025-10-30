@@ -2,8 +2,6 @@ import { FC, useEffect, useState } from 'react';
 import styles from './ServerInfo.module.css';
 
 interface ServerMetrics {
-  hostname: string;
-  platform: string;
   uptime: number;
   totalServices: number;
   runningServices: number;
@@ -35,8 +33,6 @@ export const ServerInfo: FC<ServerInfoProps> = ({ metrics }) => {
   };
 
   const defaultMetrics: ServerMetrics = {
-    hostname: 'localhost',
-    platform: 'Windows',
     uptime: 0,
     totalServices: 0,
     runningServices: 0,
@@ -58,23 +54,7 @@ export const ServerInfo: FC<ServerInfoProps> = ({ metrics }) => {
         </div>
       </div>
 
-      <div className={styles.grid}>
-        <div className={styles.card}>
-          <div className={styles.cardIcon}>🖥️</div>
-          <div className={styles.cardContent}>
-            <div className={styles.cardLabel}>Hostname</div>
-            <div className={styles.cardValue}>{data.hostname}</div>
-          </div>
-        </div>
-
-        <div className={styles.card}>
-          <div className={styles.cardIcon}>💻</div>
-          <div className={styles.cardContent}>
-            <div className={styles.cardLabel}>Platform</div>
-            <div className={styles.cardValue}>{data.platform}</div>
-          </div>
-        </div>
-
+      <div className={styles.cards}>
         <div className={styles.card}>
           <div className={styles.cardIcon}>⏱️</div>
           <div className={styles.cardContent}>
@@ -112,14 +92,14 @@ export const ServerInfo: FC<ServerInfoProps> = ({ metrics }) => {
             <div className={styles.metric}>
               <div className={styles.metricHeader}>
                 <span className={styles.metricLabel}>CPU Usage</span>
-                <span className={styles.metricValue}>{data.cpuUsage.toFixed(1)}%</span>
+                <span className={styles.metricValue}>{data.cpuUsage!.toFixed(1)}%</span>
               </div>
               <div className={styles.progressBar}>
                 <div
                   className={styles.progressFill}
                   style={{ width: `${data.cpuUsage}%` }}
                   data-level={
-                    data.cpuUsage > 80 ? 'high' : data.cpuUsage > 50 ? 'medium' : 'low'
+                    data.cpuUsage! > 80 ? 'high' : data.cpuUsage! > 50 ? 'medium' : 'low'
                   }
                 />
               </div>
@@ -129,14 +109,14 @@ export const ServerInfo: FC<ServerInfoProps> = ({ metrics }) => {
             <div className={styles.metric}>
               <div className={styles.metricHeader}>
                 <span className={styles.metricLabel}>Memory Usage</span>
-                <span className={styles.metricValue}>{data.memoryUsage.toFixed(1)}%</span>
+                <span className={styles.metricValue}>{data.memoryUsage!.toFixed(1)}%</span>
               </div>
               <div className={styles.progressBar}>
                 <div
                   className={styles.progressFill}
                   style={{ width: `${data.memoryUsage}%` }}
                   data-level={
-                    data.memoryUsage > 80 ? 'high' : data.memoryUsage > 50 ? 'medium' : 'low'
+                    data.memoryUsage! > 80 ? 'high' : data.memoryUsage! > 50 ? 'medium' : 'low'
                   }
                 />
               </div>
