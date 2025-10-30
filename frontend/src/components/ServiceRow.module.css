@@ -4,10 +4,24 @@
   display: flex;
   align-items: center;
   padding: 16px 20px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--border-primary);
   gap: 20px;
-  transition: all 0.2s ease;
-  background: #ffffff;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(22, 27, 34, 0.4);
+  border-left: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.serviceRow::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(0, 120, 212, 0.1) 0%, transparent 100%);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .serviceRow:last-child {
@@ -15,136 +29,190 @@
 }
 
 .serviceRow:hover {
-  background-color: #f8f9ff;
+  background: rgba(45, 51, 59, 0.6);
   transform: translateX(4px);
+  border-left-color: var(--accent-blue);
+  box-shadow: 0 2px 8px rgba(0, 120, 212, 0.2);
+}
+
+.serviceRow:hover::before {
+  width: 100%;
 }
 
 .serviceInfo {
   flex: 1;
   min-width: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .serviceName {
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
-  color: #2d3748;
+  color: var(--text-primary);
   margin-bottom: 4px;
   line-height: 1.4;
+  font-family: var(--font-mono);
+  letter-spacing: -0.01em;
 }
 
 .serviceSubtext {
-  font-size: 12px;
-  color: #718096;
-  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  opacity: 0.8;
 }
 
 .statusBadge {
-  min-width: 100px;
+  min-width: 120px;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .statusIndicator {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 12px;
+  border-radius: var(--radius-lg);
+  font-size: 11px;
   font-weight: 600;
-  text-transform: capitalize;
-  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: var(--font-mono);
+  backdrop-filter: blur(8px);
+  border: 1px solid;
+  position: relative;
+  overflow: hidden;
 }
 
 .statusIndicator::before {
   content: '';
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   display: inline-block;
+  position: relative;
+  z-index: 1;
 }
 
 .statusRunning {
-  background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
-  color: #155724;
-  box-shadow: 0 2px 4px rgba(21, 87, 36, 0.2);
+  background: rgba(35, 134, 54, 0.15);
+  border-color: rgba(35, 134, 54, 0.5);
+  color: var(--status-running-text);
+  box-shadow: 0 0 12px rgba(35, 134, 54, 0.3);
 }
 
 .statusRunning::before {
-  background-color: #155724;
-  box-shadow: 0 0 6px rgba(21, 87, 36, 0.6);
+  background-color: var(--status-running-text);
+  box-shadow: 0 0 8px var(--status-running-text);
 }
 
 .statusStopped {
-  background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
-  color: #721c24;
-  box-shadow: 0 2px 4px rgba(114, 28, 36, 0.2);
+  background: rgba(218, 54, 51, 0.15);
+  border-color: rgba(218, 54, 51, 0.5);
+  color: var(--status-stopped-text);
+  box-shadow: 0 0 12px rgba(218, 54, 51, 0.3);
 }
 
 .statusStopped::before {
-  background-color: #721c24;
+  background-color: var(--status-stopped-text);
 }
 
 .statusTransitioning {
-  background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
-  color: #856404;
-  box-shadow: 0 2px 4px rgba(133, 100, 4, 0.2);
-  animation: pulse 1.5s ease-in-out infinite;
+  background: rgba(210, 153, 34, 0.15);
+  border-color: rgba(210, 153, 34, 0.5);
+  color: var(--status-warning-text);
+  box-shadow: 0 0 12px rgba(210, 153, 34, 0.3);
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 .statusTransitioning::before {
-  background-color: #856404;
+  background-color: var(--status-warning-text);
   animation: blink 1s ease-in-out infinite;
 }
 
 @keyframes pulse {
   0%, 100% {
     opacity: 1;
+    box-shadow: 0 0 12px rgba(210, 153, 34, 0.3);
   }
   50% {
-    opacity: 0.8;
+    opacity: 0.7;
+    box-shadow: 0 0 20px rgba(210, 153, 34, 0.5);
   }
 }
 
 @keyframes blink {
   0%, 100% {
     opacity: 1;
+    box-shadow: 0 0 8px var(--status-warning-text);
   }
   50% {
     opacity: 0.3;
+    box-shadow: 0 0 4px var(--status-warning-text);
   }
 }
 
 .controls {
   display: flex;
   gap: 8px;
+  position: relative;
+  z-index: 1;
 }
 
 .button {
-  padding: 6px 14px;
+  padding: 8px 16px;
   font-size: 13px;
   font-weight: 500;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  color: #333;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  background: rgba(22, 27, 34, 0.6);
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+}
+
+.button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(0, 120, 212, 0.3) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  transition: width 0.4s, height 0.4s;
+  border-radius: 50%;
 }
 
 .button:hover:not(:disabled) {
-  background-color: #f0f0f0;
-  border-color: #999;
+  background: rgba(0, 120, 212, 0.15);
+  border-color: var(--accent-blue);
+  color: var(--text-primary);
+  box-shadow: 0 0 12px rgba(0, 120, 212, 0.3);
+  transform: translateY(-1px);
+}
+
+.button:hover:not(:disabled)::after {
+  width: 200px;
+  height: 200px;
 }
 
 .button:active:not(:disabled) {
-  background-color: #e0e0e0;
-  transform: translateY(1px);
+  transform: translateY(0);
+  box-shadow: 0 0 8px rgba(0, 120, 212, 0.2);
 }
 
 .button:disabled {
-  opacity: 0.5;
+  opacity: 0.3;
   cursor: not-allowed;
-  background-color: #f5f5f5;
-  color: #999;
+  background: rgba(22, 27, 34, 0.3);
+  color: var(--text-disabled);
+  filter: grayscale(1);
 }
