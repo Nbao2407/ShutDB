@@ -4,8 +4,6 @@ import { Service, ServiceStatus, ErrorState } from './types/service'
 import { parseServiceError } from './utils/errorHandler'
 import ErrorNotification from './components/ErrorNotification'
 import { ServiceList } from './components/ServiceList'
-import { FluentTitleBar } from './components/FluentTitleBar'
-import { FluentTabBar } from './components/FluentTabBar'
 import './App.css'
 
 interface AppState {
@@ -137,19 +135,8 @@ function App() {
 
   return (
     <div className="app">
-      <div className="app-header">
-        <FluentTitleBar title="Service Database Dashboard" />
-        <FluentTabBar
-          tabs={[
-            { id: 'services', title: 'Services', icon: '🛠️' },
-            { id: 'databases', title: 'Databases', icon: '🗄️' }
-          ]}
-          activeTabId="services"
-        />
-      </div>
-
       <div className="app-content fluent-scroll">
-        <h1>Service Database Dashboard</h1>
+        <h1>ShutDB</h1>
 
         {/* Error notification with dismissal */}
         {state.error && (

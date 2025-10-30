@@ -26,8 +26,8 @@
   border-radius: var(--fluent-radius-large);
   overflow: hidden;
   background: var(--acrylic-bg-secondary);
-  backdrop-filter: blur(var(--blur-subtle)) saturate(180%);
   -webkit-backdrop-filter: blur(var(--blur-subtle)) saturate(180%);
+   backdrop-filter: blur(var(--blur-subtle)) saturate(180%);
   box-shadow:
     var(--fluent-shadow-card),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
@@ -207,6 +207,7 @@
   background: rgba(22, 27, 34, 0.6);
   border: 1px dashed var(--border-primary);
   border-radius: var(--radius-md);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 
