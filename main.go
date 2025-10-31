@@ -36,7 +36,7 @@ func main() {
 	// Create application with options
 	err = wails.Run(&options.App{
 		Title:  "ShutDB",
-		Width:  700,
+		Width:  750,
 		Height: 900,
 		MinWidth: 600,
 		MinHeight: 900,
