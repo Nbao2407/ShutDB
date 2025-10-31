@@ -755,36 +755,94 @@ button:focus-visible {
   }
 }
 
-/* Tablets and small laptops */
+/* ============================================
+   Compact Window Sizes (600-768px)
+   Optimize for narrow windows and minwidth
+   ============================================ */
 @media (max-width: 768px) {
   .app-content {
     padding: 16px;
   }
 
   h1 {
-    font-size: 24px;
+    font-size: 22px;
+  }
+
+  h1::before {
+    height: 20px;
   }
 
   .app-toolbar {
-    gap: 12px;
-    padding: 12px;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    flex-wrap: nowrap;
   }
 
   .app-toolbar-left {
-    gap: 12px;
+    gap: var(--space-3);
+    min-width: 0;
+    flex: 1;
   }
 
+  .app-toolbar-right {
+    flex-shrink: 0;
+  }
+
+  /* Service stats - more compact */
   .service-stats {
-    font-size: 12px;
-    gap: 6px;
+    font-size: 11px;
+    gap: var(--space-1);
+    padding: var(--space-1) var(--space-2);
+  }
+
+  .stat-item {
+    gap: 2px;
   }
 
   .stat-value {
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .stat-label {
-    font-size: 11px;
+    font-size: 10px;
+  }
+
+  .stat-divider {
+    font-size: 10px;
+  }
+}
+
+/* ============================================
+   Narrow Windows (520-600px)
+   Two-row layout for better organization
+   ============================================ */
+@media (max-width: 600px) {
+  .app-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+
+  .app-toolbar-left {
+    width: 100%;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .app-toolbar-right {
+    width: 100%;
+    justify-content: center;
+  }
+
+  h1 {
+    font-size: 20px;
+    text-align: left;
+  }
+
+  .service-stats {
+    width: 100%;
+    justify-content: space-evenly;
+    padding: var(--space-2);
   }
 }
 

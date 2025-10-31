@@ -1,10 +1,15 @@
-/* SearchAndFilter Component Styles */
+/* ============================================
+   SearchAndFilter Component
+   Optimized for all window sizes
+   ============================================ */
 
 .searchAndFilter {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   flex-wrap: nowrap;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 /* Search Container */
@@ -12,40 +17,42 @@
   position: relative;
   display: flex;
   align-items: center;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .searchIcon {
   position: absolute;
   left: 10px;
-  color: hsl(var(--muted-foreground));
+  color: var(--fluent-text-tertiary);
   pointer-events: none;
   z-index: 1;
+  width: 16px;
+  height: 16px;
 }
 
 .searchInput {
-  background: hsl(var(--input));
-  border: 1px solid hsl(var(--border));
-  border-radius: var(--radius-sm);
+  background: var(--fluent-bg-tertiary);
+  border: 1px solid var(--fluent-border-primary);
+  border-radius: var(--radius-md);
   padding: 6px 10px 6px 32px;
-  color: hsl(var(--foreground));
+  color: var(--fluent-text-primary);
   font-size: 13px;
   width: 260px;
+  min-width: 120px;
   height: 32px;
-  /* Optimize transitions for better performance */
-  transition: border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: border-color, box-shadow;
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
   --wails-draggable: no-drag;
 }
 
 .searchInput:focus {
   outline: none;
-  border-color: hsl(var(--ring));
-  box-shadow: 0 0 0 2px hsl(var(--ring) / 0.2);
+  border-color: var(--fluent-accent);
+  box-shadow: 0 0 0 2px var(--fluent-bg-focus);
 }
 
 .searchInput::placeholder {
-  color: hsl(var(--muted-foreground));
+  color: var(--fluent-text-placeholder);
 }
 
 /* Filter Button */
@@ -54,61 +61,67 @@
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
-  background: hsl(var(--input));
-  border: 1px solid hsl(var(--border));
-  border-radius: var(--radius-sm);
-  color: hsl(var(--foreground));
+  background: var(--fluent-bg-tertiary);
+  border: 1px solid var(--fluent-border-primary);
+  border-radius: var(--radius-md);
+  color: var(--fluent-text-primary);
   font-size: 13px;
-  font-weight: 500;
+  font-weight: var(--fluent-font-weight-medium);
   cursor: pointer;
   height: 32px;
-  /* Optimize transitions for better performance */
-  transition: border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-              background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: border-color, box-shadow, background-color;
+  white-space: nowrap;
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
   --wails-draggable: no-drag;
+  flex-shrink: 0;
 }
 
 .filterButton:hover {
-  background: hsl(var(--accent) / 0.1);
-  border-color: hsl(var(--accent) / 0.3);
+  background: var(--fluent-bg-hover);
+  border-color: var(--fluent-accent);
 }
 
 .filterButton:focus {
   outline: none;
-  border-color: hsl(var(--ring));
-  box-shadow: 0 0 0 2px hsl(var(--ring) / 0.2);
+  border-color: var(--fluent-accent);
+  box-shadow: 0 0 0 2px var(--fluent-bg-focus);
 }
 
 .filterIcon {
-  color: hsl(var(--muted-foreground));
+  color: var(--fluent-text-secondary);
   flex-shrink: 0;
+  width: 16px;
+  height: 16px;
 }
 
-/* Responsive Design */
-/* Large screens - keep horizontal layout */
+/* ============================================
+   Responsive Design - Optimized for minwidth
+   ============================================ */
+
+/* Large screens */
 @media (min-width: 1025px) {
   .searchInput {
     width: 280px;
   }
 }
 
-/* Medium screens - slightly smaller search */
+/* Medium screens (769-1024px) */
 @media (max-width: 1024px) and (min-width: 769px) {
   .searchInput {
     width: 220px;
   }
 }
 
-/* Small tablets - compact horizontal layout */
-@media (max-width: 768px) and (min-width: 641px) {
+/* ============================================
+   Compact Windows (600-768px)
+   This is the critical minwidth range
+   ============================================ */
+@media (max-width: 768px) and (min-width: 601px) {
   .searchAndFilter {
-    gap: 6px;
+    gap: var(--space-2);
   }
 
   .searchInput {
-    width: 180px;
+    width: 160px;
     font-size: 12px;
     padding: 5px 8px 5px 28px;
     height: 30px;
@@ -133,16 +146,64 @@
   }
 }
 
-/* Mobile phones - keep horizontal, more compact */
-@media (max-width: 640px) {
+/* ============================================
+   Narrow Windows (520-600px)
+   Full-width search, stacked layout
+   ============================================ */
+@media (max-width: 600px) {
   .searchAndFilter {
-    gap: 4px;
+    gap: var(--space-2);
+    width: 100%;
+  }
+
+  .searchContainer {
+    flex: 1;
   }
 
   .searchInput {
-    width: 140px;
+    width: 100%;
+    font-size: 13px;
+    padding: 6px 10px 6px 32px;
+    height: 32px;
+  }
+
+  .searchIcon {
+    left: 10px;
+    width: 14px;
+    height: 14px;
+  }
+
+  .filterButton {
+    padding: 6px 12px;
     font-size: 12px;
-    padding: 5px 8px 5px 26px;
+    height: 32px;
+    gap: 4px;
+  }
+
+  .filterIcon {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* ============================================
+   Mobile Phones (<480px)
+   Ultra-compact, preserve horizontal layout
+   ============================================ */
+@media (max-width: 480px) {
+  .searchAndFilter {
+    gap: var(--space-1);
+    width: 100%;
+  }
+
+  .searchContainer {
+    flex: 1;
+  }
+
+  .searchInput {
+    width: 100%;
+    font-size: 12px;
+    padding: 5px 8px 5px 28px;
     height: 28px;
   }
 
@@ -154,7 +215,7 @@
 
   .filterButton {
     padding: 5px 8px;
-    font-size: 12px;
+    font-size: 11px;
     height: 28px;
     gap: 3px;
   }
@@ -165,34 +226,59 @@
   }
 }
 
-/* Very small phones - ultra compact single row */
-@media (max-width: 480px) {
+/* ============================================
+   Extra Small (<380px)
+   Minimal viable layout
+   ============================================ */
+@media (max-width: 380px) {
   .searchAndFilter {
-    gap: 3px;
+    gap: 4px;
   }
 
   .searchInput {
-    width: 120px;
     font-size: 11px;
-    padding: 4px 6px 4px 22px;
+    padding: 4px 6px 4px 24px;
     height: 26px;
   }
 
   .searchIcon {
     left: 6px;
-    width: 10px;
-    height: 10px;
+    width: 11px;
+    height: 11px;
   }
 
   .filterButton {
     padding: 4px 6px;
-    font-size: 11px;
+    font-size: 10px;
     height: 26px;
     gap: 2px;
   }
 
   .filterIcon {
-    width: 10px;
-    height: 10px;
+    width: 11px;
+    height: 11px;
+  }
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .searchInput,
+  .filterButton {
+    transition: none;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .searchInput,
+  .filterButton {
+    border-width: 2px;
+  }
+
+  .searchInput:focus,
+  .filterButton:focus {
+    outline-width: 3px;
   }
 }
