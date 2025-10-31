@@ -166,7 +166,7 @@ function App() {
     <div className="app">
       {/* Custom title bar */}
       <div className="title-bar">
-        <div className="title-bar-drag-region"></div>
+        <div className="title-bar-spacer"></div>
         <WindowControls />
       </div>
       

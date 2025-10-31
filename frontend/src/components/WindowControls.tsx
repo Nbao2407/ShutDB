@@ -1,13 +1,21 @@
-import { WindowMinimise, Quit } from '../wailsjs/runtime/runtime'
+import { Minimize, Close } from '../wailsjs/go/app/WindowManager'
 import styles from './WindowControls.module.css'
 
 export function WindowControls() {
-  const handleMinimize = () => {
-    WindowMinimise()
+  const handleMinimize = async () => {
+    try {
+      await Minimize()
+    } catch (error) {
+      console.error('Failed to minimize window:', error)
+    }
   }
 
-  const handleClose = () => {
-    Quit()
+  const handleClose = async () => {
+    try {
+      await Close()
+    } catch (error) {
+      console.error('Failed to close window:', error)
+    }
   }
 
   return (

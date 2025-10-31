@@ -4,6 +4,8 @@
   gap: 0;
   height: 32px;
   -webkit-app-region: no-drag;
+  /* Wails CSS property to exclude from dragging */
+  --wails-draggable: no-drag;
 }
 
 .windowControlBtn {
@@ -19,6 +21,10 @@
   transition: background-color 0.15s ease;
   font-size: 10px;
   padding: 0;
+  -webkit-app-region: no-drag;
+  pointer-events: auto;
+  /* Wails CSS property to exclude buttons from dragging */
+  --wails-draggable: no-drag;
 }
 
 .windowControlBtn:hover {

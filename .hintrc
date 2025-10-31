@@ -3,6 +3,21 @@
     "development"
   ],
   "hints": {
-    "typescript-config/consistent-casing": "off"
+    "typescript-config/consistent-casing": "off",
+    "compat-api/css": [
+      "default",
+      {
+        "ignore": [
+          "-webkit-app-region",
+          "user-select"
+        ]
+      }
+    ],
+    "axe/aria": [
+      "default",
+      {
+        "aria-valid-attr-value": "off"
+      }
+    ]
   }
 }

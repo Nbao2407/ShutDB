@@ -77,9 +77,9 @@
   --spacing-xl: 24px;
   --spacing-2xl: 32px;
 
-  /* Acrylic Effect Base Color */
-  --acrylic-base: #302b2f;
-  --acrylic-opacity: 0.8;
+  /* Windows Acrylic Effect Base Color */
+  --acrylic-base: #2c2c2c;
+  --acrylic-opacity: 0.3;
 }
 
 /* ============================================
@@ -95,19 +95,25 @@ body {
   font-family: var(--fluent-font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Modern dark background */
-  background: var(--fluent-bg-primary);
+  /* Windows acrylic dark theme base color */
+  background: #2c2c2c;
   color: var(--fluent-text-secondary);
   font-size: var(--fluent-font-size-base);
   line-height: 1.6;
   min-height: 100vh;
   overflow: hidden;
   position: relative;
+  /* Wails CSS property for frameless window dragging */
+  --wails-draggable: drag;
 }
 
-/* Acrylic Overlay Layer
-   Creates frosted glass effect with 0.8 opacity
-   Uses backdrop-filter for the blur effect */
+/* Windows Acrylic Effect Layer
+   Matches the XAML AcrylicBrush properties:
+   - BackgroundSource="HostBackdrop" 
+   - FallbackColor="#2C2C2C"
+   - TintColor="#2C2C2C" 
+   - TintOpacity="0.30"
+*/
 body::before {
   content: "";
   position: fixed;
@@ -115,13 +121,12 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;
-  /* Acrylic effect with modern dark theme */
-  background: rgba(30, 30, 30, 0.85);
-  /* Frosted glass blur effect */
-  backdrop-filter: blur(30px) saturate(160%);
-  -webkit-backdrop-filter: blur(30px) saturate(160%);
+  /* Acrylic tint with 0.30 opacity matching XAML */
+  background: rgba(44, 44, 44, 0.3);
+  /* Host backdrop blur effect */
+  -webkit-backdrop-filter: blur(30px) saturate(125%);
+  backdrop-filter: blur(30px) saturate(125%);
   pointer-events: none;
-  /* Below app content but above body background */
   z-index: 0;
 }
 
@@ -156,20 +161,31 @@ body::after {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  height: var(--titlebar-height);
-  background: var(--fluent-bg-secondary);
-  border-bottom: 1px solid var(--fluent-divider);
+  height: 32px;
+  /*background: var(--acrylic-base);*/
+  background-color: red;
   flex-shrink: 0;
   position: relative;
-  z-index: var(--z-sticky);
-  -webkit-app-region: drag;
+  z-index: 100;
   user-select: none;
   padding: 0;
+  /* Use data-wails-drag for dragging */
+  cursor: default;
 }
 
-.title-bar-drag-region {
+.title-bar-spacer {
   flex: 1;
   height: 100%;
+  user-select: none;
+}
+
+.app-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  -webkit-user-select: none;
+  user-select: none;
+  flex: 1;
 }
 
 /* ============================================
@@ -290,6 +306,8 @@ button {
   outline: none;
   position: relative;
   overflow: hidden;
+  /* Exclude all buttons from window dragging */
+  --wails-draggable: no-drag;
 }
 
 button::before {

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"embed"
 	"log"
 
@@ -16,6 +17,9 @@ var assets embed.FS
 func main() {
 	// Create service manager instance
 	serviceManager := app.NewServiceManager()
+	
+	// Create window manager instance
+	windowManager := app.NewWindowManager()
 
 	// Create application with options
 	err := wails.Run(&options.App{
@@ -26,16 +30,22 @@ func main() {
 		MinHeight: 900,
 		MaxWidth: 800,
 		MaxHeight: 900,
-		DisableResize: true,
 		Frameless: true,
+		DisableResize: true,
+		HideWindowOnClose: false,
+		AlwaysOnTop: false,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
-		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
-		OnStartup:        serviceManager.OnStartup,
-		OnShutdown:       serviceManager.OnShutdown,
+		BackgroundColour: &options.RGBA{R: 44, G: 44, B: 44, A: 1}, // Match acrylic base
+		OnStartup: func(ctx context.Context) {
+			serviceManager.OnStartup(ctx)
+			windowManager.OnStartup(ctx)
+		},
+		OnShutdown: serviceManager.OnShutdown,
 		Bind: []interface{}{
 			serviceManager,
+			windowManager,
 		},
 	})
 

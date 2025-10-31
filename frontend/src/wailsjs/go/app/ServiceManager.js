@@ -10,6 +10,10 @@ export function GetServices() {
   return window['go']['app']['ServiceManager']['GetServices']();
 }
 
+export function OnStartup(arg1) {
+  return window['go']['app']['ServiceManager']['OnStartup'](arg1);
+}
+
 export function RestartService(arg1) {
   return window['go']['app']['ServiceManager']['RestartService'](arg1);
 }
