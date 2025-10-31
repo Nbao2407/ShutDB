@@ -333,33 +333,61 @@ body::after {
   z-index: 1;
 }
 
-/* Toolbar */
+/* ============================================
+   Toolbar - Improved Layout Clarity
+   ============================================ */
 .app-toolbar {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
   flex-wrap: wrap;
-  padding: 16px;
-  background: hsl(var(--card) / 0.5);
-  border: 1px solid hsl(var(--border) / 0.3);
-  border-radius: var(--radius);
-  -webkit-backdrop-filter: blur(20px);
+  padding: var(--space-4);
+  background: var(--fluent-bg-secondary);
+  border: 1px solid var(--fluent-border-primary);
+  border-radius: var(--radius-lg);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--fluent-shadow-subtle);
 }
 
 .app-toolbar-left {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: var(--space-6);
   flex: 1;
+  min-width: 0;
+}
+
+.app-toolbar-left h1 {
+  font-size: var(--fluent-font-size-2xl);
+  font-weight: var(--fluent-font-weight-bold);
+  color: var(--fluent-text-heading);
+  margin: 0;
+  white-space: nowrap;
+  letter-spacing: -0.02em;
+  position: relative;
+  padding-left: var(--space-3);
+}
+
+.app-toolbar-left h1::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 24px;
+  background: var(--fluent-accent);
+  border-radius: 2px;
 }
 
 .app-toolbar-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: var(--space-4);
+  flex-shrink: 0;
 }
 
 
@@ -385,32 +413,40 @@ body::after {
   color: hsl(var(--muted-foreground));
 }
 
-/* Service Stats */
+/* Service Stats - Enhanced Visual Hierarchy */
 .service-stats {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: hsl(var(--muted-foreground));
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: var(--fluent-bg-tertiary);
+  border: 1px solid var(--fluent-border-subtle);
+  border-radius: var(--radius-md);
+  font-size: var(--fluent-font-size-sm);
+  color: var(--fluent-text-secondary);
 }
 
 .stat-item {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--space-1);
+  white-space: nowrap;
 }
 
 .stat-value {
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: var(--fluent-font-weight-semibold);
+  font-size: var(--fluent-font-size-md);
+  color: var(--fluent-text-primary);
 }
 
 .stat-label {
-  font-size: 12px;
+  font-size: var(--fluent-font-size-sm);
+  color: var(--fluent-text-tertiary);
 }
 
 .stat-divider {
-  opacity: 0.5;
+  opacity: 0.3;
+  color: var(--fluent-border-primary);
 }
 
 /* No Results State */
@@ -790,46 +826,69 @@ button:focus-visible {
   }
 }
 
-/* Very small phones */
+/* ============================================
+   Very Small Screens (Mobile Phones < 480px)
+   Enhanced responsive for better mobile UX
+   ============================================ */
 @media (max-width: 480px) {
   .app-content {
-    padding: 6px;
+    padding: var(--space-2);
   }
 
   h1 {
-    font-size: 18px;
-    margin-bottom: 8px;
+    font-size: var(--fluent-font-size-lg);
+    margin-bottom: 0;
   }
 
   h1::before {
     width: 2px;
-    height: 18px;
+    height: 16px;
   }
 
   .app-toolbar {
-    padding: 6px;
-    gap: 6px;
+    padding: var(--space-3);
+    gap: var(--space-3);
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .app-toolbar-left {
-    gap: 6px;
+    gap: var(--space-3);
+    flex-direction: column;
+    align-items: stretch;
   }
 
+  .app-toolbar-right {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Compact service stats */
   .service-stats {
-    font-size: 10px;
-    gap: 3px;
+    font-size: 11px;
+    padding: var(--space-2);
+    gap: var(--space-2);
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .stat-item {
+    gap: var(--space-1);
+    flex-direction: column;
+    align-items: center;
   }
 
   .stat-value {
-    font-size: 11px;
+    font-size: var(--fluent-font-size-lg);
+    font-weight: var(--fluent-font-weight-bold);
   }
 
   .stat-label {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .stat-divider {
-    font-size: 8px;
+    display: none;
   }
 }
 
