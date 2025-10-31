@@ -323,27 +323,6 @@ function App() {
                 <span className="stat-label">Stopped</span>
               </span>
             </div>
-            <button
-              type="button"
-              onClick={() => setIsSettingsOpen(true)}
-              className="settings-button"
-              title="Settings"
-              aria-label="Open Settings"
-            >
-              <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
-                <path
-                  d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                />
-                <path
-                  d="M10 1v2m0 14v2M4.22 4.22l1.42 1.42m8.72 8.72l1.42 1.42M1 10h2m14 0h2M4.22 15.78l1.42-1.42m8.72-8.72l1.42-1.42"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </button>
           </div>
         </div>
         {/* Error notification with dismissal */}
@@ -385,11 +364,35 @@ function App() {
           </>
         )}
       </div>
-      
+
+      {/* Settings Button - Bottom Left */}
+      <button
+        type="button"
+        onClick={() => setIsSettingsOpen(true)}
+        className="settings-button-fixed"
+        title="Settings"
+        aria-label="Open Settings"
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path
+            d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          />
+          <path
+            d="M10 1v2m0 14v2M4.22 4.22l1.42 1.42m8.72 8.72l1.42 1.42M1 10h2m14 0h2M4.22 15.78l1.42-1.42m8.72-8.72l1.42-1.42"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+        </svg>
+        <span className="settings-button-label">Settings</span>
+      </button>
+
       {/* Settings Modal */}
-      <SettingsModal 
-        isOpen={isSettingsOpen} 
-        onClose={() => setIsSettingsOpen(false)} 
+      <SettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
       />
     </div>
   );

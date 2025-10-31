@@ -1,113 +1,129 @@
+/* ============================================
+   TraySettings - Compact & Clean Design
+
+   Improvements:
+   - Reduced padding and gaps
+   - Tighter layout
+   - Cleaner appearance
+   - Better visual hierarchy
+   ============================================ */
+
 .container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 20px;
-  background: hsl(var(--card));
-  border: 1px solid hsl(var(--border));
-  border-radius: var(--radius);
-  max-width: 500px;
+  gap: var(--space-4);
+  padding: var(--space-6);
 }
 
 .header {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
 }
 
 .title {
-  font-size: 18px;
-  font-weight: 600;
-  color: hsl(var(--foreground));
+  font-size: var(--fluent-font-size-lg);
+  font-weight: var(--fluent-font-weight-semibold);
+  color: var(--fluent-text-heading);
   margin: 0;
+  letter-spacing: -0.01em;
 }
 
 .description {
-  font-size: 14px;
-  color: hsl(var(--muted-foreground));
+  font-size: var(--fluent-font-size-sm);
+  color: var(--fluent-text-tertiary);
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 .loading {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 40px 20px;
+  gap: var(--space-3);
+  padding: var(--space-8) var(--space-5);
   justify-content: center;
-  color: hsl(var(--muted-foreground));
-  font-size: 14px;
+  color: var(--fluent-text-secondary);
+  font-size: var(--fluent-font-size-base);
 }
 
 .spinner {
   width: 20px;
   height: 20px;
-  border: 2px solid hsl(var(--border));
-  border-top-color: hsl(var(--primary));
+  border: 2px solid var(--fluent-border-primary);
+  border-top-color: var(--fluent-accent);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
 
+/* Settings Group - More Compact */
 .settingsGroup {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--space-2);
 }
 
+/* Setting Item - Cleaner & More Compact */
 .settingItem {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 16px;
-  background: hsl(var(--muted) / 0.05);
-  border: 1px solid hsl(var(--border));
-  border-radius: var(--radius-sm);
-  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  border: 1px solid var(--fluent-border-subtle);
+  border-radius: var(--radius-md);
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+  min-height: 56px;
 }
 
 .settingItem:hover {
-  background: hsl(var(--muted) / 0.1);
+  background: var(--fluent-bg-hover);
+  border-color: var(--fluent-border-primary);
 }
 
+/* Setting Info - Optimized Spacing */
 .settingInfo {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--space-1);
+  min-width: 0;
 }
 
 .settingLabel {
-  font-size: 14px;
-  font-weight: 500;
-  color: hsl(var(--foreground));
+  font-size: var(--fluent-font-size-base);
+  font-weight: var(--fluent-font-weight-medium);
+  color: var(--fluent-text-primary);
   cursor: pointer;
+  line-height: 1.3;
 }
 
 .settingDescription {
-  font-size: 13px;
-  color: hsl(var(--muted-foreground));
+  font-size: var(--fluent-font-size-sm);
+  color: var(--fluent-text-tertiary);
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
+/* Toggle - Consistent with design system */
 .toggle {
   flex-shrink: 0;
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: var(--space-1);
   border-radius: var(--radius-sm);
-  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color var(--fluent-duration-fast) var(--fluent-easing-standard);
   --wails-draggable: no-drag;
 }
 
 .toggle:hover:not(:disabled) {
-  background: hsl(var(--accent) / 0.1);
+  background: var(--fluent-bg-hover);
 }
 
 .toggle:focus-visible {
-  outline: 2px solid hsl(var(--ring));
+  outline: 2px solid var(--fluent-accent);
   outline-offset: 2px;
 }
 
@@ -120,16 +136,15 @@
   position: relative;
   width: 44px;
   height: 24px;
-  background: hsl(var(--input));
-  border: 1px solid hsl(var(--border));
+  background: var(--fluent-bg-tertiary);
+  border: 1px solid var(--fluent-border-primary);
   border-radius: 12px;
-  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
 }
 
 .toggleEnabled .toggleSlider {
-  background: hsl(var(--primary));
-  border-color: hsl(var(--primary));
+  background: var(--fluent-accent);
+  border-color: var(--fluent-accent);
 }
 
 .toggleThumb {
@@ -138,43 +153,47 @@
   left: 2px;
   width: 18px;
   height: 18px;
-  background: hsl(var(--background));
+  background: var(--fluent-text-primary);
   border-radius: 50%;
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform var(--fluent-duration-fast) var(--fluent-easing-standard);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .toggleEnabled .toggleThumb {
   transform: translateX(20px);
 }
 
+/* Error Message - Compact */
 .errorMessage {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: hsl(var(--destructive) / 0.1);
-  color: hsl(var(--destructive));
-  border: 1px solid hsl(var(--destructive) / 0.3);
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--fluent-error-bg);
+  color: var(--fluent-error-text);
+  border: 1px solid var(--fluent-error-muted);
   border-radius: var(--radius-sm);
-  font-size: 13px;
-  font-weight: 500;
+  font-size: var(--fluent-font-size-sm);
+  font-weight: var(--fluent-font-weight-medium);
 }
 
 .errorIcon {
   flex-shrink: 0;
+  width: var(--icon-sm);
+  height: var(--icon-sm);
 }
 
+/* Saving Indicator - Compact */
 .savingIndicator {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: hsl(var(--muted) / 0.1);
-  color: hsl(var(--muted-foreground));
-  border: 1px solid hsl(var(--border));
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--fluent-bg-tertiary);
+  color: var(--fluent-text-secondary);
+  border: 1px solid var(--fluent-border-primary);
   border-radius: var(--radius-sm);
-  font-size: 13px;
+  font-size: var(--fluent-font-size-sm);
 }
 
 @keyframes spin {
@@ -183,20 +202,32 @@
   }
 }
 
-/* Responsive design */
+/* ============================================
+   Responsive Design - Mobile Friendly
+   ============================================ */
+
 @media (max-width: 768px) {
   .container {
-    padding: 16px;
-    gap: 16px;
+    padding: var(--space-4);
+    gap: var(--space-3);
   }
-  
+
+  .settingsGroup {
+    gap: var(--space-2);
+  }
+
   .settingItem {
     flex-direction: column;
     align-items: stretch;
-    gap: 12px;
-    padding: 12px;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    min-height: auto;
   }
-  
+
+  .settingInfo {
+    gap: var(--space-1);
+  }
+
   .toggle {
     align-self: flex-start;
   }
@@ -204,42 +235,67 @@
 
 @media (max-width: 480px) {
   .container {
-    padding: 12px;
-    gap: 12px;
+    padding: var(--space-3);
+    gap: var(--space-2);
   }
-  
+
   .title {
-    font-size: 16px;
+    font-size: var(--fluent-font-size-md);
   }
-  
+
   .description {
-    font-size: 13px;
+    font-size: 11px;
   }
-  
+
   .settingItem {
-    padding: 10px;
-    gap: 10px;
+    padding: var(--space-2) var(--space-3);
+    gap: var(--space-2);
   }
-  
+
   .settingLabel {
     font-size: 13px;
   }
-  
+
   .settingDescription {
-    font-size: 12px;
+    font-size: 11px;
   }
-  
+
   .toggleSlider {
     width: 40px;
     height: 22px;
   }
-  
+
   .toggleThumb {
     width: 16px;
     height: 16px;
   }
-  
+
   .toggleEnabled .toggleThumb {
     transform: translateX(18px);
+  }
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner,
+  .toggle,
+  .toggleSlider,
+  .toggleThumb,
+  .settingItem {
+    transition: none;
+    animation: none;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .settingItem {
+    border-width: 2px;
+  }
+
+  .toggle:focus-visible {
+    outline-width: 3px;
   }
 }

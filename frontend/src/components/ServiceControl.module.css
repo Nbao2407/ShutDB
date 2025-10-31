@@ -1,84 +1,106 @@
+/* ============================================
+   ServiceControl - Compact & Clean Design
+
+   Improvements:
+   - Reduced padding and gaps
+   - Tighter layout
+   - Cleaner appearance
+   - Better visual hierarchy
+   ============================================ */
+
 .container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 20px;
-  background: hsl(var(--card));
-  border: 1px solid hsl(var(--border));
-  border-radius: var(--radius);
-  max-width: 500px;
+  gap: var(--space-4);
+  padding: var(--space-6);
 }
 
 .header {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
 }
 
 .title {
-  font-size: 18px;
-  font-weight: 600;
-  color: hsl(var(--foreground));
+  font-size: var(--fluent-font-size-lg);
+  font-weight: var(--fluent-font-weight-semibold);
+  color: var(--fluent-text-heading);
   margin: 0;
+  letter-spacing: -0.01em;
 }
 
 .description {
-  font-size: 14px;
-  color: hsl(var(--muted-foreground));
+  font-size: var(--fluent-font-size-sm);
+  color: var(--fluent-text-tertiary);
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 .loading {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 40px 20px;
+  gap: var(--space-3);
+  padding: var(--space-8) var(--space-5);
   justify-content: center;
-  color: hsl(var(--muted-foreground));
-  font-size: 14px;
+  color: var(--fluent-text-secondary);
+  font-size: var(--fluent-font-size-base);
 }
 
 .spinner {
   width: 20px;
   height: 20px;
-  border: 2px solid hsl(var(--border));
-  border-top-color: hsl(var(--primary));
+  border: 2px solid var(--fluent-border-primary);
+  border-top-color: var(--fluent-accent);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
 
+/* Control Group - More Compact */
 .controlGroup {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--space-2);
 }
 
+/* Toggle Wrapper - Cleaner Layout */
 .toggleWrapper {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  border: 1px solid var(--fluent-border-subtle);
+  border-radius: var(--radius-md);
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+  min-height: 56px;
 }
 
+.toggleWrapper:hover {
+  background: var(--fluent-bg-hover);
+  border-color: var(--fluent-border-primary);
+}
+
+/* Toggle Button - Simplified */
 .toggleButton {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
+  gap: var(--space-3);
   background: transparent;
   border: none;
-  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+  transition: opacity var(--fluent-duration-fast) var(--fluent-easing-standard);
   --wails-draggable: no-drag;
-}
-
-.toggleButton:hover:not(:disabled) {
-  background: hsl(var(--accent) / 0.1);
+  flex: 1;
+  min-width: 0;
 }
 
 .toggleButton:focus-visible {
-  outline: 2px solid hsl(var(--ring));
+  outline: 2px solid var(--fluent-accent);
   outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }
 
 .toggleButton:disabled {
@@ -86,20 +108,28 @@
   cursor: not-allowed;
 }
 
+/* Toggle Controls - Right Side */
+.toggleControls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+/* Toggle Slider */
 .toggleSlider {
   position: relative;
   width: 44px;
   height: 24px;
-  background: hsl(var(--input));
-  border: 1px solid hsl(var(--border));
+  background: var(--fluent-bg-tertiary);
+  border: 1px solid var(--fluent-border-primary);
   border-radius: 12px;
-  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
 }
 
 .toggleEnabled .toggleSlider {
-  background: hsl(var(--primary));
-  border-color: hsl(var(--primary));
+  background: var(--fluent-accent);
+  border-color: var(--fluent-accent);
 }
 
 .toggleThumb {
@@ -108,10 +138,10 @@
   left: 2px;
   width: 18px;
   height: 18px;
-  background: hsl(var(--background));
+  background: var(--fluent-text-primary);
   border-radius: 50%;
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform var(--fluent-duration-fast) var(--fluent-easing-standard);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .toggleEnabled .toggleThumb {
@@ -119,17 +149,19 @@
 }
 
 .toggleLabel {
-  font-size: 14px;
-  font-weight: 500;
-  color: hsl(var(--foreground));
+  font-size: var(--fluent-font-size-base);
+  font-weight: var(--fluent-font-weight-medium);
+  color: var(--fluent-text-primary);
+  line-height: 1.3;
 }
 
+/* Status Indicator - Compact */
 .statusIndicator {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: hsl(var(--muted) / 0.1);
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  background: var(--fluent-bg-tertiary);
   border-radius: var(--radius-sm);
 }
 
@@ -137,37 +169,41 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color var(--fluent-duration-fast) var(--fluent-easing-standard);
 }
 
 .statusEnabled {
-  background: hsl(var(--success));
+  background: var(--fluent-success-text);
 }
 
 .statusDisabled {
-  background: hsl(var(--muted-foreground));
+  background: var(--fluent-text-disabled);
 }
 
 .statusText {
-  font-size: 13px;
-  color: hsl(var(--muted-foreground));
+  font-size: var(--fluent-font-size-sm);
+  color: var(--fluent-text-secondary);
+  line-height: 1;
 }
 
+/* Error Message - Compact */
 .errorMessage {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: hsl(var(--destructive) / 0.1);
-  color: hsl(var(--destructive));
-  border: 1px solid hsl(var(--destructive) / 0.3);
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--fluent-error-bg);
+  color: var(--fluent-error-text);
+  border: 1px solid var(--fluent-error-muted);
   border-radius: var(--radius-sm);
-  font-size: 13px;
-  font-weight: 500;
+  font-size: var(--fluent-font-size-sm);
+  font-weight: var(--fluent-font-weight-medium);
 }
 
 .errorIcon {
   flex-shrink: 0;
+  width: var(--icon-sm);
+  height: var(--icon-sm);
 }
 
 @keyframes spin {
@@ -176,21 +212,36 @@
   }
 }
 
-/* Responsive design */
+/* ============================================
+   Responsive Design
+   ============================================ */
+
 @media (max-width: 768px) {
   .container {
-    padding: 16px;
-    gap: 16px;
+    padding: var(--space-4);
+    gap: var(--space-3);
   }
-  
+
+  .toggleWrapper {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    min-height: auto;
+  }
+
   .toggleButton {
-    padding: 10px 12px;
+    gap: var(--space-2);
   }
-  
+
+  .toggleControls {
+    justify-content: space-between;
+  }
+
   .toggleLabel {
     font-size: 13px;
   }
-  
+
   .statusText {
     font-size: 12px;
   }
@@ -198,34 +249,64 @@
 
 @media (max-width: 480px) {
   .container {
-    padding: 12px;
-    gap: 12px;
+    padding: var(--space-3);
+    gap: var(--space-2);
   }
-  
+
   .title {
-    font-size: 16px;
+    font-size: var(--fluent-font-size-md);
   }
-  
+
   .description {
-    font-size: 13px;
+    font-size: 11px;
   }
-  
+
+  .toggleWrapper {
+    padding: var(--space-2) var(--space-3);
+    gap: var(--space-2);
+  }
+
   .toggleButton {
-    padding: 8px 10px;
-    gap: 10px;
+    gap: var(--space-2);
   }
-  
+
   .toggleSlider {
     width: 40px;
     height: 22px;
   }
-  
+
   .toggleThumb {
     width: 16px;
     height: 16px;
   }
-  
+
   .toggleEnabled .toggleThumb {
     transform: translateX(18px);
+  }
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner,
+  .toggleButton,
+  .toggleSlider,
+  .toggleThumb,
+  .toggleWrapper,
+  .statusDot {
+    transition: none;
+    animation: none;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .toggleWrapper {
+    border-width: 2px;
+  }
+
+  .toggleButton:focus-visible {
+    outline-width: 3px;
   }
 }
