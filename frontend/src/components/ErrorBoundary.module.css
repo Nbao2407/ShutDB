@@ -1,0 +1,226 @@
+/* ============================================
+   ErrorBoundary Component Styles
+   
+   Fallback UI for JavaScript errors in React components
+   Glass morphism styling consistent with the design system
+   ============================================ */
+
+.errorBoundary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: var(--spacing-xl, 24px);
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.errorContent {
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+}
+
+.errorIcon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 16px;
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 50%;
+  padding: 12px;
+}
+
+.errorIcon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.errorDetails {
+  margin-bottom: 24px;
+}
+
+.errorTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--foreground, #ffffff);
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+}
+
+.errorMessage {
+  font-size: 14px;
+  color: var(--muted-foreground, rgba(255, 255, 255, 0.7));
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+}
+
+.errorStack {
+  text-align: left;
+  margin-top: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.errorStack summary {
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--muted-foreground, rgba(255, 255, 255, 0.7));
+  margin-bottom: 8px;
+  user-select: none;
+}
+
+.errorStack summary:hover {
+  color: var(--foreground, #ffffff);
+}
+
+.errorPre {
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 11px;
+  color: #ef4444;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+  line-height: 1.4;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.errorActions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.retryButton,
+.reloadButton {
+  padding: 8px 16px;
+  border: 1px solid;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.retryButton {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.3);
+  color: #3b82f6;
+}
+
+.retryButton:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.5);
+  transform: translateY(-1px);
+}
+
+.reloadButton {
+  background: rgba(107, 114, 128, 0.1);
+  border-color: rgba(107, 114, 128, 0.3);
+  color: var(--muted-foreground, rgba(255, 255, 255, 0.7));
+}
+
+.reloadButton:hover {
+  background: rgba(107, 114, 128, 0.2);
+  border-color: rgba(107, 114, 128, 0.5);
+  color: var(--foreground, #ffffff);
+  transform: translateY(-1px);
+}
+
+.retryButton:active,
+.reloadButton:active {
+  transform: translateY(0);
+}
+
+/* Focus states for accessibility */
+.retryButton:focus-visible,
+.reloadButton:focus-visible {
+  outline: 2px solid var(--ring, #3b82f6);
+  outline-offset: 2px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .errorBoundary {
+    min-height: 150px;
+    padding: 16px;
+  }
+  
+  .errorIcon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 12px;
+  }
+  
+  .errorIcon svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .errorTitle {
+    font-size: 16px;
+  }
+  
+  .errorMessage {
+    font-size: 13px;
+  }
+  
+  .errorActions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .retryButton,
+  .reloadButton {
+    width: 100%;
+    max-width: 200px;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .errorBoundary {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: #ef4444;
+  }
+  
+  .retryButton {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: #3b82f6;
+  }
+  
+  .reloadButton {
+    background: rgba(107, 114, 128, 0.2);
+    border-color: #6b7280;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .retryButton,
+  .reloadButton {
+    transition: none;
+  }
+  
+  .retryButton:hover,
+  .reloadButton:hover {
+    transform: none;
+  }
+  
+  .retryButton:active,
+  .reloadButton:active {
+    transform: none;
+  }
+}

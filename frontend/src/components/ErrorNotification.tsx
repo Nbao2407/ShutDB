@@ -16,6 +16,7 @@ function ErrorNotification({ error, onDismiss }: ErrorNotificationProps) {
         <span className={styles.errorIcon}>⚠️</span>
         <span className={styles.errorTitle}>Error</span>
         <button 
+          type="button"
           className={styles.dismissButton}
           onClick={onDismiss}
           aria-label="Dismiss error"

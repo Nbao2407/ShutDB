@@ -3,14 +3,40 @@
 import {app} from '../models';
 import {context} from '../models';
 
+export function DisableService(arg1:string):Promise<void>;
+
+export function DisableServiceControl():Promise<void>;
+
+export function EnableService(arg1:string):Promise<void>;
+
+export function EnableServiceControl():Promise<void>;
+
+export function GetElevationStatus():Promise<string>;
+
+export function GetPrivilegeInfo():Promise<Record<string, any>>;
+
+export function GetServiceControlState():Promise<boolean>;
+
 export function GetServiceStatus(arg1:string):Promise<string>;
 
 export function GetServices():Promise<Array<app.Service>>;
 
+export function IsElevated():Promise<boolean>;
+
+export function IsServiceControlEnabled():Promise<boolean>;
+
+export function OnShutdown(arg1:context.Context):Promise<void>;
+
 export function OnStartup(arg1:context.Context):Promise<void>;
 
+export function RequireElevationForOperation():Promise<void>;
+
 export function RestartService(arg1:string):Promise<void>;
+
+export function SetServiceControlState(arg1:boolean):Promise<void>;
 
 export function StartService(arg1:string):Promise<void>;
 
 export function StopService(arg1:string):Promise<void>;
+
+export function ToggleServiceControl():Promise<boolean>;

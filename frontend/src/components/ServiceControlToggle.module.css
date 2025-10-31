@@ -1,64 +1,73 @@
-.toggle {
+.controlButtons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.button {
   display: inline-flex;
   align-items: center;
-  gap: var(--fluent-space-sm);
-  padding: var(--fluent-space-sm) var(--fluent-space-lg);
-  background: var(--fluent-bg-tertiary);
-  border: 1px solid var(--fluent-border-primary);
-  border-radius: var(--fluent-radius-medium);
-  color: var(--fluent-text-primary);
-  font-family: var(--fluent-font-family);
-  font-size: var(--fluent-font-size-base);
-  font-weight: var(--fluent-font-weight-medium);
+  gap: 4px;
+  padding: 6px 12px;
+  background: hsl(var(--input));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-sm);
+  color: hsl(var(--foreground));
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+  height: 32px;
+  transition: border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: border-color, box-shadow, background-color;
   position: relative;
   overflow: hidden;
+  --wails-draggable: no-drag;
 }
 
-.toggle:hover:not(:disabled) {
-  background: var(--fluent-bg-elevated);
-  border-color: var(--fluent-border-secondary);
+.button:hover:not(:disabled) {
+  background: hsl(var(--accent) / 0.1);
+  border-color: hsl(var(--accent) / 0.3);
 }
 
-.toggle:active:not(:disabled) {
+.button:active:not(:disabled) {
   transform: translateY(0);
 }
 
-.toggle:disabled {
+.button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.toggle:focus-visible {
-  outline: 2px solid var(--fluent-accent);
+.button:focus-visible {
+  outline: 2px solid hsl(var(--ring));
   outline-offset: 2px;
 }
 
-/* State-specific colors */
-.toggle.running {
-  border-color: var(--fluent-success);
-  color: var(--fluent-success);
+/* Start button specific styling */
+.startButton {
+  color: hsl(var(--success));
+  border-color: hsl(var(--success) / 0.3);
 }
 
-.toggle.running:hover:not(:disabled) {
-  background: var(--fluent-success-bg);
-  border-color: var(--fluent-success);
-  box-shadow: 0 0 16px rgba(16, 185, 129, 0.2);
+.startButton:hover:not(:disabled) {
+  background: hsl(var(--success) / 0.1);
+  border-color: hsl(var(--success) / 0.5);
 }
 
-.toggle.stopped {
-  border-color: var(--fluent-accent);
-  color: var(--fluent-accent);
+/* Stop button specific styling */
+.stopButton {
+  color: hsl(var(--destructive));
+  border-color: hsl(var(--destructive) / 0.3);
 }
 
-.toggle.stopped:hover:not(:disabled) {
-  background: var(--fluent-accent-tertiary);
-  border-color: var(--fluent-accent);
-  box-shadow: 0 0 16px rgba(0, 120, 212, 0.2);
+.stopButton:hover:not(:disabled) {
+  background: hsl(var(--destructive) / 0.1);
+  border-color: hsl(var(--destructive) / 0.5);
 }
 
-.toggle.loading {
+.button.loading {
   cursor: wait;
 }
 
@@ -75,9 +84,9 @@
 }
 
 .spinner {
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--fluent-border-primary);
+  width: 16px;
+  height: 16px;
+  border: 2px solid hsl(var(--border));
   border-top-color: currentColor;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
@@ -89,16 +98,94 @@
   }
 }
 
-/* Pulse animation when stopped */
-.toggle.stopped .icon {
-  animation: pulse 2s ease-in-out infinite;
+/* Responsive design */
+/* Large screens - keep horizontal layout */
+@media (min-width: 1025px) {
+  .controlButtons {
+    gap: 8px;
+  }
 }
 
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
+/* Medium screens - slightly more compact */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .controlButtons {
+    gap: 6px;
   }
-  50% {
-    opacity: 0.6;
+  
+  .button {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+
+/* Small tablets - compact horizontal */
+@media (max-width: 768px) and (min-width: 641px) {
+  .controlButtons {
+    gap: 4px;
+  }
+  
+  .button {
+    padding: 5px 10px;
+    font-size: 12px;
+    height: 30px;
+    gap: 3px;
+  }
+
+  .icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .spinner {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* Mobile phones - keep horizontal, more compact */
+@media (max-width: 640px) {
+  .controlButtons {
+    gap: 3px;
+  }
+  
+  .button {
+    padding: 5px 8px;
+    font-size: 12px;
+    height: 28px;
+    gap: 2px;
+  }
+
+  .icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .spinner {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* Very small phones - ultra compact single row */
+@media (max-width: 480px) {
+  .controlButtons {
+    gap: 2px;
+  }
+  
+  .button {
+    padding: 4px 6px;
+    font-size: 11px;
+    height: 26px;
+    gap: 1px;
+  }
+
+  .icon {
+    width: 10px;
+    height: 10px;
+  }
+
+  .spinner {
+    width: 10px;
+    height: 10px;
   }
 }

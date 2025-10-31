@@ -6,6 +6,14 @@ export function Close() {
   return window['go']['app']['WindowManager']['Close']();
 }
 
+export function IsMinimizedToTray() {
+  return window['go']['app']['WindowManager']['IsMinimizedToTray']();
+}
+
+export function IsVisible() {
+  return window['go']['app']['WindowManager']['IsVisible']();
+}
+
 export function IsWindows() {
   return window['go']['app']['WindowManager']['IsWindows']();
 }
@@ -14,10 +22,22 @@ export function Minimize() {
   return window['go']['app']['WindowManager']['Minimize']();
 }
 
+export function MinimizeToTray() {
+  return window['go']['app']['WindowManager']['MinimizeToTray']();
+}
+
 export function OnStartup(arg1) {
   return window['go']['app']['WindowManager']['OnStartup'](arg1);
 }
 
+export function RestoreFromTray() {
+  return window['go']['app']['WindowManager']['RestoreFromTray']();
+}
+
 export function StartDrag() {
   return window['go']['app']['WindowManager']['StartDrag']();
+}
+
+export function ToggleVisibility() {
+  return window['go']['app']['WindowManager']['ToggleVisibility']();
 }

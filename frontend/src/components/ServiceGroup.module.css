@@ -1,93 +1,208 @@
-.serviceGroup {
-  margin-bottom: 16px;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.2s ease;
+/* Glass morphism custom properties */
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: blur(10px);
+  --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Status colors */
+  --success: #10b981;
+  --success-bg: rgba(16, 185, 129, 0.1);
+  --success-border: rgba(16, 185, 129, 0.3);
+  
+  --destructive: #ef4444;
+  --destructive-bg: rgba(239, 68, 68, 0.1);
+  --destructive-border: rgba(239, 68, 68, 0.3);
+  
+  --warning: #f59e0b;
+  --warning-bg: rgba(245, 158, 11, 0.1);
+  --warning-border: rgba(245, 158, 11, 0.3);
+  
+  --info: #3b82f6;
+  --info-bg: rgba(59, 130, 246, 0.1);
+  --info-border: rgba(59, 130, 246, 0.3);
+  
+  --muted: #6b7280;
+  --muted-bg: rgba(107, 114, 128, 0.1);
+  --muted-border: rgba(107, 114, 128, 0.3);
 }
 
-.serviceGroup:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+/* Group header row styling for table layout */
+.groupHeaderRow {
+  background: transparent;
+}
+
+.groupHeaderRow:hover {
+  background: transparent !important;
+}
+
+.groupHeaderCell {
+  padding: 0 !important;
+  border: none !important;
 }
 
 .groupHeader {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  padding: 16px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
-  transition: all 0.2s ease;
+  transition: var(--transition-smooth);
+  margin-bottom: 4px;
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  /* Exclude from window dragging */
+  --wails-draggable: no-drag;
 }
 
 .groupHeader:hover {
-  background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
 }
 
 .groupHeaderLeft {
   display: flex;
   align-items: center;
-  gap: 8px;
-}
-
-.groupHeaderRight {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  gap: 12px;
+  flex: 1;
 }
 
 .expandIcon {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
   font-size: 10px;
-  transition: transform 0.2s;
-  color: #666;
+  transition: var(--transition-smooth);
+  color: var(--muted);
+  border-radius: 4px;
+  background: var(--info-bg);
+  border: 1px solid var(--info-border);
 }
 
 .expandIcon.expanded {
   transform: rotate(90deg);
+  background: var(--info-bg);
+  color: var(--info);
+}
+
+.categoryIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+  border-radius: 6px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.groupTitleContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
 }
 
 .groupTitle {
   font-weight: 600;
   font-size: 14px;
-  color: #333;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 .serviceCount {
-  font-size: 12px;
-  color: #999;
-  font-weight: normal;
-}
-
-.statusBadge {
-  display: flex;
-  gap: 8px;
   font-size: 11px;
-}
-
-.runningBadge {
-  padding: 2px 8px;
-  background: #e8f5e9;
-  color: #2e7d32;
-  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 500;
+  line-height: 1.2;
+  padding: 4px 8px;
+  background: var(--glass-bg);
+  border-radius: 6px;
+  border: 1px solid var(--glass-border);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
-.stoppedBadge {
-  padding: 2px 8px;
-  background: #ffebee;
-  color: #c62828;
-  border-radius: 12px;
-  font-weight: 500;
+.runningText {
+  color: var(--success);
+  font-weight: 600;
 }
 
-.groupContent {
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  background: #fafafa;
+.stoppedText {
+  color: var(--destructive);
+  font-weight: 600;
+}
+
+/* Focus styles for accessibility */
+.groupHeader:focus-visible {
+  outline: 2px solid var(--info);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+}
+
+/* Fallback for browsers that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(10px)) {
+  .groupHeader {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .serviceCount {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Animation for expand/collapse */
+@keyframes expandCollapse {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .groupHeader {
+    padding: 10px 12px;
+  }
+  
+  .groupHeaderLeft {
+    gap: 8px;
+  }
+  
+  .groupTitle {
+    font-size: 13px;
+  }
+  
+  .serviceCount {
+    font-size: 11px;
+  }
+  
+  .categoryIcon {
+    width: 18px;
+    height: 18px;
+    font-size: 14px;
+  }
 }

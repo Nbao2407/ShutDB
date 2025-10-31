@@ -12,45 +12,50 @@ export const ServiceControlToggle: FC<ServiceControlToggleProps> = ({
   onStartAll,
   isProcessing = false
 }) => {
-  const [isStopped, setIsStopped] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loadingStart, setLoadingStart] = useState(false);
+  const [loadingStop, setLoadingStop] = useState(false);
 
-  const handleToggle = async () => {
-    if (loading || isProcessing) return;
+  const handleStartAll = async () => {
+    if (loadingStart || loadingStop || isProcessing) return;
 
-    setLoading(true);
+    setLoadingStart(true);
     try {
-      if (isStopped) {
-        await onStartAll();
-        setIsStopped(false);
-      } else {
-        await onStopAll();
-        setIsStopped(true);
-      }
+      await onStartAll();
     } catch (error) {
-      console.error('Service control error:', error);
+      console.error('Start all services error:', error);
     } finally {
-      setLoading(false);
+      setLoadingStart(false);
+    }
+  };
+
+  const handleStopAll = async () => {
+    if (loadingStart || loadingStop || isProcessing) return;
+
+    setLoadingStop(true);
+    try {
+      await onStopAll();
+    } catch (error) {
+      console.error('Stop all services error:', error);
+    } finally {
+      setLoadingStop(false);
     }
   };
 
   return (
-    <button
-      className={`${styles.toggle} ${isStopped ? styles.stopped : styles.running} ${
-        loading ? styles.loading : ''
-      }`}
-      onClick={handleToggle}
-      disabled={loading || isProcessing}
-      title={isStopped ? 'Start All Services' : 'Stop All Services'}
-      aria-label={isStopped ? 'Start All Services' : 'Stop All Services'}
-      type="button"
-    >
-      {loading ? (
-        <div className={styles.spinner} />
-      ) : (
-        <>
-          <svg className={styles.icon} width="20" height="20" viewBox="0 0 20 20" fill="none">
-            {isStopped ? (
+    <div className={styles.controlButtons}>
+      <button
+        className={`${styles.button} ${styles.startButton} ${loadingStart ? styles.loading : ''}`}
+        onClick={handleStartAll}
+        disabled={loadingStart || loadingStop || isProcessing}
+        title="Start All Services"
+        aria-label="Start All Services"
+        type="button"
+      >
+        {loadingStart ? (
+          <div className={styles.spinner} />
+        ) : (
+          <>
+            <svg className={styles.icon} width="14" height="14" viewBox="0 0 20 20" fill="none">
               <path
                 d="M6 4L15 10L6 16V4Z"
                 fill="currentColor"
@@ -58,18 +63,32 @@ export const ServiceControlToggle: FC<ServiceControlToggleProps> = ({
                 strokeWidth="1.5"
                 strokeLinejoin="round"
               />
-            ) : (
-              <>
-                <rect x="4" y="4" width="4.5" height="12" rx="1" fill="currentColor" />
-                <rect x="11.5" y="4" width="4.5" height="12" rx="1" fill="currentColor" />
-              </>
-            )}
-          </svg>
-          <span className={styles.label}>
-            {isStopped ? 'Start All' : 'Stop All'}
-          </span>
-        </>
-      )}
-    </button>
+            </svg>
+            Start All
+          </>
+        )}
+      </button>
+
+      <button
+        className={`${styles.button} ${styles.stopButton} ${loadingStop ? styles.loading : ''}`}
+        onClick={handleStopAll}
+        disabled={loadingStart || loadingStop || isProcessing}
+        title="Stop All Services"
+        aria-label="Stop All Services"
+        type="button"
+      >
+        {loadingStop ? (
+          <div className={styles.spinner} />
+        ) : (
+          <>
+            <svg className={styles.icon} width="14" height="14" viewBox="0 0 20 20" fill="none">
+              <rect x="4" y="4" width="4.5" height="12" rx="1" fill="currentColor" />
+              <rect x="11.5" y="4" width="4.5" height="12" rx="1" fill="currentColor" />
+            </svg>
+            Stop All
+          </>
+        )}
+      </button>
+    </div>
   );
 };

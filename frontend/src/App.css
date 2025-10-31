@@ -9,7 +9,7 @@
    - Responsive and accessible design patterns
    ============================================ */
 
-/* Import Fluent Design System */
+/* Import legacy Fluent Design System for compatibility */
 @import "./styles/fluent-variables.css";
 @import "./styles/fluent-components.css";
 
@@ -20,44 +20,80 @@
   box-sizing: border-box;
 }
 
-/* CSS Variables */
+/* CSS Variables - Modern Glass Morphism Design System */
 :root {
-  /* Background Colors */
-  --bg-primary: #0d1117;
-  --bg-secondary: #161b22;
-  --bg-tertiary: #1f2937;
-  --bg-hover: #2d333b;
+  /* Acrylic dark theme - blue-black base (from srcff reference) */
+  --background: 220 25% 8%;
+  --background-glass: 220 30% 12%;
+  --foreground: 210 20% 95%;
 
-  /* Text Colors */
-  --text-primary: #f0f6fc;
-  --text-secondary: #c9d1d9;
-  --text-tertiary: #8b949e;
-  --text-disabled: #6e7681;
+  --card: 220 28% 10%;
+  --card-foreground: 210 20% 95%;
 
-  /* Accent Colors */
-  --accent-blue: #0078d4;
-  --accent-blue-hover: #106ebe;
-  --accent-blue-active: #005a9e;
-  --accent-purple: #7b68ee;
+  --popover: 220 28% 10%;
+  --popover-foreground: 210 20% 95%;
 
-  /* Status Colors */
-  --status-running: #238636;
-  --status-running-text: #3fb950;
-  --status-stopped: #da3633;
-  --status-stopped-text: #f85149;
-  --status-warning: #d29922;
-  --status-warning-text: #f0c84a;
+  /* Blue accent for selections */
+  --primary: 217 91% 60%;
+  --primary-foreground: 210 20% 98%;
 
-  /* Border Colors */
-  --border-primary: rgba(240, 246, 252, 0.1);
-  --border-secondary: rgba(240, 246, 252, 0.15);
-  --border-accent: rgba(88, 166, 255, 0.4);
+  --secondary: 220 20% 18%;
+  --secondary-foreground: 210 20% 95%;
+
+  --muted: 220 20% 15%;
+  --muted-foreground: 215 15% 60%;
+
+  --accent: 217 91% 60%;
+  --accent-foreground: 210 20% 98%;
+
+  /* Status colors (enhanced from srcff) */
+  --success: 142 76% 36%;
+  --success-foreground: 210 20% 98%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 210 20% 98%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 210 20% 98%;
+  --info: 199 89% 48%;
+  --info-foreground: 210 20% 98%;
+
+  --border: 220 20% 20%;
+  --input: 220 20% 18%;
+  --ring: 217 91% 60%;
+
+  --radius: 0.75rem;
+
+  /* Transitions - smooth cubic-bezier from srcff */
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Legacy compatibility variables */
+  --bg-primary: hsl(var(--background));
+  --bg-secondary: hsl(var(--card));
+  --bg-tertiary: hsl(var(--secondary));
+  --bg-hover: hsl(var(--accent) / 0.1);
+
+  --text-primary: hsl(var(--foreground));
+  --text-secondary: hsl(var(--card-foreground));
+  --text-tertiary: hsl(var(--muted-foreground));
+  --text-disabled: hsl(var(--muted-foreground) / 0.5);
+
+  --accent-blue: hsl(var(--primary));
+  --accent-blue-hover: hsl(var(--primary) / 0.9);
+  --accent-blue-active: hsl(var(--primary) / 0.8);
+
+  --status-running: hsl(var(--success));
+  --status-running-text: hsl(var(--success-foreground));
+  --status-stopped: hsl(var(--destructive));
+  --status-stopped-text: hsl(var(--destructive-foreground));
+  --status-warning: hsl(var(--warning));
+  --status-warning-text: hsl(var(--warning-foreground));
+
+  --border-primary: hsl(var(--border));
+  --border-secondary: hsl(var(--border) / 0.7);
+  --border-accent: hsl(var(--ring) / 0.4);
 
   /* Fonts */
-  --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Helvetica Neue", sans-serif;
-  --font-mono: "Cascadia Code", "Fira Code", "Consolas", "Courier New",
-    monospace;
+  --font-primary: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: "Cascadia Code", "Fira Code", "Consolas", "Courier New", monospace;
 
   /* Shadows */
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -78,8 +114,8 @@
   --spacing-2xl: 32px;
 
   /* Windows Acrylic Effect Base Color */
-  --acrylic-base: #2c2c2c;
-  --acrylic-opacity: 0.3;
+  --acrylic-base: hsl(var(--background-glass));
+  --acrylic-opacity: 0.8;
 }
 
 /* ============================================
@@ -92,13 +128,13 @@
    - Layered approach for better visual hierarchy
    ============================================ */
 body {
-  font-family: var(--fluent-font-family);
+  font-family: var(--font-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Windows acrylic dark theme base color */
-  background: #2c2c2c;
-  color: var(--fluent-text-secondary);
-  font-size: var(--fluent-font-size-base);
+  /* Modern acrylic dark theme base color */
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-size: 14px;
   line-height: 1.6;
   min-height: 100vh;
   overflow: hidden;
@@ -107,12 +143,9 @@ body {
   --wails-draggable: drag;
 }
 
-/* Windows Acrylic Effect Layer
-   Matches the XAML AcrylicBrush properties:
-   - BackgroundSource="HostBackdrop" 
-   - FallbackColor="#2C2C2C"
-   - TintColor="#2C2C2C" 
-   - TintOpacity="0.30"
+/* Modern Glass Morphism Effect Layer
+   Enhanced acrylic effect with improved blur and saturation
+   Based on srcff reference implementation
 */
 body::before {
   content: "";
@@ -121,11 +154,11 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;
-  /* Acrylic tint with 0.30 opacity matching XAML */
-  background: rgba(44, 44, 44, 0.3);
-  /* Host backdrop blur effect */
-  -webkit-backdrop-filter: blur(30px) saturate(125%);
-  backdrop-filter: blur(30px) saturate(125%);
+  /* Glass morphism background with HSL colors */
+  background: hsla(var(--background-glass), var(--acrylic-opacity));
+  /* Enhanced backdrop blur effect from srcff */
+  -webkit-backdrop-filter: blur(40px) saturate(150%);
+  backdrop-filter: blur(40px) saturate(150%);
   pointer-events: none;
   z-index: 0;
 }
@@ -154,6 +187,85 @@ body::after {
 }
 
 /* ============================================
+   Glass Morphism Utility Classes
+   Based on srcff reference implementation
+   ============================================ */
+
+/* Main glass panel effect */
+.glass-panel {
+  background: hsla(var(--background-glass), 0.8);
+  -webkit-backdrop-filter: blur(40px) saturate(150%);
+  backdrop-filter: blur(40px) saturate(150%);
+  border: 1px solid hsla(var(--border), 0.3);
+  border-radius: var(--radius);
+}
+
+/* Smooth transitions utility */
+.transition-smooth {
+  transition: var(--transition-smooth);
+}
+
+/* Status color utilities for badges and indicators */
+.text-success { color: hsl(var(--success)); }
+.text-destructive { color: hsl(var(--destructive)); }
+.text-warning { color: hsl(var(--warning)); }
+.text-info { color: hsl(var(--info)); }
+.text-muted-foreground { color: hsl(var(--muted-foreground)); }
+
+.bg-success { background-color: hsl(var(--success) / 0.1); }
+.bg-destructive { background-color: hsl(var(--destructive) / 0.1); }
+.bg-warning { background-color: hsl(var(--warning) / 0.1); }
+.bg-info { background-color: hsl(var(--info) / 0.1); }
+
+.border-success { border-color: hsl(var(--success) / 0.3); }
+.border-destructive { border-color: hsl(var(--destructive) / 0.3); }
+.border-warning { border-color: hsl(var(--warning) / 0.3); }
+.border-info { border-color: hsl(var(--info) / 0.3); }
+
+/* Hover state utilities */
+.hover-success:hover { 
+  background-color: hsl(var(--success) / 0.2); 
+  color: hsl(var(--success)); 
+}
+.hover-destructive:hover { 
+  background-color: hsl(var(--destructive) / 0.2); 
+  color: hsl(var(--destructive)); 
+}
+.hover-warning:hover { 
+  background-color: hsl(var(--warning) / 0.2); 
+  color: hsl(var(--warning)); 
+}
+.hover-info:hover { 
+  background-color: hsl(var(--info) / 0.2); 
+  color: hsl(var(--info)); 
+}
+
+/* Service utilities - Removed obsolete classes
+   Components now use CSS modules for service styling
+   */
+
+/* Search input styling */
+.search-input {
+  background: hsl(var(--input));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  color: hsl(var(--foreground));
+  font-size: 14px;
+  transition: var(--transition-smooth);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: hsl(var(--ring));
+  box-shadow: 0 0 0 2px hsl(var(--ring) / 0.2);
+}
+
+.search-input::placeholder {
+  color: hsl(var(--muted-foreground));
+}
+
+/* ============================================
    Title Bar Styles
    Custom window controls for frameless window
    ============================================ */
@@ -162,8 +274,7 @@ body::after {
   align-items: center;
   justify-content: flex-end;
   height: 32px;
-  /*background: var(--acrylic-base);*/
-  background-color: red;
+  background: var(--acrylic-base);
   flex-shrink: 0;
   position: relative;
   z-index: 100;
@@ -198,7 +309,7 @@ body::after {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  animation: fadeIn 0.4s var(--fluent-easing-decelerate);
+  animation: fadeIn 0.4s cubic-bezier(0, 0, 0.2, 1);
   /* Position above background layers */
   position: relative;
   z-index: 1;
@@ -213,7 +324,7 @@ body::after {
 .app-content {
   flex: 1;
   overflow-y: auto;
-  padding: var(--fluent-space-2xl);
+  padding: 24px;
   max-width: 1400px;
   width: 100%;
   margin: 0 auto;
@@ -227,22 +338,107 @@ body::after {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--fluent-space-lg);
-  margin-bottom: var(--fluent-space-xl);
+  gap: 16px;
+  margin-bottom: 24px;
   flex-wrap: wrap;
+  padding: 16px;
+  background: hsl(var(--card) / 0.5);
+  border: 1px solid hsl(var(--border) / 0.3);
+  border-radius: var(--radius);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
 }
 
 .app-toolbar-left {
   display: flex;
   align-items: center;
-  gap: var(--fluent-space-lg);
+  gap: 24px;
   flex: 1;
 }
 
 .app-toolbar-right {
   display: flex;
   align-items: center;
-  gap: var(--fluent-space-md);
+  gap: 16px;
+}
+
+
+
+/* Search input styling (global utility) */
+.search-input {
+  background: hsl(var(--input));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  color: hsl(var(--foreground));
+  font-size: 14px;
+  transition: var(--transition-smooth);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: hsl(var(--ring));
+  box-shadow: 0 0 0 2px hsl(var(--ring) / 0.2);
+}
+
+.search-input::placeholder {
+  color: hsl(var(--muted-foreground));
+}
+
+/* Service Stats */
+.service-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: hsl(var(--muted-foreground));
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.stat-value {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.stat-label {
+  font-size: 12px;
+}
+
+.stat-divider {
+  opacity: 0.5;
+}
+
+/* No Results State */
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+  color: hsl(var(--muted-foreground));
+}
+
+.no-results-icon {
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.no-results h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: hsl(var(--foreground));
+}
+
+.no-results p {
+  font-size: 14px;
+  margin: 0;
 }
 
 @keyframes fadeIn {
@@ -292,94 +488,150 @@ p {
 }
 
 /* ============================================
-   Button Base Styles
+   Modern Button Base Styles
+   Enhanced with glass morphism effects
    ============================================ */
 button {
   font-family: var(--font-primary);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   padding: 8px 16px;
-  border: none;
+  border: 1px solid hsl(var(--border));
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--transition-smooth);
   outline: none;
   position: relative;
   overflow: hidden;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
   /* Exclude all buttons from window dragging */
   --wails-draggable: no-drag;
 }
 
-button::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
-
-button:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
+/* Modern button hover effects */
 button:hover:not(:disabled) {
+  background: hsl(var(--accent) / 0.1);
+  border-color: hsl(var(--accent) / 0.3);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-sm);
 }
 
 button:active:not(:disabled) {
   transform: translateY(0);
+  background: hsl(var(--accent) / 0.15);
 }
 
 button:disabled {
   cursor: not-allowed;
-  opacity: 0.4;
-  filter: grayscale(0.5);
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 button:focus-visible {
-  outline: 2px solid var(--border-accent);
+  outline: 2px solid hsl(var(--ring));
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(88, 166, 255, 0.2);
+  box-shadow: 0 0 0 4px hsl(var(--ring) / 0.2);
+}
+
+/* Button variants */
+.btn-primary {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border-color: hsl(var(--primary));
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: hsl(var(--primary) / 0.9);
+}
+
+.btn-destructive {
+  background: hsl(var(--destructive));
+  color: hsl(var(--destructive-foreground));
+  border-color: hsl(var(--destructive));
+}
+
+.btn-destructive:hover:not(:disabled) {
+  background: hsl(var(--destructive) / 0.9);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: transparent;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: hsl(var(--accent) / 0.1);
+  border-color: transparent;
 }
 
 /* ============================================
-   Scrollbar Styling
-   Consistent with Acrylic theme
+   Modern Scrollbar Styling
+   Consistent with glass morphism theme
    ============================================ */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(48, 43, 47, 0.3);
-  border-radius: var(--radius-sm);
+  background: hsl(var(--background));
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.05) 100%
-  );
-  border-radius: var(--radius-sm);
-  border: 2px solid rgba(48, 43, 47, 0.3);
+  background: hsl(var(--muted));
+  border-radius: 4px;
   transition: background 0.2s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.15) 0%,
-    rgba(255, 255, 255, 0.08) 100%
-  );
+  background: hsl(var(--muted-foreground));
+}
+
+/* ============================================
+   Table Styling - Removed obsolete classes
+   Components now use CSS modules for table styling
+   ============================================ */
+
+/* Action button styling */
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.action-btn:hover:not(:disabled) {
+  transform: none;
+  box-shadow: none;
+}
+
+.action-btn.start:hover:not(:disabled) {
+  background: hsl(var(--success) / 0.2);
+  color: hsl(var(--success));
+}
+
+.action-btn.stop:hover:not(:disabled) {
+  background: hsl(var(--destructive) / 0.2);
+  color: hsl(var(--destructive));
+}
+
+.action-btn.restart:hover:not(:disabled) {
+  background: hsl(var(--info) / 0.2);
+  color: hsl(var(--info));
+}
+
+.action-btn.power:hover:not(:disabled) {
+  background: hsl(var(--warning) / 0.2);
+  color: hsl(var(--warning));
 }
 
 /* ============================================
@@ -391,7 +643,7 @@ button:focus-visible {
   justify-content: center;
   gap: var(--spacing-md);
   padding: var(--spacing-2xl);
-  color: var(--text-tertiary);
+  color: hsl(var(--muted-foreground));
   font-family: var(--font-mono);
 }
 
@@ -399,8 +651,8 @@ button:focus-visible {
   content: "";
   width: 20px;
   height: 20px;
-  border: 2px solid var(--border-primary);
-  border-top-color: var(--accent-blue);
+  border: 2px solid hsl(var(--border));
+  border-top-color: hsl(var(--primary));
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -409,6 +661,11 @@ button:focus-visible {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Spinner animation for loading states */
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
 
 /* ============================================
@@ -430,10 +687,42 @@ button:focus-visible {
 
 /* ============================================
    Responsive Design
+   Mobile-first approach with progressive enhancement
    ============================================ */
+
+/* Small tablets and large phones (landscape) */
+@media (max-width: 1024px) {
+  .app-content {
+    padding: 20px;
+    max-width: 100%;
+  }
+
+  .app-toolbar {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .app-toolbar-left {
+    gap: 16px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  .service-stats {
+    font-size: 12px;
+  }
+
+  .stat-value {
+    font-size: 13px;
+  }
+}
+
+/* Tablets and small laptops */
 @media (max-width: 768px) {
   .app-content {
-    padding: var(--fluent-space-lg);
+    padding: 16px;
   }
 
   h1 {
@@ -441,10 +730,126 @@ button:focus-visible {
   }
 
   .app-toolbar {
-    flex-direction: column;
-    align-items: stretch;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .app-toolbar-left {
+    gap: 12px;
+  }
+
+  .service-stats {
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  .stat-value {
+    font-size: 13px;
+  }
+
+  .stat-label {
+    font-size: 11px;
   }
 }
+
+/* Mobile phones */
+@media (max-width: 640px) {
+  .app-content {
+    padding: 12px;
+  }
+
+  h1 {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .app-toolbar {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .app-toolbar-left {
+    gap: 8px;
+  }
+
+  .service-stats {
+    font-size: 11px;
+    gap: 4px;
+  }
+
+  .stat-value {
+    font-size: 12px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+  }
+
+  .stat-divider {
+    font-size: 10px;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 480px) {
+  .app-content {
+    padding: 6px;
+  }
+
+  h1 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  h1::before {
+    width: 2px;
+    height: 18px;
+  }
+
+  .app-toolbar {
+    padding: 6px;
+    gap: 6px;
+  }
+
+  .app-toolbar-left {
+    gap: 6px;
+  }
+
+  .service-stats {
+    font-size: 10px;
+    gap: 3px;
+  }
+
+  .stat-value {
+    font-size: 11px;
+  }
+
+  .stat-label {
+    font-size: 9px;
+  }
+
+  .stat-divider {
+    font-size: 8px;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (max-height: 600px) and (orientation: landscape) {
+  .app-content {
+    padding: 12px;
+  }
+
+  h1 {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .app-toolbar {
+    padding: 8px;
+  }
+}
+
+
 
 /* ============================================
    Print Styles
@@ -458,5 +863,63 @@ button:focus-visible {
   body {
     background: white;
     color: black;
+  }
+}
+/* Settings Button */
+.settings-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: hsl(var(--input));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-sm);
+  color: hsl(var(--muted-foreground));
+  cursor: pointer;
+  transition: border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --wails-draggable: no-drag;
+}
+
+.settings-button:hover {
+  background: hsl(var(--accent) / 0.1);
+  border-color: hsl(var(--accent) / 0.3);
+  color: hsl(var(--foreground));
+}
+
+.settings-button:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+.settings-button:active {
+  transform: translateY(0);
+}
+
+/* Responsive adjustments for settings button */
+@media (max-width: 768px) {
+  .settings-button {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .settings-button svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings-button {
+    width: 26px;
+    height: 26px;
+  }
+  
+  .settings-button svg {
+    width: 12px;
+    height: 12px;
   }
 }

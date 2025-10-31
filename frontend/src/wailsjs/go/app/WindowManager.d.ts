@@ -4,10 +4,20 @@ import {context} from '../models';
 
 export function Close():Promise<void>;
 
+export function IsMinimizedToTray():Promise<boolean>;
+
+export function IsVisible():Promise<boolean>;
+
 export function IsWindows():Promise<boolean>;
 
 export function Minimize():Promise<void>;
 
+export function MinimizeToTray():Promise<void>;
+
 export function OnStartup(arg1:context.Context):Promise<void>;
 
+export function RestoreFromTray():Promise<void>;
+
 export function StartDrag():Promise<void>;
+
+export function ToggleVisibility():Promise<void>;

@@ -1,0 +1,385 @@
+/* ============================================
+   ServiceTableRow Component Styles
+   
+   Modern table row styling with glass morphism effects
+   Based on srcff reference implementation
+   ============================================ */
+
+/* Table Row */
+.tableRow {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  /* Optimize transitions for better performance */
+  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  /* Promote to composite layer for smooth animations */
+  will-change: background-color;
+}
+
+.tableRow:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Name Cell */
+.nameCell {
+  padding: 12px 16px;
+  font-weight: 500;
+}
+
+.nameContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.serviceIcon {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+}
+
+.nameContent {
+  min-width: 0;
+  flex: 1;
+}
+
+.displayName {
+  font-size: 14px;
+  color: var(--foreground, #ffffff);
+  line-height: 1.4;
+  margin-bottom: 2px;
+}
+
+.serviceName {
+  font-size: 12px;
+  color: var(--muted-foreground, rgba(255, 255, 255, 0.6));
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+}
+
+/* Status Cell */
+.statusCell {
+  padding: 12px 16px;
+  width: 120px;
+}
+
+/* Startup Type Cell */
+.startupTypeCell {
+  padding: 12px 16px;
+  width: 120px;
+}
+
+.startupTypeText {
+  font-size: 14px;
+  color: var(--foreground, #ffffff);
+}
+
+
+
+/* Actions Cell */
+.actionsCell {
+  padding: 12px 16px;
+  width: 140px;
+  text-align: center;
+}
+
+.actionButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+/* Action Buttons */
+.actionButton {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--muted-foreground, rgba(255, 255, 255, 0.6));
+  cursor: pointer;
+  /* Optimize transitions for better performance */
+  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), 
+              color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  /* Promote to composite layer for smooth hover effects */
+  will-change: background-color, color;
+}
+
+.actionButton:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.actionButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.buttonIcon {
+  width: 14px;
+  height: 14px;
+}
+
+/* Button Variants */
+.startButton:hover:not(:disabled) {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+}
+
+.stopButton:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.restartButton:hover:not(:disabled) {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+}
+
+
+
+.toggleButton:hover:not(:disabled) {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+}
+
+/* Focus States for Accessibility */
+.actionButton:focus-visible {
+  outline: 2px solid var(--ring, #3b82f6);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   Loading States and Error Handling
+   ============================================ */
+
+/* Error row styling */
+.errorRow {
+  background: rgba(239, 68, 68, 0.05);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.errorRowContainer {
+  background: rgba(239, 68, 68, 0.05);
+  border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.errorCell {
+  padding: 8px 16px;
+}
+
+.errorMessage {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ef4444;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.errorIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: #ef4444;
+}
+
+.errorText {
+  flex: 1;
+  font-weight: 500;
+}
+
+.errorDismiss {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #ef4444;
+  cursor: pointer;
+  border-radius: 2px;
+  /* Optimize transitions for better performance */
+  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: background-color;
+}
+
+.errorDismiss:hover {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.errorDismiss svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Loading button states */
+.loading {
+  pointer-events: none;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  /* Optimize for GPU acceleration */
+  will-change: transform;
+  transform-origin: center;
+}
+
+/* Optimized spin animation using transform3d for GPU acceleration */
+@keyframes spin {
+  from {
+    transform: rotate3d(0, 0, 1, 0deg);
+  }
+  to {
+    transform: rotate3d(0, 0, 1, 360deg);
+  }
+}
+
+/* Enhanced button disabled states */
+.actionButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.actionButton.loading {
+  opacity: 0.8;
+}
+
+/* ============================================
+   Enhanced Focus States for Accessibility
+   ============================================ */
+
+.actionButton:focus-visible {
+  outline: 2px solid var(--ring, #3b82f6);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  z-index: 1;
+}
+
+.errorDismiss:focus-visible {
+  outline: 2px solid #ef4444;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2);
+}
+
+/* Enhanced focus for table row */
+.tableRow:focus-within {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+/* Focus indicators for interactive elements */
+.nameContainer:focus-within,
+.statusCell:focus-within,
+.startupTypeCell:focus-within,
+.actionsCell:focus-within {
+  outline: 2px solid transparent;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  border-radius: 4px;
+}
+
+/* High contrast focus indicators */
+@media (prefers-contrast: high) {
+  .actionButton:focus-visible {
+    outline: 3px solid var(--ring, #3b82f6);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.3);
+  }
+  
+  .errorDismiss:focus-visible {
+    outline: 3px solid #ef4444;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.3);
+  }
+  
+  .tableRow:focus-within {
+    box-shadow: inset 0 0 0 3px rgba(59, 130, 246, 0.5);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .nameCell {
+    min-width: 200px;
+  }
+  
+  .statusCell {
+    width: 100px;
+  }
+  
+  .startupTypeCell {
+    width: 100px;
+  }
+  
+
+  
+  .actionsCell {
+    width: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nameCell,
+  .statusCell,
+  .startupTypeCell,
+  .actionsCell {
+    padding: 8px 12px;
+  }
+  
+  .actionButton {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .buttonIcon {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .displayName {
+    font-size: 13px;
+  }
+  
+  .serviceName {
+    font-size: 11px;
+  }
+  
+  .errorMessage {
+    font-size: 12px;
+  }
+  
+  .errorIcon {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* ============================================
+   Reduced Motion Support
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+  
+  .actionButton {
+    transition: none;
+  }
+  
+  .errorDismiss {
+    transition: none;
+  }
+}

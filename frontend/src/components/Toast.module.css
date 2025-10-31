@@ -1,0 +1,150 @@
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  z-index: 1100;
+  min-width: 300px;
+  max-width: 400px;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --wails-draggable: no-drag;
+}
+
+.toast.visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.closeButton {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: hsl(var(--muted-foreground));
+  cursor: pointer;
+  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --wails-draggable: no-drag;
+}
+
+.closeButton:hover {
+  background: hsl(var(--accent) / 0.1);
+  color: hsl(var(--foreground));
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+/* Toast type styles */
+.success {
+  border-left: 4px solid hsl(var(--success));
+}
+
+.success .icon {
+  color: hsl(var(--success));
+}
+
+.success .message {
+  color: hsl(var(--foreground));
+}
+
+.error {
+  border-left: 4px solid hsl(var(--destructive));
+}
+
+.error .icon {
+  color: hsl(var(--destructive));
+}
+
+.error .message {
+  color: hsl(var(--foreground));
+}
+
+.info {
+  border-left: 4px solid hsl(var(--primary));
+}
+
+.info .icon {
+  color: hsl(var(--primary));
+}
+
+.info .message {
+  color: hsl(var(--foreground));
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .toast {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    min-width: auto;
+    max-width: none;
+    transform: translateY(-100%);
+  }
+  
+  .toast.visible {
+    transform: translateY(0);
+  }
+  
+  .message {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .toast {
+    padding: 10px 12px;
+    gap: 6px;
+  }
+  
+  .content {
+    gap: 6px;
+  }
+  
+  .message {
+    font-size: 12px;
+  }
+  
+  .closeButton {
+    width: 20px;
+    height: 20px;
+  }
+}

@@ -1,0 +1,246 @@
+/* ============================================
+   StatusBadge Component Styles
+   
+   Based on srcff reference implementation with:
+   - Glass morphism effects
+   - Color-coded status variants
+   - Loading states with smooth animations
+   - Consistent with existing design system
+   ============================================ */
+
+/* Base badge styling following srcff patterns */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 9999px; /* Full rounded corners like srcff */
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+  border: 1px solid;
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+  /* Glass morphism backdrop effect */
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+/* Status text styling */
+.statusText {
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+/* Spinner animation for transitioning states */
+.spinner {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================
+   Status Variants - Following srcff color system
+   ============================================ */
+
+/* Success variant - Running services */
+.success {
+  color: hsl(var(--success));
+  background: hsl(var(--success) / 0.1);
+  border-color: hsl(var(--success) / 0.3);
+}
+
+.success:hover {
+  background: hsl(var(--success) / 0.15);
+  border-color: hsl(var(--success) / 0.4);
+}
+
+/* Destructive variant - Stopped services */
+.destructive {
+  color: hsl(var(--destructive));
+  background: hsl(var(--destructive) / 0.1);
+  border-color: hsl(var(--destructive) / 0.3);
+}
+
+.destructive:hover {
+  background: hsl(var(--destructive) / 0.15);
+  border-color: hsl(var(--destructive) / 0.4);
+}
+
+/* Info variant - Transitioning services */
+.info {
+  color: hsl(var(--info));
+  background: hsl(var(--info) / 0.1);
+  border-color: hsl(var(--info) / 0.3);
+}
+
+.info:hover {
+  background: hsl(var(--info) / 0.15);
+  border-color: hsl(var(--info) / 0.4);
+}
+
+/* Muted variant - Disabled services */
+.muted {
+  color: hsl(var(--muted-foreground));
+  background: hsl(var(--muted) / 0.3);
+  border-color: hsl(var(--border));
+}
+
+.muted:hover {
+  background: hsl(var(--muted) / 0.4);
+  border-color: hsl(var(--border) / 0.8);
+}
+
+/* ============================================
+   Transitioning State Animation
+   Enhanced pulse effect for loading states
+   ============================================ */
+
+.transitioning {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  position: relative;
+}
+
+.transitioning::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  border-radius: inherit;
+  background: linear-gradient(45deg, transparent, currentColor, transparent);
+  opacity: 0.1;
+  animation: shimmer 2s linear infinite;
+  z-index: -1;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ============================================
+   Accessibility and Focus States
+   ============================================ */
+
+.statusBadge:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px hsl(var(--ring) / 0.2);
+}
+
+/* Enhanced accessibility for screen readers */
+.statusBadge[role="status"] {
+  /* Ensure proper announcement timing */
+  transition: all 0.3s ease-in-out;
+}
+
+/* High contrast mode enhancements */
+@media (prefers-contrast: high) {
+  .statusBadge:focus-visible {
+    outline: 3px solid hsl(var(--ring));
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px hsl(var(--ring) / 0.3);
+  }
+  
+  .statusBadge {
+    border-width: 2px;
+    font-weight: 700;
+  }
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 768px) {
+  .statusBadge {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+  
+  .spinner {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+/* ============================================
+   High Contrast Mode Support
+   ============================================ */
+
+@media (prefers-contrast: high) {
+  .statusBadge {
+    border-width: 2px;
+  }
+  
+  .success {
+    background: hsl(var(--success) / 0.2);
+    border-color: hsl(var(--success));
+  }
+  
+  .destructive {
+    background: hsl(var(--destructive) / 0.2);
+    border-color: hsl(var(--destructive));
+  }
+  
+  .info {
+    background: hsl(var(--info) / 0.2);
+    border-color: hsl(var(--info));
+  }
+  
+  .muted {
+    background: hsl(var(--muted) / 0.5);
+    border-color: hsl(var(--muted-foreground));
+  }
+}
+
+/* ============================================
+   Reduced Motion Support
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+  
+  .transitioning {
+    animation: none;
+  }
+  
+  .transitioning::before {
+    animation: none;
+  }
+  
+  .statusBadge {
+    transition: none;
+  }
+}
