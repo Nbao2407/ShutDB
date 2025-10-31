@@ -9,12 +9,13 @@ import {
   Service,
   ServiceStatus,
   ErrorState,
-  ServiceType,
 } from "./types/service";
 import { parseServiceError } from "./utils/errorHandler";
 import ErrorNotification from "./components/ErrorNotification";
 import { ServiceTable } from "./components/ServiceTable";
-import { SearchAndFilter, ServiceCategory } from "./components/SearchAndFilter";
+import { SearchAndFilter } from "./components/SearchAndFilter";
+import { CategoryFilter } from "./components/CategoryFilter";
+import { ServiceCategory } from "./types/category";
 import { WindowControls } from "./components/WindowControls";
 import { SettingsModal } from "./components/SettingsModal";
 
@@ -26,33 +27,6 @@ interface AppState {
   error: ErrorState | null;
 }
 
-// Service categorization utility (moved from types/service.ts to include "all" option)
-
-const categorizeService = (service: Service): Exclude<ServiceCategory, "all"> => {
-  const dbTypes: ServiceType[] = [
-    "postgresql",
-    "mysql",
-    "mariadb",
-    "mssql",
-    "mongodb",
-    "oracle",
-    "cassandra",
-    "elasticsearch",
-    "couchdb",
-    "influxdb",
-    "neo4j",
-    "sqlite",
-    "db2",
-    "firebird",
-  ];
-  const cacheTypes: ServiceType[] = ["redis", "memcached"];
-  const messageTypes: ServiceType[] = ["rabbitmq"];
-
-  if (dbTypes.includes(service.Type)) return "database";
-  if (cacheTypes.includes(service.Type)) return "cache";
-  if (messageTypes.includes(service.Type)) return "message";
-  return "other";
-};
 
 function App() {
   const [state, setState] = useState<AppState>({
@@ -64,7 +38,7 @@ function App() {
   // Search and filter state
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] =
-    useState<ServiceCategory>("all");
+    useState<ServiceCategory | "all">("all");
   const [isProcessing, setIsProcessing] = useState(false);
   
   // Settings modal state
@@ -245,7 +219,7 @@ function App() {
     // Filter by category
     if (selectedCategory !== "all") {
       filtered = filtered.filter(
-        (service) => categorizeService(service) === selectedCategory
+        (service) => service.Category === selectedCategory
       );
     }
 
@@ -254,19 +228,19 @@ function App() {
 
   // Get category counts for filter dropdown
   const categoryCounts = useMemo(() => {
-    const counts: Record<ServiceCategory, number> = {
+    const counts: Record<ServiceCategory | "all", number> = {
       all: state.services.length,
-      database: 0,
-      web: 0,
-      cache: 0,
-      message: 0,
-      application: 0,
-      other: 0,
+      sql_databases: 0,
+      nosql_databases: 0,
+      cache_memory: 0,
+      search_analytics: 0,
+      message_brokers: 0,
     };
 
     state.services.forEach((service) => {
-      const category = categorizeService(service);
-      counts[category]++;
+      if (service.Category) {
+        counts[service.Category]++;
+      }
     });
 
     return counts;
@@ -287,12 +261,25 @@ function App() {
             <SearchAndFilter
               searchTerm={searchTerm}
               onSearchChange={setSearchTerm}
-              selectedCategory={selectedCategory}
-              onCategoryChange={setSelectedCategory}
-              categoryCounts={categoryCounts}
+              selectedCategory="all"
+              onCategoryChange={() => {}}
+              categoryCounts={{
+                all: 0,
+                database: 0,
+                web: 0,
+                cache: 0,
+                message: 0,
+                application: 0,
+                other: 0,
+              }}
               onStartAll={handleStartAll}
               onStopAll={handleStopAll}
               isProcessing={state.loading || isProcessing}
+            />
+            <CategoryFilter
+              selectedCategory={selectedCategory}
+              onCategoryChange={setSelectedCategory}
+              categoryCounts={categoryCounts}
             />
           </div>
           <div className="app-toolbar-right">

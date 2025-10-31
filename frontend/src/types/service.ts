@@ -42,12 +42,11 @@ export type ServiceType =
  * ServiceCategory represents the category grouping for services in the UI
  */
 export type ServiceCategory =
-  | "database"
-  | "web"
-  | "cache"
-  | "message"
-  | "application"
-  | "other";
+  | "sql_databases"
+  | "nosql_databases"
+  | "cache_memory"
+  | "search_analytics"
+  | "message_brokers";
 
 /**
  * LogOnType represents the service account type for log-on configuration
@@ -67,8 +66,8 @@ export interface Service {
   Status: ServiceStatus;
   Type: ServiceType;
   StartupType: StartupType;
+  Category: ServiceCategory;
   // Extended properties for table display
-  category?: ServiceCategory;
   logOnAs?: LogOnType;
   icon?: string;
 }
@@ -100,24 +99,28 @@ export interface ErrorState {
  * @returns The category that the service belongs to
  */
 export const categorizeService = (serviceType: ServiceType): ServiceCategory => {
-  const dbTypes: ServiceType[] = [
-    'postgresql', 'mysql', 'mariadb', 'mssql', 'mongodb', 'oracle',
-    'cassandra', 'elasticsearch', 'couchdb', 'influxdb', 'neo4j',
+  const sqlDatabases: ServiceType[] = [
+    'postgresql', 'mysql', 'mariadb', 'mssql', 'oracle',
     'sqlite', 'db2', 'firebird'
   ];
 
-  const webTypes: ServiceType[] = [];
+  const nosqlDatabases: ServiceType[] = [
+    'mongodb', 'cassandra', 'couchdb', 'neo4j'
+  ];
 
-  const cacheTypes: ServiceType[] = ['redis', 'memcached'];
+  const cacheMemory: ServiceType[] = ['redis', 'memcached'];
 
-  const messageTypes: ServiceType[] = ['rabbitmq'];
+  const searchAnalytics: ServiceType[] = ['elasticsearch', 'influxdb'];
 
-  if (dbTypes.includes(serviceType)) return 'database';
-  if (webTypes.includes(serviceType)) return 'web';
-  if (cacheTypes.includes(serviceType)) return 'cache';
-  if (messageTypes.includes(serviceType)) return 'message';
+  const messageBrokers: ServiceType[] = ['rabbitmq'];
 
-  return 'other';
+  if (sqlDatabases.includes(serviceType)) return 'sql_databases';
+  if (nosqlDatabases.includes(serviceType)) return 'nosql_databases';
+  if (cacheMemory.includes(serviceType)) return 'cache_memory';
+  if (searchAnalytics.includes(serviceType)) return 'search_analytics';
+  if (messageBrokers.includes(serviceType)) return 'message_brokers';
+
+  return 'sql_databases'; // Default fallback
 };
 
 /**
@@ -127,17 +130,16 @@ export const categorizeService = (serviceType: ServiceType): ServiceCategory => 
  */
 export const getLogOnTypeForCategory = (category: ServiceCategory): LogOnType => {
   switch (category) {
-    case 'database':
+    case 'sql_databases':
       return 'Network Service';
-    case 'web':
+    case 'nosql_databases':
       return 'Network Service';
-    case 'cache':
+    case 'cache_memory':
       return 'Network Service';
-    case 'message':
+    case 'search_analytics':
       return 'Network Service';
-    case 'application':
-      return 'Local Service';
-    case 'other':
+    case 'message_brokers':
+      return 'Network Service';
     default:
       return 'Local System';
   }
@@ -150,17 +152,16 @@ export const getLogOnTypeForCategory = (category: ServiceCategory): LogOnType =>
  */
 export const getCategoryIcon = (category: ServiceCategory): string => {
   switch (category) {
-    case 'database':
-      return '📊';
-    case 'web':
-      return '🌐';
-    case 'cache':
+    case 'sql_databases':
+      return '🗄️';
+    case 'nosql_databases':
+      return '📦';
+    case 'cache_memory':
       return '⚡';
-    case 'message':
+    case 'search_analytics':
+      return '🔍';
+    case 'message_brokers':
       return '📨';
-    case 'application':
-      return '🔧';
-    case 'other':
     default:
       return '⚙️';
   }
@@ -171,14 +172,12 @@ export const getCategoryIcon = (category: ServiceCategory): string => {
  * @param service The basic service object from the backend
  * @returns The service with extended UI properties
  */
-export const extendServiceForUI = (service: Omit<Service, 'category' | 'logOnAs' | 'icon'>): Service => {
-  const category = categorizeService(service.Type);
-  const logOnAs = getLogOnTypeForCategory(category);
-  const icon = getCategoryIcon(category);
+export const extendServiceForUI = (service: Service): Service => {
+  const logOnAs = getLogOnTypeForCategory(service.Category);
+  const icon = getCategoryIcon(service.Category);
 
   return {
     ...service,
-    category,
     logOnAs,
     icon
   };

@@ -86,6 +86,7 @@ func (d *WindowsServiceDetector) DetectServices() ([]Service, error) {
 				Status:      mapWindowsStateToStatus(osService.State),
 				Type:        serviceType,
 				StartupType: startupType,
+				Category:    GetServiceCategory(serviceType),
 			})
 		}
 	}
