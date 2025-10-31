@@ -9,20 +9,19 @@
    - Responsive design with proper overflow handling
    ============================================ */
 
-/* Main Row Container */
+/* Main Row Container - Enhanced with refined design */
 .serviceRow {
   display: flex;
   align-items: center;
-  padding: var(--fluent-space-lg) var(--fluent-space-xl);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  gap: var(--fluent-space-xl);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--fluent-divider);
+  gap: var(--space-4);
   transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--fluent-bg-secondary);
   border-left: 3px solid transparent;
   position: relative;
-  overflow: visible; /* Allow dropdowns and tooltips to overflow */
-  margin-bottom: 2px;
-  /* Proper z-index to ensure rows don't overlap incorrectly */
+  overflow: visible;
+  margin-bottom: 0;
   z-index: 1;
 }
 
@@ -30,23 +29,22 @@
   border-bottom: none;
 }
 
-/* Hover effect with accent border */
+/* Hover effect with refined subtle highlight */
 .serviceRow:hover {
-  background: rgba(0, 120, 212, 0.08);
+  background: var(--fluent-bg-hover);
   border-left-color: var(--fluent-accent);
-  /* Slightly elevate on hover for better interaction feedback */
   z-index: 2;
 }
 
 /* Disabled service row styling */
 .serviceRowDisabled {
-  opacity: 0.6;
-  background: rgba(100, 100, 100, 0.1);
+  opacity: 0.5;
+  background: var(--fluent-bg-tertiary);
 }
 
 .serviceRowDisabled:hover {
-  background: rgba(100, 100, 100, 0.15);
-  border-left-color: rgba(150, 150, 150, 0.5);
+  background: var(--fluent-bg-hover);
+  border-left-color: var(--fluent-text-disabled);
 }
 
 /* Service Information Section */
@@ -58,22 +56,22 @@
 }
 
 .serviceName {
-  font-weight: 600;
-  font-size: 15px;
+  font-weight: var(--fluent-font-weight-semibold);
+  font-size: var(--fluent-font-size-base);
   color: var(--fluent-text-primary);
-  margin-bottom: 4px;
+  margin-bottom: var(--space-1);
   line-height: 1.4;
   letter-spacing: -0.01em;
 }
 
 .serviceSubtext {
-  font-size: 12px;
+  font-size: var(--fluent-font-size-sm);
   color: var(--fluent-text-tertiary);
   font-family: var(--fluent-font-mono);
-  opacity: 0.7;
+  opacity: 0.9;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   flex-wrap: wrap;
 }
 

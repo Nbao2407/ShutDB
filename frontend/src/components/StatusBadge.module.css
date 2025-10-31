@@ -1,43 +1,42 @@
 /* ============================================
-   StatusBadge Component Styles
-   
-   Based on srcff reference implementation with:
-   - Glass morphism effects
-   - Color-coded status variants
-   - Loading states with smooth animations
-   - Consistent with existing design system
+   StatusBadge Component - Refined Design
+
+   Enhanced with UX recommendations:
+   - Softer status colors for dark theme
+   - Better contrast ratios (WCAG AA)
+   - Refined interaction states
+   - Improved accessibility
    ============================================ */
 
-/* Base badge styling following srcff patterns */
+/* Base badge styling */
 .statusBadge {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
-  border-radius: 9999px; /* Full rounded corners like srcff */
-  font-size: 12px;
-  font-weight: 500;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border-radius: 9999px;
+  font-size: var(--fluent-font-size-sm);
+  font-weight: var(--fluent-font-weight-medium);
   text-transform: capitalize;
   border: 1px solid;
-  transition: var(--transition-smooth);
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
   position: relative;
   overflow: hidden;
-  /* Glass morphism backdrop effect */
-  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 /* Status text styling */
 .statusText {
   line-height: 1;
-  font-weight: 600;
+  font-weight: var(--fluent-font-weight-semibold);
   letter-spacing: 0.025em;
 }
 
 /* Spinner animation for transitioning states */
 .spinner {
-  width: 12px;
-  height: 12px;
+  width: var(--icon-xs);
+  height: var(--icon-xs);
   flex-shrink: 0;
   animation: spin 1s linear infinite;
 }
@@ -52,55 +51,56 @@
 }
 
 /* ============================================
-   Status Variants - Following srcff color system
+   Status Variants - Refined Colors
+   Using new softer palette for dark theme
    ============================================ */
 
-/* Success variant - Running services */
+/* Success variant - Running services (Green) */
 .success {
-  color: hsl(var(--success));
-  background: hsl(var(--success) / 0.1);
-  border-color: hsl(var(--success) / 0.3);
+  color: var(--fluent-success-text);
+  background: var(--fluent-success-bg);
+  border-color: var(--fluent-success-muted);
 }
 
 .success:hover {
-  background: hsl(var(--success) / 0.15);
-  border-color: hsl(var(--success) / 0.4);
+  background: var(--fluent-success-muted);
+  border-color: var(--fluent-success);
 }
 
-/* Destructive variant - Stopped services */
+/* Destructive variant - Stopped services (Red) */
 .destructive {
-  color: hsl(var(--destructive));
-  background: hsl(var(--destructive) / 0.1);
-  border-color: hsl(var(--destructive) / 0.3);
+  color: var(--fluent-error-text);
+  background: var(--fluent-error-bg);
+  border-color: var(--fluent-error-muted);
 }
 
 .destructive:hover {
-  background: hsl(var(--destructive) / 0.15);
-  border-color: hsl(var(--destructive) / 0.4);
+  background: var(--fluent-error-muted);
+  border-color: var(--fluent-error);
 }
 
-/* Info variant - Transitioning services */
+/* Info variant - Transitioning services (Blue) */
 .info {
-  color: hsl(var(--info));
-  background: hsl(var(--info) / 0.1);
-  border-color: hsl(var(--info) / 0.3);
+  color: var(--fluent-accent-hover);
+  background: var(--fluent-accent-tertiary);
+  border-color: var(--fluent-accent-secondary);
 }
 
 .info:hover {
-  background: hsl(var(--info) / 0.15);
-  border-color: hsl(var(--info) / 0.4);
+  background: var(--fluent-accent-secondary);
+  border-color: var(--fluent-accent-muted);
 }
 
-/* Muted variant - Disabled services */
+/* Muted variant - Disabled services (Gray) */
 .muted {
-  color: hsl(var(--muted-foreground));
-  background: hsl(var(--muted) / 0.3);
-  border-color: hsl(var(--border));
+  color: var(--fluent-text-tertiary);
+  background: rgba(107, 114, 128, 0.15);
+  border-color: var(--fluent-border-primary);
 }
 
 .muted:hover {
-  background: hsl(var(--muted) / 0.4);
-  border-color: hsl(var(--border) / 0.8);
+  background: rgba(107, 114, 128, 0.25);
+  border-color: var(--fluent-border-secondary);
 }
 
 /* ============================================
@@ -133,7 +133,7 @@
     transform: scale(1);
   }
   50% {
-    opacity: 0.8;
+    opacity: 0.85;
     transform: scale(1.02);
   }
 }
@@ -152,28 +152,48 @@
    ============================================ */
 
 .statusBadge:focus-visible {
-  outline: 2px solid hsl(var(--ring));
+  outline: 2px solid var(--fluent-accent);
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px hsl(var(--ring) / 0.2);
+  box-shadow: 0 0 0 4px var(--fluent-bg-focus);
 }
 
 /* Enhanced accessibility for screen readers */
 .statusBadge[role="status"] {
-  /* Ensure proper announcement timing */
-  transition: all 0.3s ease-in-out;
+  transition: all var(--fluent-duration-normal) var(--fluent-easing-standard);
 }
 
 /* High contrast mode enhancements */
 @media (prefers-contrast: high) {
   .statusBadge:focus-visible {
-    outline: 3px solid hsl(var(--ring));
+    outline-width: 3px;
     outline-offset: 3px;
-    box-shadow: 0 0 0 6px hsl(var(--ring) / 0.3);
+    outline-color: #60a5fa;
+    box-shadow: 0 0 0 6px rgba(96, 165, 250, 0.3);
   }
-  
+
   .statusBadge {
     border-width: 2px;
-    font-weight: 700;
+    font-weight: var(--fluent-font-weight-bold);
+  }
+
+  .success {
+    background: var(--fluent-success-muted);
+    border-color: var(--fluent-success);
+  }
+
+  .destructive {
+    background: var(--fluent-error-muted);
+    border-color: var(--fluent-error);
+  }
+
+  .info {
+    background: var(--fluent-accent-secondary);
+    border-color: var(--fluent-accent);
+  }
+
+  .muted {
+    background: rgba(107, 114, 128, 0.4);
+    border-color: var(--fluent-text-disabled);
   }
 }
 
@@ -183,43 +203,13 @@
 
 @media (max-width: 768px) {
   .statusBadge {
-    font-size: 11px;
+    font-size: var(--fluent-font-size-xs);
     padding: 3px 6px;
   }
-  
+
   .spinner {
     width: 10px;
     height: 10px;
-  }
-}
-
-/* ============================================
-   High Contrast Mode Support
-   ============================================ */
-
-@media (prefers-contrast: high) {
-  .statusBadge {
-    border-width: 2px;
-  }
-  
-  .success {
-    background: hsl(var(--success) / 0.2);
-    border-color: hsl(var(--success));
-  }
-  
-  .destructive {
-    background: hsl(var(--destructive) / 0.2);
-    border-color: hsl(var(--destructive));
-  }
-  
-  .info {
-    background: hsl(var(--info) / 0.2);
-    border-color: hsl(var(--info));
-  }
-  
-  .muted {
-    background: hsl(var(--muted) / 0.5);
-    border-color: hsl(var(--muted-foreground));
   }
 }
 
@@ -231,15 +221,15 @@
   .spinner {
     animation: none;
   }
-  
+
   .transitioning {
     animation: none;
   }
-  
+
   .transitioning::before {
     animation: none;
   }
-  
+
   .statusBadge {
     transition: none;
   }

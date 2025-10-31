@@ -1,154 +1,259 @@
+/* ============================================
+   SettingsModal Component - Enhanced Design
+
+   Improvements based on UX recommendations:
+   - Refined spacing and layout
+   - Better typography hierarchy
+   - Enhanced interaction states
+   - Improved accessibility
+   - Professional modal presentation
+   ============================================ */
+
+/* Overlay backdrop */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--fluent-overlay-bg);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  padding: 20px;
+  z-index: var(--z-overlay);
+  padding: var(--space-5);
   --wails-draggable: no-drag;
+  animation: fadeIn var(--fluent-duration-normal) var(--fluent-easing-decelerate);
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal container */
 .modal {
-  background: hsl(var(--background));
-  border: 1px solid hsl(var(--border));
+  background: var(--fluent-bg-secondary);
+  border: 1px solid var(--fluent-modal-border);
   border-radius: var(--radius-lg);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  max-width: 600px;
+  box-shadow: var(--fluent-shadow-flyout);
+  max-width: var(--container-sm);
   width: 100%;
   max-height: 90vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  animation: slideUp var(--fluent-duration-normal) var(--fluent-easing-decelerate);
 }
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================
+   Header Section
+   ============================================ */
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 24px;
-  border-bottom: 1px solid hsl(var(--border));
-  background: hsl(var(--card));
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--fluent-divider);
+  background: var(--fluent-bg-tertiary);
 }
 
 .title {
-  font-size: 20px;
-  font-weight: 600;
-  color: hsl(var(--foreground));
+  font-size: var(--fluent-font-size-xl);
+  font-weight: var(--fluent-font-weight-semibold);
+  line-height: var(--fluent-line-height-tight);
+  color: var(--fluent-text-heading);
   margin: 0;
+  letter-spacing: var(--fluent-letter-spacing-tight);
 }
 
+/* Close button */
 .closeButton {
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: var(--touch-target-min);
+  min-height: var(--touch-target-min);
   width: 32px;
   height: 32px;
   background: transparent;
   border: none;
   border-radius: var(--radius-sm);
-  color: hsl(var(--muted-foreground));
+  color: var(--fluent-text-secondary);
   cursor: pointer;
-  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-              color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
   --wails-draggable: no-drag;
 }
 
 .closeButton:hover {
-  background: hsl(var(--accent) / 0.1);
-  color: hsl(var(--foreground));
+  background: var(--fluent-bg-hover);
+  color: var(--fluent-text-primary);
+}
+
+.closeButton:active {
+  background: var(--fluent-bg-active);
+  transform: scale(0.95);
 }
 
 .closeButton:focus-visible {
-  outline: 2px solid hsl(var(--ring));
+  outline: 2px solid var(--fluent-accent);
   outline-offset: 2px;
 }
 
+/* ============================================
+   Tabs Section
+   ============================================ */
+
 .tabs {
   display: flex;
-  border-bottom: 1px solid hsl(var(--border));
-  background: hsl(var(--muted) / 0.05);
+  border-bottom: 1px solid var(--fluent-divider);
+  background: var(--fluent-bg-primary);
+  padding: 0 var(--space-4);
+  gap: var(--space-1);
 }
 
 .tab {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 16px;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
   background: transparent;
   border: none;
-  color: hsl(var(--muted-foreground));
-  font-size: 14px;
-  font-weight: 500;
+  color: var(--fluent-text-secondary);
+  font-size: var(--fluent-font-size-base);
+  font-weight: var(--fluent-font-weight-medium);
+  font-family: var(--fluent-font-family);
   cursor: pointer;
-  transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-              background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
   border-bottom: 2px solid transparent;
+  position: relative;
   --wails-draggable: no-drag;
+  min-height: var(--touch-target-min);
+}
+
+/* Tab icon sizing */
+.tab svg {
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+  flex-shrink: 0;
 }
 
 .tab:hover {
-  color: hsl(var(--foreground));
-  background: hsl(var(--accent) / 0.1);
+  color: var(--fluent-text-primary);
+  background: var(--fluent-bg-hover);
+}
+
+.tab:active {
+  background: var(--fluent-bg-active);
 }
 
 .tab:focus-visible {
-  outline: 2px solid hsl(var(--ring));
+  outline: 2px solid var(--fluent-accent);
   outline-offset: -2px;
+  z-index: 1;
 }
 
+/* Active tab state */
 .tabActive {
-  color: hsl(var(--primary));
-  border-bottom-color: hsl(var(--primary));
-  background: hsl(var(--background));
+  color: var(--fluent-accent);
+  border-bottom-color: var(--fluent-accent);
+  background: var(--fluent-bg-secondary);
+  font-weight: var(--fluent-font-weight-semibold);
 }
 
 .tabActive:hover {
-  color: hsl(var(--primary));
-  background: hsl(var(--background));
+  color: var(--fluent-accent-hover);
+  background: var(--fluent-bg-secondary);
 }
+
+/* ============================================
+   Content Section
+   ============================================ */
 
 .content {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 0;
 }
 
-/* Responsive design */
+/* Custom scrollbar for content area */
+.content::-webkit-scrollbar {
+  width: 12px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: var(--fluent-bg-primary);
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.12);
+  background-clip: padding-box;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
 @media (max-width: 768px) {
   .overlay {
-    padding: 10px;
+    padding: var(--space-3);
   }
-  
+
   .modal {
     max-height: 95vh;
+    max-width: 100%;
   }
-  
+
   .header {
-    padding: 16px 20px;
+    padding: var(--space-4) var(--space-5);
   }
-  
+
   .title {
-    font-size: 18px;
+    font-size: var(--fluent-font-size-lg);
   }
-  
+
   .closeButton {
     width: 28px;
     height: 28px;
   }
-  
-  .tab {
-    padding: 10px 12px;
-    font-size: 13px;
-    gap: 6px;
+
+  .tabs {
+    padding: 0 var(--space-2);
+    gap: 0;
   }
-  
+
+  .tab {
+    padding: var(--space-2) var(--space-3);
+    font-size: 13px;
+    gap: var(--space-1);
+  }
+
   .tab svg {
     width: 14px;
     height: 14px;
@@ -157,35 +262,99 @@
 
 @media (max-width: 480px) {
   .overlay {
-    padding: 5px;
+    padding: var(--space-2);
   }
-  
+
   .modal {
     max-height: 98vh;
+    border-radius: var(--radius-md);
   }
-  
+
   .header {
-    padding: 12px 16px;
+    padding: var(--space-3) var(--space-4);
   }
-  
+
   .title {
-    font-size: 16px;
+    font-size: var(--fluent-font-size-md);
   }
-  
+
+  .closeButton {
+    width: 24px;
+    height: 24px;
+  }
+
   .tabs {
     flex-direction: column;
+    padding: var(--space-2);
+    gap: var(--space-1);
   }
-  
+
   .tab {
-    padding: 8px 12px;
-    font-size: 12px;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--fluent-font-size-sm);
     justify-content: flex-start;
     border-bottom: none;
-    border-right: 2px solid transparent;
+    border-left: 2px solid transparent;
+    border-radius: var(--radius-sm);
   }
-  
+
   .tabActive {
     border-bottom-color: transparent;
-    border-right-color: hsl(var(--primary));
+    border-left-color: var(--fluent-accent);
   }
+}
+
+/* ============================================
+   Accessibility Enhancements
+   ============================================ */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .modal {
+    border-width: 2px;
+    border-color: var(--fluent-text-primary);
+  }
+
+  .tab {
+    border-bottom-width: 3px;
+  }
+
+  .tabActive {
+    border-bottom-width: 3px;
+  }
+
+  .closeButton:focus-visible,
+  .tab:focus-visible {
+    outline-width: 3px;
+    outline-color: #60a5fa;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .modal {
+    animation: none;
+  }
+
+  .closeButton:active,
+  .tab:active {
+    transform: none;
+  }
+
+  .modal,
+  .closeButton,
+  .tab {
+    transition: none;
+  }
+}
+
+/* Focus trap styling */
+.modal:focus {
+  outline: none;
+}
+
+/* Ensure proper stacking context */
+.modal {
+  isolation: isolate;
 }
