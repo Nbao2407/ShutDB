@@ -284,7 +284,6 @@ function App() {
         {/* Toolbar */}
         <div className="app-toolbar">
           <div className="app-toolbar-left">
-            <h1>ShutDB</h1>
             <SearchAndFilter
               searchTerm={searchTerm}
               onSearchChange={setSearchTerm}
