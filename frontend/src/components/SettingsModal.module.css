@@ -17,8 +17,8 @@
   right: 0;
   bottom: 0;
   background: var(--fluent-overlay-bg);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,11 +37,13 @@
   }
 }
 
-/* Modal container */
+/* Modal container - Enhanced acrylic effect */
 .modal {
-  background: var(--fluent-bg-secondary);
+  background: var(--acrylic-bg-modal);
+  -webkit-backdrop-filter: blur(var(--blur-strong)) saturate(200%);
+  backdrop-filter: blur(var(--blur-strong)) saturate(200%);
   border: 1px solid var(--fluent-modal-border);
-  border-radius: var(--radius-lg);
+  border-radius: 4px;
   box-shadow: var(--fluent-shadow-flyout);
   max-width: var(--container-sm);
   width: 100%;
@@ -55,7 +57,7 @@
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(20px) scale(0.98);
+    transform: translateY(32px) scale(0.96);
   }
   to {
     opacity: 1;
@@ -85,7 +87,7 @@
   letter-spacing: var(--fluent-letter-spacing-tight);
 }
 
-/* Close button */
+/* Close button - Enhanced hover states */
 .closeButton {
   display: flex;
   align-items: center;
@@ -96,7 +98,7 @@
   height: 32px;
   background: transparent;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: 4px;
   color: var(--fluent-text-secondary);
   cursor: pointer;
   transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
@@ -106,6 +108,7 @@
 .closeButton:hover {
   background: var(--fluent-bg-hover);
   color: var(--fluent-text-primary);
+  box-shadow: var(--fluent-shadow-subtle);
 }
 
 .closeButton:active {
@@ -114,8 +117,9 @@
 }
 
 .closeButton:focus-visible {
-  outline: 2px solid var(--fluent-accent);
-  outline-offset: 2px;
+  outline: none;
+  box-shadow: var(--fluent-shadow-focus);
+  border: 1px solid var(--fluent-accent);
 }
 
 /* ============================================
@@ -159,6 +163,7 @@
 .tab:hover {
   color: var(--fluent-text-primary);
   background: var(--fluent-bg-hover);
+  border-radius: 4px 4px 0 0;
 }
 
 .tab:active {
@@ -166,22 +171,22 @@
 }
 
 .tab:focus-visible {
-  outline: 2px solid var(--fluent-accent);
-  outline-offset: -2px;
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--fluent-accent);
   z-index: 1;
 }
 
-/* Active tab state */
+/* Active tab state - Blue accent underline */
 .tabActive {
   color: var(--fluent-accent);
   border-bottom-color: var(--fluent-accent);
-  background: var(--fluent-bg-secondary);
+  background: transparent;
   font-weight: var(--fluent-font-weight-semibold);
 }
 
 .tabActive:hover {
   color: var(--fluent-accent-hover);
-  background: var(--fluent-bg-secondary);
+  background: var(--fluent-bg-hover);
 }
 
 /* ============================================

@@ -280,7 +280,10 @@
    ============================================ */
 
 .subServices {
-  background: var(--fluent-bg-primary);
+  background: var( --acrylic-bg-secondary);
+  -webkit-backdrop-filter: blur(var(--blur-subtle)) saturate(140%);
+  backdrop-filter: blur(var(--blur-subtle)) saturate(140%);
+  border-top: 1px solid var(--fluent-border-subtle);
   border: 1px solid var(--fluent-accent);
   border-top: none;
   border-bottom-left-radius: var(--radius-md);

@@ -9,7 +9,7 @@
   align-items: center;
   gap: 4px;
   padding: 6px 12px;
-  background: hsl(var(--input));
+  background: rgb(54, 54, 54, 0.8);
   border: 1px solid hsl(var(--border));
   border-radius: var(--radius-sm);
   color: hsl(var(--foreground));

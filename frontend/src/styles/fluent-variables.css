@@ -11,33 +11,31 @@
 
 :root {
   /* ============================================
-     CORE BACKGROUND COLORS
+     CORE BACKGROUND COLORS - Windows 11 Fluent Dark Mode
      ============================================ */
-  --fluent-bg-primary: #1e1e1e;           /* Main background */
-  --fluent-bg-secondary: #252526;         /* Sidebar, cards */
-  --fluent-bg-tertiary: #2d2d30;          /* Elevated surfaces */
-  --fluent-bg-elevated: #3e3e42;          /* Modals, dropdowns */
+  /*--fluent-bg-primary: #121212;          
+  --fluent-bg-secondary: #262626;        
+  --fluent-bg-tertiary: #3d3d3d;      
+  --fluent-bg-elevated: #4b4b4b;         
 
-  /* Interaction states */
-  --fluent-bg-hover: #2a2d2e;             /* Hover state */
-  --fluent-bg-active: #323538;            /* Active/pressed state */
-  --fluent-bg-focus: rgba(13, 110, 253, 0.15); /* Focus ring background */
+  --fluent-bg-hover: #2d2d2d;             
+  --fluent-bg-active: #373737;            
+  --fluent-bg-focus: rgba(46, 134, 222, 0.12); 
 
-  /* Selection states */
-  --fluent-bg-selected: #094771;          /* Selected item */
-  --fluent-bg-selected-hover: #0e5a8e;    /* Selected + hover */
-  --fluent-bg-selected-subtle: rgba(13, 110, 253, 0.12); /* Subtle selection */
+  --fluent-bg-selected: #1a4d7a;         
+  --fluent-bg-selected-hover: #205d92;    
+  --fluent-bg-selected-subtle: rgba(46, 134, 222, 0.15); */
 
-  /* Acrylic Material Effects */
-  --acrylic-bg-primary: rgba(30, 30, 30, 0.85);
-  --acrylic-bg-secondary: rgba(37, 37, 38, 0.9);
-  --acrylic-bg-tertiary: rgba(45, 45, 48, 0.8);
-  --acrylic-bg-header: rgba(28, 28, 28, 0.95);
+  --acrylic-bg-primary: rgba(18, 18, 18, 0.85);
+  --acrylic-bg-secondary: rgb(0, 0, 0);
+ /* --acrylic-bg-secondary: rgba(38, 38, 38, 0.88);
+ /* --acrylic-bg-tertiary: rgba(61, 61, 61, 0.82);*/
+  --acrylic-bg-header: rgba(26, 26, 26, 0.92);
+  --acrylic-bg-modal: rgba(75, 75, 75, 0.90);
 
-  /* Blur Effects */
-  --blur-background: 30px;
-  --blur-subtle: 15px;
-  --blur-strong: 50px;
+  --blur-background: 40px;
+  --blur-subtle: 20px;
+  --blur-strong: 60px;
 
   /* ============================================
      TEXT COLORS - Enhanced Hierarchy
@@ -51,23 +49,25 @@
   --fluent-text-placeholder: #6b7280;     /* Input placeholders */
 
   /* ============================================
-     ACCENT COLORS - Refined Blue Palette
+     ACCENT COLORS - Bright Blue (#2e86de) Fluent System
+     Modern, vibrant accent for selections and interactions
      ============================================ */
 
-  /* Primary Accent - Microsoft-style Blue */
-  --fluent-accent: #0d6efd;               /* Primary blue - softer than before */
-  --fluent-accent-hover: #3184fd;         /* Lighter hover state */
-  --fluent-accent-pressed: #0558c5;       /* Darker pressed state */
-  --fluent-accent-muted: rgba(13, 110, 253, 0.5); /* 50% opacity */
-  --fluent-accent-secondary: rgba(13, 110, 253, 0.2);
-  --fluent-accent-tertiary: rgba(13, 110, 253, 0.1);
+  /* Primary Accent - Bright Blue */
+  --fluent-accent: #2e86de;               /* Primary bright blue */
+  --fluent-accent-hover: #4a9ae5;         /* Lighter hover state */
+  --fluent-accent-pressed: #2370c4;       /* Darker pressed state */
+  --fluent-accent-muted: rgba(46, 134, 222, 0.5); /* 50% opacity */
+  --fluent-accent-secondary: rgba(46, 134, 222, 0.25);
+  --fluent-accent-tertiary: rgba(46, 134, 222, 0.12);
 
   /* Link color */
-  --fluent-text-link: var(--fluent-accent);
+  --fluent-text-link: #4a9ae5;
+  --fluent-text-link-hover: #5ea8ea;
 
-  /* Alternative Accent */
+  /* Alternative Accent - Purple for secondary actions */
   --fluent-accent-alt: #8b5cf6;
-  --fluent-accent-alt-hover: #9d6ff7;
+  --fluent-accent-alt-hover: #a78bfa;
 
   /* ============================================
      STATUS COLORS - Refined for Dark Theme
@@ -97,30 +97,32 @@
   --fluent-alert-red: #dc2626;
 
   /* ============================================
-     BORDERS & DIVIDERS
+     BORDERS & DIVIDERS - Light gray tones for definition
      ============================================ */
-  --fluent-border-primary: rgba(255, 255, 255, 0.06);
-  --fluent-border-secondary: rgba(255, 255, 255, 0.1);
+  --fluent-border-primary: rgba(222, 228, 234, 0.08);   /* #dfe4ea at 8% */
+  --fluent-border-secondary: rgba(222, 228, 234, 0.12);  /* #dfe4ea at 12% */
   --fluent-border-focus: var(--fluent-accent);
-  --fluent-border-subtle: rgba(255, 255, 255, 0.04);
+  --fluent-border-subtle: rgba(222, 228, 234, 0.05);     /* #dfe4ea at 5% */
+  --fluent-border-hover: rgba(222, 228, 234, 0.15);      /* #dfe4ea at 15% */
 
   /* Divider lines */
-  --fluent-divider: rgba(255, 255, 255, 0.08);
+  --fluent-divider: rgba(178, 190, 195, 0.10);           /* #b2bec3 at 10% */
 
   /* Modal/Overlay borders */
-  --fluent-modal-border: rgba(255, 255, 255, 0.12);
+  --fluent-modal-border: rgba(222, 228, 234, 0.15);
 
   /* ============================================
-     SHADOWS & DEPTH
+     SHADOWS & DEPTH - Enhanced for layered UI
      ============================================ */
-  --fluent-shadow-flyout: 0 8px 32px rgba(0, 0, 0, 0.6);
-  --fluent-shadow-popup: 0 4px 24px rgba(0, 0, 0, 0.5);
-  --fluent-shadow-card: 0 2px 16px rgba(0, 0, 0, 0.4);
-  --fluent-shadow-subtle: 0 1px 4px rgba(0, 0, 0, 0.3);
+  --fluent-shadow-flyout: 0 12px 40px rgba(0, 0, 0, 0.7), 0 4px 16px rgba(0, 0, 0, 0.5);
+  --fluent-shadow-popup: 0 8px 32px rgba(0, 0, 0, 0.6), 0 2px 12px rgba(0, 0, 0, 0.4);
+  --fluent-shadow-card: 0 4px 20px rgba(0, 0, 0, 0.5), 0 1px 8px rgba(0, 0, 0, 0.3);
+  --fluent-shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.4);
 
-  /* Interactive shadows */
-  --fluent-shadow-hover: 0 4px 12px rgba(13, 110, 253, 0.3);
-  --fluent-shadow-active: 0 2px 4px rgba(13, 110, 253, 0.2);
+  /* Interactive shadows - blue glow on hover/focus */
+  --fluent-shadow-hover: 0 6px 16px rgba(46, 134, 222, 0.25), 0 2px 8px rgba(46, 134, 222, 0.15);
+  --fluent-shadow-active: 0 2px 8px rgba(46, 134, 222, 0.2), 0 1px 4px rgba(46, 134, 222, 0.1);
+  --fluent-shadow-focus: 0 0 0 3px rgba(46, 134, 222, 0.3);
 
   /* ============================================
      BORDER RADIUS
@@ -202,15 +204,20 @@
   --fluent-letter-spacing-wide: 0.05em;
 
   /* ============================================
-     ANIMATION & TRANSITIONS
+     ANIMATION & TRANSITIONS - Smooth and Natural
+     Calibrated for responsive yet fluid interactions
      ============================================ */
+  --fluent-duration-instant: 100ms;
   --fluent-duration-fast: 150ms;
-  --fluent-duration-normal: 250ms;
-  --fluent-duration-slow: 350ms;
+  --fluent-duration-normal: 300ms;
+  --fluent-duration-slow: 500ms;
+  --fluent-duration-page: 600ms;
 
-  --fluent-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
-  --fluent-easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
-  --fluent-easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  /* Easing curves - natural, ease-in-out based */
+  --fluent-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);      /* Standard ease */
+  --fluent-easing-decelerate: cubic-bezier(0, 0, 0.2, 1);      /* Enter animations */
+  --fluent-easing-accelerate: cubic-bezier(0.4, 0, 1, 1);      /* Exit animations */
+  --fluent-easing-smooth: cubic-bezier(0.45, 0, 0.15, 1);      /* Extra smooth */
 
   /* ============================================
      Z-INDEX LAYERS

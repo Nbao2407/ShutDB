@@ -1,22 +1,47 @@
-/* Fluent Design Components */
+/* ============================================
+   Fluent Design Components - Windows 11 Style
+   
+   Enhanced with:
+   - Acrylic material effects
+   - Reveal highlight interactions
+   - Smooth animations (0.3s-0.6s)
+   - 4px border radius standard
+   - Blue (#2e86de) accent glow
+   ============================================ */
 
-/* Acrylic Material Base */
+/* ============================================
+   ACRYLIC MATERIAL BASE
+   ============================================ */
 .fluent-acrylic {
   background: var(--acrylic-bg-primary);
   backdrop-filter: blur(var(--blur-background)) saturate(180%);
   -webkit-backdrop-filter: blur(var(--blur-background)) saturate(180%);
+  border: 1px solid var(--fluent-border-primary);
+  box-shadow: var(--fluent-shadow-card);
 }
 
 .fluent-acrylic-secondary {
   background: var(--acrylic-bg-secondary);
   backdrop-filter: blur(var(--blur-subtle)) saturate(150%);
   -webkit-backdrop-filter: blur(var(--blur-subtle)) saturate(150%);
+  border: 1px solid var(--fluent-border-subtle);
 }
 
-/* Reveal Highlight Effect */
+.fluent-acrylic-modal {
+  background: var(--acrylic-bg-modal);
+  backdrop-filter: blur(var(--blur-strong)) saturate(200%);
+  -webkit-backdrop-filter: blur(var(--blur-strong)) saturate(200%);
+  border: 1px solid var(--fluent-modal-border);
+  box-shadow: var(--fluent-shadow-flyout);
+}
+
+/* ============================================
+   REVEAL HIGHLIGHT EFFECT - Fluent interaction
+   ============================================ */
 .fluent-reveal {
   position: relative;
   overflow: hidden;
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
 }
 
 .fluent-reveal::before {
@@ -26,9 +51,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--reveal-gradient);
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+              rgba(46, 134, 222, 0.15) 0%, 
+              transparent 60%);
   opacity: 0;
-  transition: opacity var(--fluent-duration-fast) var(--fluent-easing-standard);
+  transition: opacity var(--fluent-duration-normal) var(--fluent-easing-smooth);
   pointer-events: none;
   z-index: 1;
 }
@@ -37,10 +64,11 @@
   opacity: 1;
 }
 
-/* Reveal Border Effect */
+/* Reveal Border Effect - Blue accent glow */
 .fluent-reveal-border {
   position: relative;
   border: 1px solid var(--fluent-border-primary);
+  transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
 }
 
 .fluent-reveal-border::after {
@@ -51,21 +79,30 @@
   right: -1px;
   bottom: -1px;
   border-radius: inherit;
-  border: 1px solid transparent;
-  background: var(--reveal-border-gradient);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
+  border: 1px solid var(--fluent-accent);
   opacity: 0;
-  transition: opacity var(--fluent-duration-fast);
+  transition: opacity var(--fluent-duration-normal) var(--fluent-easing-smooth);
   pointer-events: none;
+  z-index: 0;
 }
 
 .fluent-reveal-border:hover::after {
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
-/* Fluent Button */
+.fluent-reveal-border:focus::after,
+.fluent-reveal-border:focus-visible::after {
+  opacity: 0.8;
+  box-shadow: var(--fluent-shadow-focus);
+}
+
+/* ============================================
+   FLUENT BUTTON - Modern Windows 11 Style
+   - 4px border radius
+   - Smooth background brightening on hover
+   - Blue accent glow on focus
+   - Scale animation on press
+   ============================================ */
 .fluent-button {
   display: inline-flex;
   align-items: center;
@@ -78,57 +115,83 @@
   color: var(--fluent-text-primary);
   background: var(--fluent-bg-tertiary);
   border: 1px solid var(--fluent-border-primary);
-  border-radius: var(--fluent-radius-medium);
+  border-radius: 4px; /* Uniform 4px radius */
   cursor: pointer;
   transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
   user-select: none;
   position: relative;
   overflow: hidden;
+  min-height: var(--button-height-md);
 }
 
 .fluent-button:hover {
   background: var(--fluent-bg-elevated);
   border-color: var(--fluent-border-secondary);
+  box-shadow: var(--fluent-shadow-subtle);
+}
+
+.fluent-button:focus,
+.fluent-button:focus-visible {
+  outline: none;
+  border-color: var(--fluent-accent);
+  box-shadow: var(--fluent-shadow-focus);
 }
 
 .fluent-button:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
+  background: var(--fluent-bg-active);
 }
 
 .fluent-button:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+  background: var(--fluent-bg-secondary);
   pointer-events: none;
 }
 
-/* Accent Button */
+/* Accent Button - Bright blue primary actions */
 .fluent-button-accent {
   background: var(--fluent-accent);
   border-color: var(--fluent-accent);
   color: #ffffff;
+  font-weight: var(--fluent-font-weight-semibold);
+  box-shadow: 0 2px 8px rgba(46, 134, 222, 0.25);
 }
 
 .fluent-button-accent:hover {
   background: var(--fluent-accent-hover);
   border-color: var(--fluent-accent-hover);
+  box-shadow: var(--fluent-shadow-hover);
+  transform: translateY(-1px);
 }
 
 .fluent-button-accent:active {
   background: var(--fluent-accent-pressed);
+  transform: scale(0.97);
+  box-shadow: var(--fluent-shadow-active);
 }
 
-/* Fluent Card */
+.fluent-button-accent:focus,
+.fluent-button-accent:focus-visible {
+  box-shadow: 0 0 0 4px rgba(46, 134, 222, 0.4);
+}
+
+/* ============================================
+   FLUENT CARD - Layered panel with acrylic
+   ============================================ */
 .fluent-card {
   background: var(--acrylic-bg-secondary);
+  -webkit-backdrop-filter: blur(var(--blur-subtle)) saturate(150%);
   backdrop-filter: blur(var(--blur-subtle)) saturate(150%);
   border: 1px solid var(--fluent-border-primary);
-  border-radius: var(--fluent-radius-large);
+  border-radius: 4px;
   box-shadow: var(--fluent-shadow-card);
+  padding: var(--spacing-card-padding);
   transition: all var(--fluent-duration-normal) var(--fluent-easing-standard);
 }
 
 .fluent-card:hover {
-  border-color: var(--fluent-border-secondary);
+  border-color: var(--fluent-border-hover);
   box-shadow: var(--fluent-shadow-popup);
   transform: translateY(-2px);
 }
@@ -417,9 +480,10 @@
   font-size: var(--fluent-font-size-xs);
   color: var(--fluent-text-primary);
   background: var(--acrylic-bg-secondary);
+  -webkit-backdrop-filter: blur(var(--blur-subtle));
   backdrop-filter: blur(var(--blur-subtle));
   border: 1px solid var(--fluent-border-primary);
-  border-radius: var(--fluent-radius-small);
+  border-radius: 4px;
   box-shadow: var(--fluent-shadow-popup);
   white-space: nowrap;
   pointer-events: none;
@@ -435,3 +499,204 @@
     opacity: 1;
   }
 }
+
+/* ============================================
+   TOAST NOTIFICATIONS - Slide & Fade
+   ============================================ */
+.fluent-toast {
+  position: fixed;
+  min-width: 320px;
+  max-width: 480px;
+  padding: var(--space-4);
+  background: var(--acrylic-bg-modal);
+  -webkit-backdrop-filter: blur(var(--blur-strong));
+  backdrop-filter: blur(var(--blur-strong));
+  border: 1px solid var(--fluent-modal-border);
+  border-radius: 4px;
+  box-shadow: var(--fluent-shadow-flyout);
+  color: var(--fluent-text-primary);
+  font-size: var(--fluent-font-size-base);
+  z-index: var(--z-toast);
+  animation: toast-slide-in var(--fluent-duration-normal) var(--fluent-easing-decelerate);
+}
+
+.fluent-toast.toast-exit {
+  animation: toast-slide-out var(--fluent-duration-fast) var(--fluent-easing-accelerate);
+}
+
+@keyframes toast-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes toast-slide-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+/* ============================================
+   PAGE TRANSITIONS - Scale & Fade
+   Duration: 0.3s-0.6s with ease-in-out
+   ============================================ */
+.page-transition-enter {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: all var(--fluent-duration-page) var(--fluent-easing-smooth);
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: scale(1.02);
+  transition: all var(--fluent-duration-normal) var(--fluent-easing-accelerate);
+}
+
+/* ============================================
+   TAB SWITCH TRANSITIONS - Gradient Fade
+   ============================================ */
+.tab-content-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.tab-content-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all var(--fluent-duration-normal) var(--fluent-easing-decelerate);
+}
+
+.tab-content-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tab-content-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-accelerate);
+}
+
+/* ============================================
+   LOADING INDICATORS - Spinning Motion
+   ============================================ */
+.fluent-spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--fluent-border-primary);
+  border-top-color: var(--fluent-accent);
+  border-radius: 50%;
+  animation: fluent-spin 0.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.fluent-spinner-large {
+  width: 40px;
+  height: 40px;
+  border-width: 4px;
+}
+
+@keyframes fluent-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pulse loading indicator */
+.fluent-pulse {
+  animation: fluent-pulse 2s var(--fluent-easing-smooth) infinite;
+}
+
+@keyframes fluent-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Smooth transitions */
+.transition-smooth {
+  transition: all var(--fluent-duration-normal) var(--fluent-easing-smooth);
+}
+
+.transition-fast {
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+}
+
+/* Hover lift effect */
+.hover-lift {
+  transition: transform var(--fluent-duration-fast) var(--fluent-easing-standard);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+/* Focus glow effect */
+.focus-glow:focus,
+.focus-glow:focus-visible {
+  outline: none;
+  box-shadow: var(--fluent-shadow-focus);
+  border-color: var(--fluent-accent);
+}
+
+/* Truncate text with ellipsis */
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Scrollbar styling for overflow containers */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--fluent-bg-elevated) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--fluent-bg-elevated);
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--fluent-bg-hover);
+}
+

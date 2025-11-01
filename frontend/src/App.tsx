@@ -307,24 +307,21 @@ function App() {
       <div className="service-stats-fixed">
         <span className="stat-item">
           <span className="stat-value">{filteredServices.length}</span>
-          <span className="stat-label stat-label-full">Services</span>
-          <span className="stat-label stat-label-short">Svcs</span>
+          <span className="stat-label">Total</span>
         </span>
         <span className="stat-divider">•</span>
         <span className="stat-item">
           <span className="stat-value text-success">
             {filteredServices.filter((s) => s.Status === "running").length}
           </span>
-          <span className="stat-label stat-label-full">Running</span>
-          <span className="stat-label stat-label-short">Run</span>
+          <span className="stat-label">Active</span>
         </span>
         <span className="stat-divider">•</span>
         <span className="stat-item">
           <span className="stat-value text-destructive">
             {filteredServices.filter((s) => s.Status === "stopped").length}
           </span>
-          <span className="stat-label stat-label-full">Stopped</span>
-          <span className="stat-label stat-label-short">Stop</span>
+          <span className="stat-label">Inactive</span>
         </span>
       </div>
 

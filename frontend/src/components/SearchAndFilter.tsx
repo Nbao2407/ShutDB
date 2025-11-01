@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useDebouncedSearch } from "../hooks/useDebounce";
+import React, { useEffect, useState } from "react";
+import { useDebounce } from "../hooks/useDebounce";
 import styles from "./SearchAndFilter.module.css";
 
 // Extended ServiceCategory type for filtering (includes "all")
@@ -33,26 +33,22 @@ export const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
   void selectedCategory;
   void onCategoryChange;
   void categoryCounts;
-  // Use internal debounced search state
-  const {
-    searchTerm: internalSearchTerm,
-    debouncedSearchTerm,
-    setSearchTerm: setInternalSearchTerm,
-  } = useDebouncedSearch(searchTerm, debounceDelay);
+  
+  // Local state for the input value
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
+  
+  // Debounce the local search term
+  const debouncedSearchTerm = useDebounce(localSearchTerm, debounceDelay);
 
-  // Sync external search term changes with internal state
+  // Update local state when external searchTerm prop changes
   useEffect(() => {
-    if (searchTerm !== internalSearchTerm) {
-      setInternalSearchTerm(searchTerm);
-    }
-  }, [searchTerm, internalSearchTerm, setInternalSearchTerm]);
+    setLocalSearchTerm(searchTerm);
+  }, [searchTerm]);
 
   // Call parent's onSearchChange when debounced value changes
   useEffect(() => {
-    if (debouncedSearchTerm !== searchTerm) {
-      onSearchChange(debouncedSearchTerm);
-    }
-  }, [debouncedSearchTerm, searchTerm, onSearchChange]);
+    onSearchChange(debouncedSearchTerm);
+  }, [debouncedSearchTerm, onSearchChange]);
   return (
     <div className={styles.searchAndFilter}>
       {/* Search Container */}
@@ -73,8 +69,8 @@ export const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
           type="text"
           className={styles.searchInput}
           placeholder="Search services..."
-          value={internalSearchTerm}
-          onChange={(e) => setInternalSearchTerm(e.target.value)}
+          value={localSearchTerm}
+          onChange={(e) => setLocalSearchTerm(e.target.value)}
           aria-label="Search services"
           title="Search services"
         />

@@ -1,19 +1,23 @@
 /* ============================================
    ServiceTable Component Styles
    
-   Based on srcff reference implementation with:
-   - Glass morphism table container
-   - Modern table structure with proper spacing
-   - Action buttons with hover effects
-   - Service icons and hierarchical name display
-   - Consistent with existing design system
+   Enhanced with acrylic backgrounds for improved focus:
+   - Alternating row backgrounds with different shades
+   - Column-specific subtle backgrounds
+   - Status-aware hover states
+   - Glass morphism effects throughout
+   - Consistent with Fluent Design System
    ============================================ */
 
-/* Main table container with glass morphism effect */
+/* Main table container with enhanced glass morphism */
 .tableContainer {
-  border-radius: var(--radius);
+  border-radius: 4px;
   overflow: hidden;
-  /* Glass panel styling is applied via className */
+  background: var(--acrylic-bg-primary);
+  -webkit-backdrop-filter: blur(var(--blur-background)) saturate(180%);
+  backdrop-filter: blur(var(--blur-background)) saturate(180%);
+  border: 1px solid var(--fluent-border-primary);
+  box-shadow: var(--fluent-shadow-card);
 }
 
 /* Table base styling */
@@ -26,15 +30,18 @@
 }
 
 /* ============================================
-   Table Header Styling
+   Table Header Styling - Enhanced with acrylic
    ============================================ */
 
 .headerRow {
-  border-bottom: 1px solid hsl(var(--border) / 0.5);
+  border-bottom: 1px solid var(--fluent-border-secondary);
+  background: var(--acrylic-bg-header);
+  -webkit-backdrop-filter: blur(var(--blur-subtle)) saturate(150%);
+  backdrop-filter: blur(var(--blur-subtle)) saturate(150%);
 }
 
 .headerRow:hover {
-  background: transparent !important;
+  background: var(--acrylic-bg-header) !important;
 }
 
 .serviceTable th {
@@ -42,9 +49,9 @@
   text-align: left;
   font-weight: 600;
   font-size: 13px;
-  color: hsl(var(--muted-foreground));
+  color: var(--fluent-text-secondary);
   background: transparent;
-  border-bottom: 1px solid hsl(var(--border) / 0.5);
+  border-bottom: 1px solid var(--fluent-border-secondary);
 }
 
 /* Header column specific widths following srcff patterns */
@@ -70,16 +77,52 @@
 }
 
 /* ============================================
-   Table Row Styling
+   Table Row Styling - Acrylic alternating backgrounds
+   Different shades for improved content focus
    ============================================ */
 
 .serviceRow {
-  border-bottom: 1px solid hsl(var(--border) / 0.3);
+  border-bottom: 1px solid var(--fluent-divider);
   cursor: pointer;
+  background: rgba(18, 18, 18, 0.4);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+}
+
+/* Alternating row backgrounds for better readability */
+.serviceRow:nth-child(even) {
+  background: rgba(38, 38, 38, 0.5);
+  -webkit-backdrop-filter: blur(15px) saturate(150%);
+  backdrop-filter: blur(15px) saturate(150%);
 }
 
 .serviceRow:hover {
-  background: hsl(var(--secondary) / 0.3);
+  background: rgba(61, 61, 61, 0.6);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  backdrop-filter: blur(20px) saturate(160%);
+  box-shadow: inset 0 0 0 1px var(--fluent-border-hover);
+}
+
+/* Enhanced hover for running services */
+.serviceRow[data-status="running"]:hover {
+  background: rgba(22, 163, 74, 0.08);
+  box-shadow: inset 0 0 0 1px var(--fluent-success-muted);
+}
+
+/* Enhanced hover for stopped services */
+.serviceRow[data-status="stopped"]:hover {
+  background: rgba(220, 38, 38, 0.08);
+  box-shadow: inset 0 0 0 1px var(--fluent-error-muted);
+}
+
+/* Active/Selected row state */
+.serviceRow:active,
+.serviceRow.selected {
+  background: var(--fluent-bg-selected);
+  -webkit-backdrop-filter: blur(var(--blur-background)) saturate(180%);
+  backdrop-filter: blur(var(--blur-background)) saturate(180%);
+  box-shadow: inset 0 0 0 1px var(--fluent-accent-secondary);
 }
 
 .serviceRow:last-child {
@@ -90,14 +133,43 @@
   padding: 12px 16px;
   vertical-align: middle;
   border-bottom: none; /* Handled by row */
+  position: relative;
+}
+
+/* Subtle cell background for status column - draws attention */
+.statusCell {
+  background: rgba(46, 134, 222, 0.05);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-left: 1px solid rgba(46, 134, 222, 0.1);
+}
+
+/* Subtle cell background for startup type column */
+.startupCell {
+  background: rgba(61, 61, 61, 0.25);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+/* Actions column - slightly elevated with distinct shade */
+.actionsCell {
+  background: rgba(75, 75, 75, 0.2);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  text-align: center;
+  border-right: 1px solid rgba(222, 228, 234, 0.05);
 }
 
 /* ============================================
-   Name Column Styling
+   Name Column Styling - Primary focus area
    ============================================ */
 
 .nameCell {
   font-weight: 500;
+  background: rgba(26, 26, 26, 0.35);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border-left: 1px solid rgba(222, 228, 234, 0.08);
 }
 
 .nameContent {
@@ -109,7 +181,7 @@
 .serviceIcon {
   width: 16px;
   height: 16px;
-  border-radius: 2px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,13 +190,13 @@
 }
 
 .iconRunning {
-  background: hsl(var(--primary) / 0.2);
-  color: hsl(var(--primary));
+  background: var(--fluent-success-bg);
+  color: var(--fluent-success-text);
 }
 
 .iconStopped {
-  background: hsl(var(--muted) / 0.5);
-  color: hsl(var(--muted-foreground));
+  background: var(--fluent-bg-elevated);
+  color: var(--fluent-text-tertiary);
 }
 
 .nameText {
@@ -134,7 +206,7 @@
 
 .displayName {
   font-size: 14px;
-  color: hsl(var(--foreground));
+  color: var(--fluent-text-primary);
   font-weight: 500;
   line-height: 1.2;
   margin-bottom: 2px;
@@ -142,7 +214,7 @@
 
 .serviceName {
   font-size: 12px;
-  color: hsl(var(--muted-foreground));
+  color: var(--fluent-text-tertiary);
   font-weight: 400;
   line-height: 1.2;
 }
@@ -164,12 +236,15 @@
 }
 
 /* ============================================
-   Error Row Styling
+   Error Row Styling - Enhanced acrylic
    ============================================ */
 
 .errorRow {
-  background: rgba(239, 68, 68, 0.05);
-  border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+  background: var(--fluent-error-bg);
+  -webkit-backdrop-filter: blur(var(--blur-subtle)) saturate(120%);
+  backdrop-filter: blur(var(--blur-subtle)) saturate(120%);
+  border-bottom: 1px solid var(--fluent-error-muted);
+  border-left: 3px solid var(--fluent-error);
   position: absolute;
   top: var(--virtual-top, 0);
   height: var(--virtual-height, auto);
@@ -184,18 +259,15 @@
 }
 
 .errorMessage {
-  color: #ef4444;
+  color: var(--fluent-error-text);
   font-size: 13px;
   font-weight: 500;
 }
 
 /* ============================================
    Actions Column Styling
+   Action buttons with enhanced acrylic backgrounds
    ============================================ */
-
-.actionsCell {
-  text-align: center;
-}
 
 .actionButtons {
   display: flex;
@@ -215,15 +287,24 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  transition: var(--transition-smooth);
-  color: hsl(var(--muted-foreground));
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+  color: var(--fluent-text-tertiary);
   /* Exclude from window dragging */
   --wails-draggable: no-drag;
 }
 
 .actionBtn:hover:not(:disabled) {
-  transform: none;
-  box-shadow: none;
+  background: var(--acrylic-bg-tertiary);
+  -webkit-backdrop-filter: blur(var(--blur-subtle));
+  backdrop-filter: blur(var(--blur-subtle));
+  color: var(--fluent-text-primary);
+  transform: scale(1.05);
+  box-shadow: var(--fluent-shadow-subtle);
+}
+
+.actionBtn:active:not(:disabled) {
+  transform: scale(0.95);
+  background: var(--fluent-bg-active);
 }
 
 .actionBtn:disabled {
