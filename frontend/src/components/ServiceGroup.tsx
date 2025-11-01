@@ -20,12 +20,12 @@ interface ServiceGroupProps {
 // Category icon mapping
 const getCategoryIcon = (category: ServiceCategory): string => {
   const iconMap: Record<ServiceCategory, string> = {
-    database: '📊',
-    web: '🌐',
-    cache: '⚡',
-    message: '📨',
-    application: '🔧',
-    other: '🔧'
+    database: 'database',
+    web: 'apps',
+    cache: 'flash',
+    message: 'chatBubblesQuestion',
+    application: 'settings',
+    other: 'settings'
   };
   return iconMap[category];
 };

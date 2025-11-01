@@ -15,23 +15,23 @@ const (
 type ServiceType string
 
 const (
-	TypePostgreSQL ServiceType = "postgresql"
-	TypeMongoDB    ServiceType = "mongodb"
-	TypeMySQL      ServiceType = "mysql"
-	TypeMariaDB    ServiceType = "mariadb"
-	TypeMSSQL      ServiceType = "mssql"
-	TypeOracle     ServiceType = "oracle"
-	TypeRedis      ServiceType = "redis"
-	TypeCassandra  ServiceType = "cassandra"
+	TypePostgreSQL    ServiceType = "postgresql"
+	TypeMongoDB       ServiceType = "mongodb"
+	TypeMySQL         ServiceType = "mysql"
+	TypeMariaDB       ServiceType = "mariadb"
+	TypeMSSQL         ServiceType = "mssql"
+	TypeOracle        ServiceType = "oracle"
+	TypeRedis         ServiceType = "redis"
+	TypeCassandra     ServiceType = "cassandra"
 	TypeElasticsearch ServiceType = "elasticsearch"
-	TypeCouchDB    ServiceType = "couchdb"
-	TypeInfluxDB   ServiceType = "influxdb"
-	TypeNeo4j      ServiceType = "neo4j"
-	TypeRabbitMQ   ServiceType = "rabbitmq"
-	TypeMemcached  ServiceType = "memcached"
-	TypeSQLite     ServiceType = "sqlite"
-	TypeDB2        ServiceType = "db2"
-	TypeFirebird   ServiceType = "firebird"
+	TypeCouchDB       ServiceType = "couchdb"
+	TypeInfluxDB      ServiceType = "influxdb"
+	TypeNeo4j         ServiceType = "neo4j"
+	TypeRabbitMQ      ServiceType = "rabbitmq"
+	TypeMemcached     ServiceType = "memcached"
+	TypeSQLite        ServiceType = "sqlite"
+	TypeDB2           ServiceType = "db2"
+	TypeFirebird      ServiceType = "firebird"
 )
 
 // StartupType represents the service startup configuration
@@ -70,31 +70,31 @@ func GetCategoryInfo(category ServiceCategory) map[string]string {
 		CategorySQL: {
 			"name":        "SQL Databases",
 			"description": "Relational database management systems",
-			"icon":        "🗄️",
+			"icon":        "database",
 			"color":       "#0078D4",
 		},
 		CategoryNoSQL: {
 			"name":        "NoSQL Databases",
 			"description": "Document, graph, and column-family databases",
-			"icon":        "📦",
+			"icon":        "documentStack",
 			"color":       "#107C10",
 		},
 		CategoryCache: {
 			"name":        "Cache & In-Memory",
 			"description": "High-performance caching and in-memory stores",
-			"icon":        "⚡",
+			"icon":        "flash",
 			"color":       "#FF8C00",
 		},
 		CategorySearch: {
 			"name":        "Search & Analytics",
 			"description": "Search engines and time-series databases",
-			"icon":        "🔍",
+			"icon":        "search",
 			"color":       "#881798",
 		},
 		CategoryMessaging: {
 			"name":        "Message Brokers",
 			"description": "Message queuing and streaming services",
-			"icon":        "📨",
+			"icon":        "chatBubblesQuestion",
 			"color":       "#E81123",
 		},
 	}
@@ -102,7 +102,7 @@ func GetCategoryInfo(category ServiceCategory) map[string]string {
 	if info, exists := categoryInfo[category]; exists {
 		return info
 	}
-	return map[string]string{"name": "Unknown", "description": "", "icon": "❓", "color": "#666666"}
+	return map[string]string{"name": "Unknown", "description": "", "icon": "settings", "color": "#666666"}
 }
 
 // GetServiceCategory returns the category for a given service type

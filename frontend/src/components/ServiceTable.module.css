@@ -151,16 +151,11 @@
    Status Column Styling
    ============================================ */
 
-.statusCell {
-  /* StatusBadge component handles its own styling */
-}
+/* StatusBadge component handles its own styling */
 
 /* ============================================
    Startup Type Column Styling
    ============================================ */
-
-.startupCell {
-}
 
 .startupText {
   font-size: 14px;
@@ -175,6 +170,12 @@
 .errorRow {
   background: rgba(239, 68, 68, 0.05);
   border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+  position: absolute;
+  top: var(--virtual-top, 0);
+  height: var(--virtual-height, auto);
+  width: 100%;
+  display: table;
+  table-layout: fixed;
 }
 
 .errorCell {
@@ -306,8 +307,8 @@
   top: 0;
   z-index: 10;
   background: hsl(var(--background) / 0.95);
-  backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .virtualScrollViewport {
@@ -317,12 +318,12 @@
   will-change: scroll-position;
   /* Enable hardware acceleration */
   transform: translateZ(0);
-  -webkit-overflow-scrolling: touch;
 }
 
 .virtualScrollContent {
   position: relative;
   width: 100%;
+  height: var(--virtual-height);
 }
 
 .virtualRow {
@@ -330,6 +331,10 @@
   will-change: transform;
   contain: layout style paint;
   display: contents; /* Allow table row to be properly positioned */
+  position: absolute;
+  top: var(--virtual-top, 0);
+  height: var(--virtual-height, auto);
+  width: 100%;
 }
 
 /* Performance optimizations for virtual scrolling */

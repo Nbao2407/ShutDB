@@ -1,0 +1,546 @@
+/* ============================================
+   HierarchicalServiceTable Component
+   Hierarchical table displaying database services grouped by type
+   ============================================ */
+
+.hierarchicalTable {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+/* ============================================
+   Table Summary Stats
+   ============================================ */
+
+.tableSummary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--fluent-bg-secondary);
+  border: 1px solid var(--fluent-border-primary);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-2);
+}
+
+.summaryItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 80px;
+}
+
+.summaryValue {
+  font-size: 18px;
+  font-weight: var(--fluent-font-weight-bold);
+  color: var(--fluent-text-primary);
+  line-height: 1;
+}
+
+.summaryValue.running {
+  color: var(--status-running);
+}
+
+.summaryValue.stopped {
+  color: var(--status-stopped);
+}
+
+.summaryLabel {
+  font-size: 11px;
+  font-weight: var(--fluent-font-weight-medium);
+  color: var(--fluent-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+/* ============================================
+   Service Groups Container
+   ============================================ */
+
+.serviceGroups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ============================================
+   Database Group
+   ============================================ */
+
+.databaseGroup {
+  border: 1px solid var(--fluent-border-primary);
+  border-radius: var(--radius-lg);
+  background: var(--fluent-bg-secondary);
+  overflow: hidden;
+  transition: all var(--fluent-duration-normal) var(--fluent-easing-standard);
+}
+
+.databaseGroup:hover {
+  border-color: var(--fluent-border-secondary);
+  box-shadow: var(--fluent-shadow-hover);
+}
+
+/* Group Header */
+.groupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-4);
+  background: var(--fluent-bg-tertiary);
+  border-bottom: 1px solid var(--fluent-border-subtle);
+  cursor: pointer;
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+  user-select: none;
+  min-height: 44px;
+  border-radius: 4px;
+  margin: 4px var(--space-2);
+}
+
+.groupHeader:hover {
+  background: var(--fluent-bg-hover);
+  transform: translateY(-1px);
+}
+
+.groupHeader:active {
+  transform: translateY(0);
+  background: var(--fluent-bg-pressed);
+}
+
+.groupHeader.expanded {
+  background: var(--fluent-bg-hover);
+  border-bottom-color: var(--fluent-border-primary);
+}
+
+.groupHeaderContent {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: 1;
+  min-width: 0;
+}
+
+/* Expand/Collapse Icon */
+.expandIcon {
+  width: 16px;
+  height: 16px;
+  color: var(--fluent-text-primary);
+  transition: transform var(--fluent-duration-medium) var(--fluent-easing-standard);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expandIcon.expanded {
+  transform: rotate(90deg);
+}
+
+/* Group Icon */
+.groupIcon {
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* Group Info */
+.groupInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.groupName {
+  font-size: 16px;
+  font-weight: var(--fluent-font-weight-semibold);
+  color: var(--fluent-text-primary);
+  margin: 0 0 var(--space-1) 0;
+  line-height: 1.2;
+}
+
+.groupStats {
+  font-size: 12px;
+  color: var(--fluent-text-secondary);
+  line-height: 1.2;
+}
+
+.groupStats .running {
+  color: var(--status-running);
+  font-weight: var(--fluent-font-weight-medium);
+}
+
+.groupStats .stopped {
+  color: var(--status-stopped);
+  font-weight: var(--fluent-font-weight-medium);
+}
+
+/* Group Actions */
+.groupActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.groupActionBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--fluent-bg-primary);
+  border: 1px solid var(--fluent-border-primary);
+  border-radius: var(--radius-md);
+  color: var(--fluent-text-secondary);
+  cursor: pointer;
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+  font-size: 16px;
+  --wails-draggable: no-drag;
+  position: relative;
+  overflow: hidden;
+}
+
+.groupActionBtn:hover:not(:disabled) {
+  background: var(--fluent-bg-hover);
+  border-color: var(--fluent-accent);
+  color: var(--fluent-text-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--fluent-shadow-sm);
+}
+
+.groupActionBtn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.groupActionBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  background: var(--fluent-bg-subtle);
+  color: var(--fluent-text-disabled);
+}
+
+.groupActionBtn:focus-visible {
+  outline: 2px solid var(--fluent-accent);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(0, 120, 212, 0.3);
+  background: var(--fluent-bg-hover);
+  border-color: var(--fluent-accent);
+}
+
+.groupActionBtn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   Group Services - Table Container
+   ============================================ */
+
+.groupServices {
+  background: var(--fluent-bg-primary);
+  border-top: 1px solid var(--fluent-border-subtle);
+}
+
+.servicesTable {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 13px;
+}
+
+.tableHeader {
+  background: var(--fluent-bg-secondary);
+  border-bottom: 1px solid var(--fluent-border-primary);
+}
+
+.tableHeader th {
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  font-size: 11px;
+  font-weight: var(--fluent-font-weight-semibold);
+  color: var(--fluent-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-right: 1px solid var(--fluent-border-subtle);
+}
+
+.tableHeader th:last-child {
+  border-right: none;
+}
+
+.nameColumn {
+  width: 40%;
+  min-width: 200px;
+}
+
+.statusColumn {
+  width: 20%;
+  min-width: 100px;
+}
+
+.startupColumn {
+  width: 20%;
+  min-width: 120px;
+}
+
+.actionsColumn {
+  width: 20%;
+  min-width: 120px;
+  text-align: center;
+}
+
+/* ============================================
+   Empty State
+   ============================================ */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-4);
+  text-align: center;
+  color: var(--fluent-text-secondary);
+  background: var(--fluent-bg-secondary);
+  border: 1px solid var(--fluent-border-primary);
+  border-radius: var(--radius-lg);
+}
+
+.emptyIcon {
+  font-size: 48px;
+  margin-bottom: var(--space-4);
+  opacity: 0.6;
+}
+
+.emptyState h3 {
+  font-size: 18px;
+  font-weight: var(--fluent-font-weight-semibold);
+  color: var(--fluent-text-primary);
+  margin: 0 0 var(--space-2) 0;
+}
+
+.emptyState p {
+  font-size: 14px;
+  color: var(--fluent-text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .tableSummary {
+    padding: var(--space-2) var(--space-3);
+    gap: var(--space-3);
+  }
+
+  .summaryItem {
+    min-width: 70px;
+  }
+
+  .summaryValue {
+    font-size: 16px;
+  }
+
+  .summaryLabel {
+    font-size: 10px;
+  }
+
+  .groupHeader {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .groupName {
+    font-size: 15px;
+  }
+
+  .groupStats {
+    font-size: 11px;
+  }
+
+  .groupActionBtn {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .tableSummary {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .summaryItem {
+    min-width: 60px;
+  }
+
+  .summaryValue {
+    font-size: 14px;
+  }
+
+  .summaryLabel {
+    font-size: 9px;
+  }
+
+  .groupHeader {
+    padding: var(--space-3) var(--space-3);
+    min-height: 40px;
+  }
+
+  .groupHeaderContent {
+    gap: var(--space-2);
+  }
+
+  .groupIcon {
+    font-size: 18px;
+  }
+
+  .groupName {
+    font-size: 14px;
+  }
+
+  .groupStats {
+    font-size: 10px;
+  }
+
+  .groupActions {
+    gap: var(--space-1);
+  }
+
+  .groupActionBtn {
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+  }
+
+  .tableHeader th {
+    padding: var(--space-1) var(--space-2);
+    font-size: 10px;
+  }
+
+  .nameColumn {
+    min-width: 150px;
+  }
+
+  .statusColumn,
+  .startupColumn,
+  .actionsColumn {
+    min-width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hierarchicalTable {
+    gap: var(--space-2);
+  }
+
+  .tableSummary {
+    padding: var(--space-2);
+    gap: var(--space-2);
+  }
+
+  .summaryItem {
+    min-width: 50px;
+  }
+
+  .summaryValue {
+    font-size: 12px;
+  }
+
+  .summaryLabel {
+    font-size: 8px;
+  }
+
+  .databaseGroup {
+    border-radius: var(--radius-md);
+  }
+
+  .groupHeader {
+    padding: var(--space-2);
+    min-height: 36px;
+  }
+
+  .groupHeaderContent {
+    gap: var(--space-1);
+  }
+
+  .groupIcon {
+    font-size: 16px;
+  }
+
+  .groupName {
+    font-size: 13px;
+  }
+
+  .groupStats {
+    font-size: 9px;
+  }
+
+  .groupActionBtn {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+  }
+
+  .tableHeader th {
+    padding: var(--space-1);
+    font-size: 9px;
+  }
+
+  .servicesTable {
+    font-size: 11px;
+  }
+
+  /* Hide some columns on very small screens */
+  .startupColumn {
+    display: none;
+  }
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .databaseGroup,
+  .groupHeader,
+  .expandIcon,
+  .groupActionBtn {
+    transition: none;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .databaseGroup,
+  .groupHeader,
+  .groupActionBtn {
+    border-width: 2px;
+  }
+}
+
+/* Focus management */
+.groupHeader:focus-visible {
+  box-shadow: 0 0 0 4px rgba(0, 120, 212, 0.3);
+  background: var(--fluent-bg-focus);
+  border-bottom-color: var(--fluent-accent);
+}
+
+/* High contrast mode support */
+@media (prefers-color-scheme: high-contrast) {
+  .groupHeader {
+    border: 2px solid ButtonText;
+  }
+
+  .groupActionBtn {
+    border: 1px solid ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+}

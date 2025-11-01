@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Service, ErrorState } from "../types/service";
 import { StatusBadge } from "./StatusBadge";
+import { FluentIcons } from "./FluentIcons";
 import { parseServiceError } from "../utils/errorHandler";
 import styles from "./ServiceTableRow.module.css";
 
@@ -49,31 +50,41 @@ const ServiceTableRowComponent = ({
   const actionButtonsRef = useRef<HTMLDivElement>(null);
   const lastFocusedButtonRef = useRef<HTMLButtonElement | null>(null);
 
+  // Helper component to render Fluent icons
+  const FluentIcon: React.FC<{ name: string; className?: string }> = ({ name, className }) => {
+    const IconComponent = (FluentIcons as any)[name];
+    return (
+      <span className={className}>
+        {IconComponent ? <IconComponent /> : <FluentIcons.Server />}
+      </span>
+    );
+  };
+
   // Get service icon based on type
   const getServiceIcon = (type: string): string => {
     const iconMap: Record<string, string> = {
       // Database services
-      postgresql: "📊",
-      mysql: "📊",
-      mariadb: "📊",
-      mssql: "📊",
-      mongodb: "📊",
-      oracle: "📊",
-      cassandra: "📊",
-      elasticsearch: "📊",
-      couchdb: "📊",
-      influxdb: "📊",
-      neo4j: "📊",
-      sqlite: "📊",
-      db2: "📊",
-      firebird: "📊",
+      postgresql: "Database",
+      mysql: "Database",
+      mariadb: "Database",
+      mssql: "Database",
+      mongodb: "DocumentStack",
+      oracle: "Database",
+      cassandra: "DocumentStack",
+      elasticsearch: "Search",
+      couchdb: "DocumentStack",
+      influxdb: "ChartLine",
+      neo4j: "DocumentStack",
+      sqlite: "Database",
+      db2: "Database",
+      firebird: "Database",
       // Cache services
-      redis: "⚡",
-      memcached: "⚡",
+      redis: "Flash",
+      memcached: "Flash",
       // Message brokers
-      rabbitmq: "📨",
+      rabbitmq: "ChatBubblesQuestion",
       // Default
-      default: "🔧",
+      default: "Server",
     };
 
     return iconMap[type.toLowerCase()] || iconMap.default;
@@ -336,7 +347,7 @@ const ServiceTableRowComponent = ({
         <td className={styles.nameCell} role="cell" aria-describedby={statusId}>
           <div className={styles.nameContainer}>
             <div className={styles.serviceIcon} aria-hidden="true">
-              {getServiceIcon(service.Type)}
+              <FluentIcon name={getServiceIcon(service.Type)} />
             </div>
             <div className={styles.nameContent}>
               <div className={styles.displayName} id={serviceId}>

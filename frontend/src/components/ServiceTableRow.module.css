@@ -262,9 +262,11 @@
    ============================================ */
 
 .actionButton:focus-visible {
-  outline: 2px solid var(--ring, #3b82f6);
+  outline: 2px solid var(--fluent-accent);
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 0 0 4px rgba(0, 120, 212, 0.3);
+  background: var(--fluent-bg-hover);
+  border-color: var(--fluent-accent);
   z-index: 1;
 }
 

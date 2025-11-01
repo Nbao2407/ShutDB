@@ -153,17 +153,17 @@ export const getLogOnTypeForCategory = (category: ServiceCategory): LogOnType =>
 export const getCategoryIcon = (category: ServiceCategory): string => {
   switch (category) {
     case 'sql_databases':
-      return '🗄️';
+      return 'database';
     case 'nosql_databases':
-      return '📦';
+      return 'documentStack';
     case 'cache_memory':
-      return '⚡';
+      return 'flash';
     case 'search_analytics':
-      return '🔍';
+      return 'search';
     case 'message_brokers':
-      return '📨';
+      return 'chatBubblesQuestion';
     default:
-      return '⚙️';
+      return 'settings';
   }
 };
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Service, ServiceStatus } from '../types/service';
+import { FluentIcons } from './FluentIcons';
 import styles from './ServiceRow.module.css';
 
 interface ServiceRowProps {
@@ -189,7 +190,7 @@ export function ServiceRow({ service, onStart, onStop, onRestart, onDisable, onE
             aria-pressed={!isDisabled}
           >
             <span className={styles.toggleIcon}>
-              {isDisabled ? '⚡' : '🚫'}
+              {isDisabled ? <FluentIcons.Flash /> : <FluentIcons.Stop />}
             </span>
             <span>{isDisabled ? 'Enable' : 'Disable'}</span>
           </button>

@@ -113,6 +113,8 @@ export const ScrollableDropdown: FC<ScrollableDropdownProps> = ({
             width: `${menuPosition.width}px`
           }}
           role="listbox"
+          title="Dropdown menu"
+          aria-label="Dropdown menu"
         >
           <div className={styles.menuScroll}>
             {options.map((option) => (

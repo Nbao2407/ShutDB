@@ -1,0 +1,508 @@
+/* ============================================
+   HierarchicalServiceFilter Component
+   Hierarchical dropdown for database services
+   ============================================ */
+
+.hierarchicalFilter {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Main Dropdown Button */
+.dropdownButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 8px 14px;
+  background: var(--fluent-bg-tertiary);
+  border: 1px solid var(--fluent-border-primary);
+  border-radius: var(--radius-md);
+  color: var(--fluent-text-primary);
+  font-size: 13px;
+  font-weight: var(--fluent-font-weight-medium);
+  cursor: pointer;
+  height: 36px;
+  white-space: nowrap;
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+  --wails-draggable: no-drag;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.dropdownButton:hover {
+  background: var(--fluent-bg-hover);
+  border-color: var(--fluent-accent);
+}
+
+.dropdownButton:focus {
+  outline: none;
+  border-color: var(--fluent-accent);
+  box-shadow: 0 0 0 2px var(--fluent-bg-focus);
+}
+
+.dropdownButton.active {
+  background: var(--fluent-bg-hover);
+  border-color: var(--fluent-accent);
+}
+
+/* Service Icon */
+.serviceIcon {
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* Dropdown Text */
+.dropdownText {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+/* Service Count */
+.serviceCount {
+  font-size: 11px;
+  color: var(--fluent-text-secondary);
+  font-weight: var(--fluent-font-weight-medium);
+  flex-shrink: 0;
+}
+
+/* Chevron Icon */
+.chevron {
+  width: 12px;
+  height: 12px;
+  color: var(--fluent-text-secondary);
+  transition: transform var(--fluent-duration-fast) var(--fluent-easing-standard);
+  flex-shrink: 0;
+}
+
+.chevron.open {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 320px;
+  max-width: 400px;
+  max-height: 500px;
+  overflow-y: auto;
+  background: var(--fluent-bg-secondary);
+  border: 1px solid var(--fluent-border-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--fluent-shadow-elevated);
+  z-index: 1000;
+  padding: var(--space-2);
+  animation: dropdownSlideIn var(--fluent-duration-normal) var(--fluent-easing-decelerate);
+}
+
+@keyframes dropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Menu Item Base */
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--fluent-duration-fastest) var(--fluent-easing-standard);
+  user-select: none;
+  position: relative;
+}
+
+.menuItem:hover {
+  background: var(--fluent-bg-hover);
+}
+
+.menuItem.selected {
+  background: var(--fluent-accent);
+  color: var(--fluent-text-on-accent);
+}
+
+.menuItem.selected .itemIcon,
+.menuItem.selected .itemCount {
+  color: var(--fluent-text-on-accent);
+}
+
+/* Item Icon */
+.itemIcon {
+  font-size: 16px;
+  line-height: 1;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Item Content */
+.itemContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.itemName {
+  font-size: 13px;
+  font-weight: var(--fluent-font-weight-medium);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Item Count */
+.itemCount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 20px;
+  padding: 0 6px;
+  background: var(--fluent-bg-tertiary);
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: var(--fluent-font-weight-semibold);
+  color: var(--fluent-text-secondary);
+  flex-shrink: 0;
+}
+
+.menuItem.selected .itemCount {
+  background: var(--fluent-text-on-accent);
+  color: var(--fluent-accent);
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: var(--fluent-border-primary);
+  margin: var(--space-2) 0;
+}
+
+/* All Services Item */
+.allServicesItem {
+  font-weight: var(--fluent-font-weight-semibold);
+  margin-bottom: var(--space-1);
+}
+
+.allServicesItem .itemIcon {
+  font-size: 16px;
+}
+
+/* ============================================
+   Category Group - Hierarchical Structure
+   ============================================ */
+
+.categoryGroup {
+  margin-bottom: var(--space-1);
+}
+
+/* Category Header */
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--fluent-duration-fastest) var(--fluent-easing-standard);
+  user-select: none;
+  background: var(--fluent-bg-primary);
+  border: 1px solid var(--fluent-border-subtle);
+  font-weight: var(--fluent-font-weight-semibold);
+  position: relative;
+}
+
+.categoryHeader:hover {
+  background: var(--fluent-bg-hover);
+  border-color: var(--fluent-border-primary);
+}
+
+.categoryHeader.expanded {
+  background: var(--fluent-bg-hover);
+  border-color: var(--fluent-accent);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* Category Chevron */
+.categoryChevron {
+  width: 10px;
+  height: 10px;
+  color: var(--fluent-text-secondary);
+  transition: transform var(--fluent-duration-fast) var(--fluent-easing-standard);
+  flex-shrink: 0;
+}
+
+.categoryChevron.open {
+  transform: rotate(90deg);
+}
+
+/* Category Icon */
+.categoryIcon {
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* Category Name */
+.categoryName {
+  flex: 1;
+  font-size: 13px;
+  font-weight: var(--fluent-font-weight-semibold);
+  color: var(--fluent-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Category Count */
+.categoryCount {
+  font-size: 11px;
+  color: var(--fluent-text-secondary);
+  font-weight: var(--fluent-font-weight-medium);
+  flex-shrink: 0;
+}
+
+/* ============================================
+   Sub Services - Children of Categories
+   ============================================ */
+
+.subServices {
+  background: var(--fluent-bg-primary);
+  border: 1px solid var(--fluent-accent);
+  border-top: none;
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  padding: var(--space-1);
+  margin-bottom: var(--space-1);
+}
+
+/* Sub Service Item */
+.subServiceItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--fluent-duration-fastest) var(--fluent-easing-standard);
+  user-select: none;
+  position: relative;
+  margin-left: var(--space-4);
+}
+
+.subServiceItem:hover {
+  background: var(--fluent-bg-hover);
+}
+
+.subServiceItem.selected {
+  background: var(--fluent-accent);
+  color: var(--fluent-text-on-accent);
+}
+
+.subServiceItem.selected .subServiceIcon,
+.subServiceItem.selected .subServiceCount {
+  color: var(--fluent-text-on-accent);
+}
+
+/* Sub Service Icon */
+.subServiceIcon {
+  font-size: 14px;
+  line-height: 1;
+  width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+/* Sub Service Content */
+.subServiceContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.subServiceName {
+  font-size: 12px;
+  font-weight: var(--fluent-font-weight-medium);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--fluent-text-primary);
+}
+
+.subServiceItem.selected .subServiceName {
+  color: var(--fluent-text-on-accent);
+}
+
+/* Sub Service Count */
+.subServiceCount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 16px;
+  padding: 0 4px;
+  background: var(--fluent-bg-tertiary);
+  border-radius: var(--radius-pill);
+  font-size: 10px;
+  font-weight: var(--fluent-font-weight-semibold);
+  color: var(--fluent-text-secondary);
+  flex-shrink: 0;
+}
+
+.subServiceItem.selected .subServiceCount {
+  background: var(--fluent-text-on-accent);
+  color: var(--fluent-accent);
+}
+
+/* ============================================
+   Scrollbar Styling
+   ============================================ */
+
+.dropdownMenu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dropdownMenu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dropdownMenu::-webkit-scrollbar-thumb {
+  background: var(--fluent-border-primary);
+  border-radius: 4px;
+}
+
+.dropdownMenu::-webkit-scrollbar-thumb:hover {
+  background: var(--fluent-border-secondary);
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 768px) {
+  .dropdownButton {
+    padding: 6px 10px;
+    font-size: 12px;
+    height: 32px;
+    min-width: 160px;
+  }
+
+  .serviceIcon {
+    font-size: 14px;
+  }
+
+  .chevron {
+    width: 10px;
+    height: 10px;
+  }
+
+  .dropdownMenu {
+    min-width: 280px;
+    max-height: 400px;
+  }
+
+  .categoryHeader,
+  .menuItem {
+    padding: var(--space-2);
+  }
+
+  .subServiceItem {
+    padding: var(--space-1) var(--space-2);
+    margin-left: var(--space-3);
+  }
+
+  .itemIcon {
+    font-size: 14px;
+    width: 18px;
+  }
+
+  .subServiceIcon {
+    font-size: 12px;
+    width: 16px;
+  }
+
+  .itemName,
+  .categoryName {
+    font-size: 12px;
+  }
+
+  .subServiceName {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dropdownButton {
+    padding: 5px 8px;
+    font-size: 11px;
+    height: 30px;
+    min-width: 140px;
+  }
+
+  .dropdownMenu {
+    min-width: 260px;
+    max-height: 350px;
+  }
+
+  .serviceIcon {
+    font-size: 12px;
+  }
+
+  .chevron {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .dropdownMenu,
+  .chevron,
+  .categoryChevron,
+  .menuItem,
+  .categoryHeader,
+  .subServiceItem {
+    animation: none;
+    transition: none;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .dropdownButton,
+  .dropdownMenu,
+  .menuItem,
+  .categoryHeader,
+  .subServiceItem {
+    border-width: 2px;
+  }
+
+  .divider {
+    height: 2px;
+  }
+}
+
+/* Focus visible states */
+.dropdownButton:focus-visible,
+.menuItem:focus-visible,
+.categoryHeader:focus-visible,
+.subServiceItem:focus-visible {
+  outline: 2px solid var(--fluent-accent);
+  outline-offset: 2px;
+}

@@ -1,5 +1,6 @@
 import { ErrorState } from '../types/service';
 import { getErrorGuidance } from '../utils/errorHandler';
+import { FluentIcons } from './FluentIcons';
 import styles from './ErrorNotification.module.css';
 
 interface ErrorNotificationProps {
@@ -13,7 +14,9 @@ function ErrorNotification({ error, onDismiss }: ErrorNotificationProps) {
   return (
     <div className={styles.errorContainer}>
       <div className={styles.errorHeader}>
-        <span className={styles.errorIcon}>⚠️</span>
+        <span className={styles.errorIcon}>
+          <FluentIcons.ChatBubblesQuestion />
+        </span>
         <span className={styles.errorTitle}>Error</span>
         <button 
           type="button"
@@ -21,7 +24,7 @@ function ErrorNotification({ error, onDismiss }: ErrorNotificationProps) {
           onClick={onDismiss}
           aria-label="Dismiss error"
         >
-          ✕
+          ×
         </button>
       </div>
       <div className={styles.errorMessage}>
@@ -29,7 +32,10 @@ function ErrorNotification({ error, onDismiss }: ErrorNotificationProps) {
       </div>
       {guidance && (
         <div className={styles.errorGuidance}>
-          💡 {guidance}
+          <span className={styles.guidanceIcon}>
+            <FluentIcons.Apps />
+          </span>
+          {guidance}
         </div>
       )}
     </div>

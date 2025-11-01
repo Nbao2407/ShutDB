@@ -5,6 +5,7 @@ import {
   groupServiceTypesByCategory,
   getServiceTypeInfo,
 } from "../types/serviceTypeFilter";
+import { FluentIcons } from "./FluentIcons";
 import styles from "./ServiceTypeFilter.module.css";
 
 interface ServiceTypeFilterProps {
@@ -46,10 +47,16 @@ export const ServiceTypeFilter: React.FC<ServiceTypeFilterProps> = ({
     };
   }, [isOpen]);
 
+  // Helper component to render Fluent icons
+  const FluentIcon: React.FC<{ name: string; className?: string }> = ({ name, className }) => {
+    const IconComponent = (FluentIcons as any)[name];
+    return IconComponent ? <IconComponent className={className} /> : <span>{name}</span>;
+  };
+
   const getSelectedInfo = () => {
     if (selectedType === "all") {
       return {
-        icon: "📊",
+        icon: "chartLine",
         name: "All Services",
         count: typeCounts.all || 0,
       };
@@ -74,7 +81,7 @@ export const ServiceTypeFilter: React.FC<ServiceTypeFilterProps> = ({
         aria-expanded={isOpen}
         type="button"
       >
-        <span className={styles.serviceIcon}>{selectedInfo.icon}</span>
+        <FluentIcon name={selectedInfo.icon} className={styles.serviceIcon} />
         <span className={styles.dropdownText}>{selectedInfo.name}</span>
         <svg
           className={`${styles.chevron} ${isOpen ? styles.open : ""}`}
@@ -105,7 +112,7 @@ export const ServiceTypeFilter: React.FC<ServiceTypeFilterProps> = ({
               }
             }}
           >
-            <span className={styles.itemIcon}>📊</span>
+            <FluentIcon name="chartLine" className={styles.itemIcon} />
             <div className={styles.itemContent}>
               <div className={styles.itemName}>All Services</div>
             </div>
@@ -140,7 +147,7 @@ export const ServiceTypeFilter: React.FC<ServiceTypeFilterProps> = ({
                       }
                     }}
                   >
-                    <span className={styles.itemIcon}>{info.icon}</span>
+                    <FluentIcon name={info.icon} className={styles.itemIcon} />
                     <div className={styles.itemContent}>
                       <div className={styles.itemName}>{info.name}</div>
                       <div className={styles.itemCategory}>{info.category}</div>

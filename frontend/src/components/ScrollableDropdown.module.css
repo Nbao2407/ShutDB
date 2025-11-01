@@ -71,8 +71,8 @@
 .menu {
   position: fixed;
   background: var(--acrylic-bg-secondary);
-  backdrop-filter: blur(var(--blur-background)) saturate(180%);
   -webkit-backdrop-filter: blur(var(--blur-background)) saturate(180%);
+  backdrop-filter: blur(var(--blur-background)) saturate(180%);
   border: 1px solid var(--fluent-border-secondary);
   border-radius: var(--fluent-radius-medium);
   box-shadow: var(--fluent-shadow-flyout);

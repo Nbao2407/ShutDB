@@ -6,10 +6,12 @@
 .searchAndFilter {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 10px;
   flex-wrap: nowrap;
   flex-shrink: 1;
   min-width: 0;
+  width: 100%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Search Container */
@@ -19,225 +21,196 @@
   align-items: center;
   flex-shrink: 1;
   min-width: 0;
+  flex: 1 1 auto;
 }
 
 .searchIcon {
   position: absolute;
-  left: 10px;
-  color: var(--fluent-text-tertiary);
+  left: 11px;
+  color: hsl(215 15% 60%);
   pointer-events: none;
   z-index: 1;
   width: 16px;
   height: 16px;
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
 }
 
 .searchInput {
-  background: var(--fluent-bg-tertiary);
-  border: 1px solid var(--fluent-border-primary);
-  border-radius: var(--radius-md);
-  padding: 6px 10px 6px 32px;
-  color: var(--fluent-text-primary);
-  font-size: 13px;
-  width: 260px;
-  min-width: 120px;
-  height: 32px;
-  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+  background: hsl(220 20% 18%);
+  border: 1px solid hsl(220 20% 20%);
+  border-radius: 8px;
+  padding: 7px 10px 7px 36px;
+  color: hsl(210 20% 95%);
+  font-size: 14px;
+  font-weight: 400;
+  width: 100%;
+  min-width: 140px;
+  height: 36px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   --wails-draggable: no-drag;
+}
+
+.searchInput:hover {
+  border-color: hsl(220 20% 28%);
+  background: hsl(220 20% 20%);
 }
 
 .searchInput:focus {
   outline: none;
-  border-color: var(--fluent-accent);
-  box-shadow: 0 0 0 2px var(--fluent-bg-focus);
+  border-color: hsl(217 91% 60%);
+  box-shadow: 0 0 0 3px hsl(217 91% 60% / 0.15), inset 0 0 0 1px hsl(217 91% 60% / 0.3);
+  background: hsl(220 22% 22%);
 }
 
 .searchInput::placeholder {
-  color: var(--fluent-text-placeholder);
-}
-
-/* Filter Button */
-.filterButton {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  background: var(--fluent-bg-tertiary);
-  border: 1px solid var(--fluent-border-primary);
-  border-radius: var(--radius-md);
-  color: var(--fluent-text-primary);
-  font-size: 13px;
-  font-weight: var(--fluent-font-weight-medium);
-  cursor: pointer;
-  height: 32px;
-  white-space: nowrap;
-  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
-  --wails-draggable: no-drag;
-  flex-shrink: 0;
-}
-
-.filterButton:hover {
-  background: var(--fluent-bg-hover);
-  border-color: var(--fluent-accent);
-}
-
-.filterButton:focus {
-  outline: none;
-  border-color: var(--fluent-accent);
-  box-shadow: 0 0 0 2px var(--fluent-bg-focus);
-}
-
-.filterIcon {
-  color: var(--fluent-text-secondary);
-  flex-shrink: 0;
-  width: 16px;
-  height: 16px;
+  color: hsl(215 15% 50%);
 }
 
 /* ============================================
-   Responsive Design - Optimized for minwidth
+   Responsive Design - Single Row Maintained
    ============================================ */
 
-/* Large screens */
-@media (min-width: 1025px) {
-  .searchInput {
-    width: 280px;
+/* Medium+ screens (600px+) - Separated Layout */
+@media (min-width: 600px) {
+  .searchAndFilter {
+    gap: 14px;
   }
 }
 
-/* Medium screens (769-1024px) */
-@media (max-width: 1024px) and (min-width: 769px) {
+@media (max-width: 599px) {
+  .searchAndFilter {
+    gap: 8px;
+  }
+}
+
+/* Large screens (1200px+) - Full layout */
+@media (min-width: 1200px) {
+  .searchInput {
+    width: 280px;
+    min-width: 260px;
+    font-size: 14px;
+    height: 36px;
+    padding: 7px 10px 7px 36px;
+  }
+}
+
+/* Tablets (1024px - 1199px) - Optimized */
+@media (max-width: 1199px) and (min-width: 1024px) {
+  .searchInput {
+    width: 280px;
+    min-width: 240px;
+    font-size: 13px;
+    height: 34px;
+    padding: 6px 10px 6px 34px;
+  }
+
+  .searchIcon {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+/* Medium Devices (768px - 1024px)
+   Compact single row with better spacing
+   ============================================ */
+@media (max-width: 1023px) and (min-width: 769px) {
+  .searchAndFilter {
+    gap: 8px;
+    height: 32px;
+  }
+
   .searchInput {
     width: 220px;
+    min-width: 160px;
+    font-size: 12px;
+    padding: 5px 8px 5px 32px;
+    height: 32px;
+  }
+
+  .searchIcon {
+    left: 9px;
+    width: 14px;
+    height: 14px;
   }
 }
 
 /* ============================================
-   Compact Windows (600-768px)
-   This is the critical minwidth range
+   Narrow Windows (600px - 768px)
+   Ultra-compact single row
    ============================================ */
 @media (max-width: 768px) and (min-width: 601px) {
   .searchAndFilter {
-    gap: var(--space-2);
+    gap: 6px;
+    height: 30px;
   }
 
   .searchInput {
-    width: 160px;
-    font-size: 12px;
-    padding: 5px 8px 5px 28px;
+    width: 180px;
+    min-width: 120px;
+    font-size: 11px;
+    padding: 5px 8px 5px 30px;
     height: 30px;
   }
 
   .searchIcon {
     left: 8px;
-    width: 14px;
-    height: 14px;
-  }
-
-  .filterButton {
-    padding: 5px 10px;
-    font-size: 12px;
-    height: 30px;
-    gap: 4px;
-  }
-
-  .filterIcon {
-    width: 14px;
-    height: 14px;
+    width: 13px;
+    height: 13px;
   }
 }
 
 /* ============================================
-   Narrow Windows (520-600px)
-   Full-width search, stacked layout
+   Narrow Windows (480px - 600px)
+   Ultra-compact single row
    ============================================ */
-@media (max-width: 600px) {
+@media (max-width: 600px) and (min-width: 481px) {
   .searchAndFilter {
-    gap: var(--space-2);
-    width: 100%;
+    gap: 6px;
+    height: 28px;
   }
 
   .searchContainer {
-    flex: 1;
+    flex: 1 1 auto;
+    min-width: 100px;
   }
 
   .searchInput {
     width: 100%;
-    font-size: 13px;
-    padding: 6px 10px 6px 32px;
-    height: 32px;
+    min-width: 80px;
+    font-size: 11px;
+    padding: 4px 8px 4px 26px;
+    height: 28px;
   }
 
   .searchIcon {
-    left: 10px;
-    width: 14px;
-    height: 14px;
-  }
-
-  .filterButton {
-    padding: 6px 12px;
-    font-size: 12px;
-    height: 32px;
-    gap: 4px;
-  }
-
-  .filterIcon {
-    width: 14px;
-    height: 14px;
+    left: 8px;
+    width: 12px;
+    height: 12px;
   }
 }
 
 /* ============================================
-   Mobile Phones (<480px)
-   Ultra-compact, preserve horizontal layout
+   Small Phones (< 480px)
+   Minimal single-row layout
    ============================================ */
 @media (max-width: 480px) {
   .searchAndFilter {
-    gap: var(--space-1);
-    width: 100%;
+    gap: 4px;
+    height: 26px;
   }
 
   .searchContainer {
-    flex: 1;
+    flex: 1 1 auto;
+    min-width: 60px;
   }
 
   .searchInput {
     width: 100%;
-    font-size: 12px;
-    padding: 5px 8px 5px 28px;
-    height: 28px;
-  }
-
-  .searchIcon {
-    left: 8px;
-    width: 12px;
-    height: 12px;
-  }
-
-  .filterButton {
-    padding: 5px 8px;
-    font-size: 11px;
-    height: 28px;
-    gap: 3px;
-  }
-
-  .filterIcon {
-    width: 12px;
-    height: 12px;
-  }
-}
-
-/* ============================================
-   Extra Small (<380px)
-   Minimal viable layout
-   ============================================ */
-@media (max-width: 380px) {
-  .searchAndFilter {
-    gap: 4px;
-  }
-
-  .searchInput {
-    font-size: 11px;
-    padding: 4px 6px 4px 24px;
+    min-width: 50px;
+    font-size: 10px;
+    padding: 3px 6px 3px 24px;
     height: 26px;
   }
 
@@ -248,7 +221,7 @@
   }
 
   .filterButton {
-    padding: 4px 6px;
+    padding: 3px 6px;
     font-size: 10px;
     height: 26px;
     gap: 2px;
@@ -261,7 +234,44 @@
 }
 
 /* ============================================
-   Accessibility
+   Extra Small Screens (< 380px)
+   Extreme compaction
+   ============================================ */
+@media (max-width: 380px) {
+  .searchAndFilter {
+    gap: 2px;
+    height: 24px;
+  }
+
+  .searchInput {
+    width: 100%;
+    min-width: 40px;
+    font-size: 9px;
+    padding: 2px 4px 2px 20px;
+    height: 24px;
+  }
+
+  .searchIcon {
+    left: 4px;
+    width: 10px;
+    height: 10px;
+  }
+
+  .filterButton {
+    padding: 2px 4px;
+    font-size: 8px;
+    height: 24px;
+    gap: 1px;
+  }
+
+  .filterIcon {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+/* ============================================
+   Accessibility & Motion Preferences
    ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
@@ -282,3 +292,4 @@
     outline-width: 3px;
   }
 }
+

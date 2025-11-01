@@ -3,6 +3,7 @@ import { Service, ErrorState } from "../types/service";
 import { ServiceTableRow } from "./ServiceTableRow";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { useVirtualScrolling } from "../hooks/useVirtualScrolling";
+import { FluentIcons } from "./FluentIcons";
 import styles from "./ServiceTable.module.css";
 
 
@@ -140,13 +141,14 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({
               </thead>
             </table>
             
+            {/* Virtual scrolling requires dynamic CSS properties for performance */}
             <div 
               className={styles.virtualScrollViewport}
               {...virtualScrolling.scrollElementProps}
             >
               <div 
                 className={styles.virtualScrollContent}
-                style={{ height: virtualScrolling.totalHeight }}
+                style={{ "--virtual-height": `${virtualScrolling.totalHeight}px` } as React.CSSProperties}
               >
                 <table className={styles.serviceTable}>
                   <tbody role="rowgroup">
@@ -172,13 +174,9 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({
                               role="row" 
                               aria-rowindex={virtualItem.index + 2}
                               style={{
-                                position: 'absolute',
-                                top: virtualItem.start,
-                                height: ROW_HEIGHT,
-                                width: '100%',
-                                display: 'table',
-                                tableLayout: 'fixed',
-                              }}
+                                "--virtual-top": `${virtualItem.start}px`,
+                                "--virtual-height": `${ROW_HEIGHT}px`,
+                              } as React.CSSProperties}
                             >
                               <td colSpan={4} className={styles.errorCell} role="cell">
                                 <div className={styles.errorMessage} role="alert" aria-live="polite">
@@ -188,14 +186,16 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({
                             </tr>
                           }
                         >
+                          {/* eslint-disable jsx-a11y/no-static-element-interactions */}
                           <div
                             className={styles.virtualRow}
+                            data-virtual-top={virtualItem.start}
+                            data-virtual-height={ROW_HEIGHT}
+                            // CSS custom properties required for dynamic positioning
                             style={{
-                              position: 'absolute',
-                              top: virtualItem.start,
-                              height: ROW_HEIGHT,
-                              width: '100%',
-                            }}
+                              "--virtual-top": `${virtualItem.start}px`,
+                              "--virtual-height": `${ROW_HEIGHT}px`,
+                            } as React.CSSProperties}
                           >
                             <ServiceTableRow
                               service={service}
@@ -298,7 +298,9 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({
         {/* Empty State */}
         {services.length === 0 && (
           <div className={styles.emptyState} role="status" aria-live="polite">
-            <div className={styles.emptyIcon} aria-hidden="true">🔍</div>
+            <div className={styles.emptyIcon} aria-hidden="true">
+              <FluentIcons.Search />
+            </div>
             <p className={styles.emptyTitle}>No services found</p>
             <p className={styles.emptySubtext}>
               No database services are currently detected or match your search criteria
