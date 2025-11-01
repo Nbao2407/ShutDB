@@ -338,26 +338,30 @@ body::after {
    ============================================ */
 .app-toolbar {
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: space-between;
-  gap: var(--space-4);
+  gap: var(--space-3);
   margin-bottom: var(--space-6);
-  flex-wrap: wrap;
-  padding: var(--space-4);
+  flex-wrap: nowrap;
+  padding: var(--space-3);
   background: var(--fluent-bg-secondary);
   border: 1px solid var(--fluent-border-primary);
   border-radius: var(--radius-lg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: var(--fluent-shadow-subtle);
+  min-height: 48px;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .app-toolbar-left {
   display: flex;
   align-items: center;
-  gap: var(--space-6);
+  gap: var(--space-2);
   flex: 1;
   min-width: 0;
+  flex-wrap: nowrap;
 }
 
 .app-toolbar-left h1 {
@@ -386,8 +390,9 @@ body::after {
 .app-toolbar-right {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-3);
   flex-shrink: 0;
+  flex-wrap: nowrap;
 }
 
 
@@ -773,15 +778,13 @@ button:focus-visible {
   }
 
   .app-toolbar {
-    gap: var(--space-3);
-    padding: var(--space-3);
-    flex-wrap: nowrap;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    min-height: 44px;
   }
 
   .app-toolbar-left {
-    gap: var(--space-3);
-    min-width: 0;
-    flex: 1;
+    gap: var(--space-2);
   }
 
   .app-toolbar-right {
@@ -814,35 +817,39 @@ button:focus-visible {
 
 /* ============================================
    Narrow Windows (520-600px)
-   Two-row layout for better organization
+   Keep single row, compact layout
    ============================================ */
 @media (max-width: 600px) {
   .app-toolbar {
-    flex-direction: column;
-    align-items: stretch;
-    gap: var(--space-3);
+    gap: var(--space-1);
+    padding: var(--space-2);
+    min-height: 40px;
   }
 
   .app-toolbar-left {
-    width: 100%;
-    flex-direction: column;
-    gap: var(--space-2);
+    gap: var(--space-1);
   }
 
   .app-toolbar-right {
-    width: 100%;
-    justify-content: center;
+    gap: var(--space-2);
   }
 
   h1 {
-    font-size: 20px;
-    text-align: left;
+    font-size: 18px;
   }
 
   .service-stats {
-    width: 100%;
-    justify-content: space-evenly;
-    padding: var(--space-2);
+    font-size: 10px;
+    gap: var(--space-1);
+    padding: var(--space-1);
+  }
+
+  .stat-value {
+    font-size: 12px;
+  }
+
+  .stat-label {
+    font-size: 9px;
   }
 }
 
@@ -904,21 +911,17 @@ button:focus-visible {
   }
 
   .app-toolbar {
-    padding: var(--space-3);
-    gap: var(--space-3);
-    flex-direction: column;
-    align-items: stretch;
+    padding: var(--space-2);
+    gap: var(--space-1);
+    min-height: 36px;
   }
 
   .app-toolbar-left {
-    gap: var(--space-3);
-    flex-direction: column;
-    align-items: stretch;
+    gap: var(--space-1);
   }
 
   .app-toolbar-right {
-    width: 100%;
-    justify-content: center;
+    gap: var(--space-1);
   }
 
   /* Compact service stats */

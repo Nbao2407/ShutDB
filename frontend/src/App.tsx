@@ -14,8 +14,8 @@ import { parseServiceError } from "./utils/errorHandler";
 import ErrorNotification from "./components/ErrorNotification";
 import { ServiceTable } from "./components/ServiceTable";
 import { SearchAndFilter } from "./components/SearchAndFilter";
-import { CategoryFilter } from "./components/CategoryFilter";
-import { ServiceCategory } from "./types/category";
+import { ServiceTypeFilter } from "./components/ServiceTypeFilter";
+import { ServiceType } from "./types/service";
 import { WindowControls } from "./components/WindowControls";
 import { SettingsModal } from "./components/SettingsModal";
 
@@ -37,8 +37,8 @@ function App() {
 
   // Search and filter state
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] =
-    useState<ServiceCategory | "all">("all");
+  const [selectedType, setSelectedType] =
+    useState<ServiceType | "all">("all");
   const [isProcessing, setIsProcessing] = useState(false);
   
   // Settings modal state
@@ -216,30 +216,42 @@ function App() {
       );
     }
 
-    // Filter by category
-    if (selectedCategory !== "all") {
+    // Filter by service type
+    if (selectedType !== "all") {
       filtered = filtered.filter(
-        (service) => service.Category === selectedCategory
+        (service) => service.Type === selectedType
       );
     }
 
     return filtered;
-  }, [state.services, searchTerm, selectedCategory]);
+  }, [state.services, searchTerm, selectedType]);
 
-  // Get category counts for filter dropdown
-  const categoryCounts = useMemo(() => {
-    const counts: Record<ServiceCategory | "all", number> = {
+  // Get type counts for filter dropdown
+  const typeCounts = useMemo(() => {
+    const counts: Record<ServiceType | "all", number> = {
       all: state.services.length,
-      sql_databases: 0,
-      nosql_databases: 0,
-      cache_memory: 0,
-      search_analytics: 0,
-      message_brokers: 0,
+      postgresql: 0,
+      mongodb: 0,
+      mysql: 0,
+      mariadb: 0,
+      mssql: 0,
+      oracle: 0,
+      redis: 0,
+      cassandra: 0,
+      elasticsearch: 0,
+      couchdb: 0,
+      influxdb: 0,
+      neo4j: 0,
+      rabbitmq: 0,
+      memcached: 0,
+      sqlite: 0,
+      db2: 0,
+      firebird: 0,
     };
 
     state.services.forEach((service) => {
-      if (service.Category) {
-        counts[service.Category]++;
+      if (service.Type) {
+        counts[service.Type]++;
       }
     });
 
@@ -276,10 +288,10 @@ function App() {
               onStopAll={handleStopAll}
               isProcessing={state.loading || isProcessing}
             />
-            <CategoryFilter
-              selectedCategory={selectedCategory}
-              onCategoryChange={setSelectedCategory}
-              categoryCounts={categoryCounts}
+            <ServiceTypeFilter
+              selectedType={selectedType}
+              onTypeChange={setSelectedType}
+              typeCounts={typeCounts}
             />
           </div>
           <div className="app-toolbar-right">
