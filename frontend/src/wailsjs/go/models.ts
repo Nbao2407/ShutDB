@@ -26,6 +26,7 @@ export namespace app {
 	    Status: string;
 	    Type: string;
 	    StartupType: string;
+	    Category: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new Service(source);
@@ -38,6 +39,7 @@ export namespace app {
 	        this.Status = source["Status"];
 	        this.Type = source["Type"];
 	        this.StartupType = source["StartupType"];
+	        this.Category = source["Category"];
 	    }
 	}
 

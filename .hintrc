@@ -9,7 +9,8 @@
       {
         "ignore": [
           "-webkit-app-region",
-          "user-select"
+          "user-select",
+          "-webkit-mask"
         ]
       }
     ],
