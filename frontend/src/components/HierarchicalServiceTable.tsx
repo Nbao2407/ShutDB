@@ -34,6 +34,9 @@ export interface HierarchicalServiceTableProps {
   onStart: (serviceName: string) => Promise<void>;
   onStop: (serviceName: string) => Promise<void>;
   onRestart: (serviceName: string) => Promise<void>;
+  isDisabled?: boolean;
+  disabledServices?: Set<string>;
+  onToggleServiceDisabled?: (serviceName: string) => void;
 }
 
 interface DatabaseGroup {
@@ -50,6 +53,9 @@ export const HierarchicalServiceTable: React.FC<HierarchicalServiceTableProps> =
   onStart,
   onStop,
   onRestart,
+  isDisabled = false,
+  disabledServices = new Set(),
+  onToggleServiceDisabled,
 }) => {
   const [expandedGroups, setExpandedGroups] = useState<Partial<Record<ServiceType, boolean>>>({});
 
@@ -104,7 +110,15 @@ export const HierarchicalServiceTable: React.FC<HierarchicalServiceTableProps> =
   }
 
   return (
-    <div className={styles.hierarchicalTable}>
+    <div className={`${styles.hierarchicalTable} ${isDisabled ? styles.disabled : ''}`}>
+      {isDisabled && (
+        <div className={styles.disabledOverlay}>
+          <div className={styles.disabledMessage}>
+            <FluentIcon iconName="error" />
+            <span>Table interactions are disabled</span>
+          </div>
+        </div>
+      )}
       {/* Hierarchical Groups */}
       <div className={styles.serviceGroups}>
         {databaseGroups.map((group) => (
@@ -152,34 +166,50 @@ export const HierarchicalServiceTable: React.FC<HierarchicalServiceTableProps> =
                 </div>
               </div>
               <div className={styles.groupActions}>
-                <button
-                  className={styles.groupActionBtn}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    // Start all stopped services in this group
-                    group.services
-                      .filter(s => s.Status === "stopped")
-                      .forEach(s => onStart(s.Name));
-                  }}
-                  title={`Start all ${group.name} services`}
-                  disabled={group.services.every(s => s.Status === "running")}
-                >
-                  <FluentIcon iconName="play" />
-                </button>
-                <button
-                  className={styles.groupActionBtn}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    // Stop all running services in this group
-                    group.services
-                      .filter(s => s.Status === "running")
-                      .forEach(s => onStop(s.Name));
-                  }}
-                  title={`Stop all ${group.name} services`}
-                  disabled={group.services.every(s => s.Status === "stopped")}
-                >
-                  <FluentIcon iconName="stop" />
-                </button>
+                {(() => {
+                  const enabledServices = group.services.filter(s => !disabledServices.has(s.Name));
+                  const runningCount = enabledServices.filter(s => s.Status === "running").length;
+                  const stoppedCount = enabledServices.filter(s => s.Status === "stopped").length;
+                  const hasRunning = runningCount > 0;
+                  
+                  // Determine primary action based on majority state
+                  const shouldShowStop = hasRunning && (runningCount >= stoppedCount);
+                  const isToggleDisabled = isDisabled || enabledServices.length === 0;
+                  
+                  return (
+                    <button
+                      className={`${styles.groupActionBtn} ${styles.groupToggleBtn} ${
+                        shouldShowStop ? styles.stopGroup : styles.startGroup
+                      }`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (!isDisabled) {
+                          if (shouldShowStop) {
+                            // Stop all running services in this group that are not individually disabled
+                            group.services
+                              .filter(s => s.Status === "running" && !disabledServices.has(s.Name))
+                              .forEach(s => onStop(s.Name));
+                          } else {
+                            // Start all stopped services in this group that are not individually disabled
+                            group.services
+                              .filter(s => s.Status === "stopped" && !disabledServices.has(s.Name))
+                              .forEach(s => onStart(s.Name));
+                          }
+                        }
+                      }}
+                      title={
+                        isDisabled 
+                          ? "Table is disabled" 
+                          : shouldShowStop 
+                            ? `Stop ${runningCount} running ${group.name} service${runningCount !== 1 ? 's' : ''}`
+                            : `Start ${stoppedCount} stopped ${group.name} service${stoppedCount !== 1 ? 's' : ''}`
+                      }
+                      disabled={isToggleDisabled}
+                    >
+                      <FluentIcon iconName={shouldShowStop ? "stop" : "play"} />
+                    </button>
+                  );
+                })()}
               </div>
             </button>
 
@@ -204,6 +234,9 @@ export const HierarchicalServiceTable: React.FC<HierarchicalServiceTableProps> =
                         onStart={() => onStart(service.Name)}
                         onStop={() => onStop(service.Name)}
                         onRestart={() => onRestart(service.Name)}
+                        isDisabled={isDisabled}
+                        isServiceDisabled={disabledServices.has(service.Name)}
+                        onToggleServiceDisabled={onToggleServiceDisabled ? () => onToggleServiceDisabled(service.Name) : undefined}
                       />
                     ))}
                   </tbody>

@@ -40,7 +40,9 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   
-
+  // Table state
+  const [isTableDisabled, setIsTableDisabled] = useState(false);
+  const [disabledServices, setDisabledServices] = useState<Set<string>>(new Set());
   
   // Settings modal state
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -89,6 +91,11 @@ function App() {
 
   // Handle start service
   const handleStart = async (serviceName: string) => {
+    // Check if service is individually disabled
+    if (disabledServices.has(serviceName)) {
+      return;
+    }
+
     try {
       // Optimistic UI update
       updateServiceStatus(serviceName, "starting");
@@ -113,6 +120,11 @@ function App() {
 
   // Handle stop service
   const handleStop = async (serviceName: string) => {
+    // Check if service is individually disabled
+    if (disabledServices.has(serviceName)) {
+      return;
+    }
+
     try {
       // Optimistic UI update
       updateServiceStatus(serviceName, "stopping");
@@ -137,6 +149,11 @@ function App() {
 
   // Handle restart service
   const handleRestart = async (serviceName: string) => {
+    // Check if service is individually disabled
+    if (disabledServices.has(serviceName)) {
+      return;
+    }
+
     try {
       // Optimistic UI update
       updateServiceStatus(serviceName, "restarting");
@@ -164,7 +181,7 @@ function App() {
     setIsProcessing(true);
     try {
       const runningServices = filteredServices.filter(
-        (s) => s.Status === "running"
+        (s) => s.Status === "running" && !disabledServices.has(s.Name)
       );
       for (const service of runningServices) {
         try {
@@ -179,12 +196,25 @@ function App() {
     }
   };
 
+  // Handle individual service disable/enable
+  const handleToggleServiceDisabled = (serviceName: string) => {
+    setDisabledServices((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(serviceName)) {
+        newSet.delete(serviceName);
+      } else {
+        newSet.add(serviceName);
+      }
+      return newSet;
+    });
+  };
+
   // Handle start all services
   const handleStartAll = async () => {
     setIsProcessing(true);
     try {
       const stoppedServices = filteredServices.filter(
-        (s) => s.Status === "stopped"
+        (s) => s.Status === "stopped" && !disabledServices.has(s.Name)
       );
       for (const service of stoppedServices) {
         try {
@@ -257,6 +287,8 @@ function App() {
               onStartAll={handleStartAll}
               onStopAll={handleStopAll}
               isProcessing={state.loading || isProcessing}
+              isTableDisabled={isTableDisabled}
+              onToggleTableState={() => setIsTableDisabled(!isTableDisabled)}
             />
           </div>
         </div>
@@ -286,6 +318,9 @@ function App() {
                 onStart={handleStart}
                 onStop={handleStop}
                 onRestart={handleRestart}
+                isDisabled={isTableDisabled}
+                disabledServices={disabledServices}
+                onToggleServiceDisabled={handleToggleServiceDisabled}
               />
             )}
           </>

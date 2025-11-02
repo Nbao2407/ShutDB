@@ -8,6 +8,48 @@
   flex-direction: column;
   gap: var(--space-4);
   width: 100%;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.hierarchicalTable.disabled {
+  opacity: 0.6;
+  filter: grayscale(0.3);
+  position: relative;
+}
+
+.hierarchicalTable.disabled .serviceGroups {
+  pointer-events: none;
+  user-select: none;
+}
+
+.disabledOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.1);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  z-index: 10;
+  border-radius: var(--radius-lg);
+}
+
+.disabledMessage {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--acrylic-bg-card);
+  border: 1px solid var(--fluent-border-primary);
+  border-radius: var(--radius-md);
+  color: var(--fluent-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: var(--shadow-acrylic-md);
 }
 
 /* ============================================
@@ -115,22 +157,25 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-4) var(--space-4);
+  padding: var(--space-3) var(--space-4);
   background: var(--acrylic-accent-medium);
   -webkit-backdrop-filter: blur(var(--blur-strong));
   backdrop-filter: blur(var(--blur-strong));
   border-bottom: 2px solid rgba(200, 200, 200, 0.15);
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;
-  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   user-select: none;
-  min-height: 48px;
-  border-radius: 8px;
+  min-height: 52px;
+  border-radius: 12px;
   margin: 8px var(--space-2);
-  box-shadow: var(--shadow-acrylic-lg), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    var(--shadow-acrylic-lg), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 8px 32px rgba(0, 0, 0, 0.12);
   position: relative;
   overflow: hidden;
-  width: 100%;
+  width: calc(100% - var(--space-4));
   text-align: left;
   font-family: inherit;
   font-size: inherit;
@@ -143,16 +188,38 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  border-radius: 8px 8px 0 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  border-radius: 12px 12px 0 0;
+}
+
+.groupHeader::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  border-radius: 12px;
 }
 
 .groupHeader:hover {
   background: var(--acrylic-accent-light);
-  transform: translateY(-3px);
-  border-color: rgba(200, 200, 200, 0.15);
-  border-bottom-color: rgba(200, 200, 200, 0.15);
-  box-shadow: var(--shadow-acrylic-xl), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transform: translateY(-4px) scale(1.01);
+  border-color: rgba(255, 255, 255, 0.2);
+  border-bottom-color: rgba(200, 200, 200, 0.2);
+  box-shadow: 
+    var(--shadow-acrylic-xl), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 12px 40px rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.groupHeader:hover::after {
+  opacity: 1;
 }
 
 .groupHeader:active {
@@ -174,29 +241,54 @@
   gap: var(--space-3);
   flex: 1;
   min-width: 0;
+  padding-right: var(--space-2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.groupHeader:hover .groupHeaderContent {
+  transform: translateX(1px);
 }
 
 /* Expand/Collapse Icon */
 .expandIcon {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   color: var(--fluent-text-primary);
-  transition: transform var(--fluent-duration-medium) var(--fluent-easing-standard);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .expandIcon.expanded {
-  transform: rotate(90deg);
+  transform: rotate(90deg) scale(1.1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+.groupHeader:hover .expandIcon {
+  transform: scale(1.1);
+  filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.3));
+}
+
+.groupHeader:hover .expandIcon.expanded {
+  transform: rotate(90deg) scale(1.2);
+  filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.3));
 }
 
 /* Group Icon */
 .groupIcon {
-  font-size: 20px;
+  font-size: 22px;
   line-height: 1;
   flex-shrink: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+.groupHeader:hover .groupIcon {
+  transform: scale(1.05);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)) drop-shadow(0 0 12px rgba(255, 255, 255, 0.2));
 }
 
 /* Group Info */
@@ -233,44 +325,91 @@
 .groupActions {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-2);
   flex-shrink: 0;
+  padding: 6px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 62px;
+}
+
+.groupActions:hover {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .groupActionBtn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  background: var(--acrylic-bg-card);
-  -webkit-backdrop-filter: blur(var(--blur-minimal));
-  backdrop-filter: blur(var(--blur-minimal));
-  border: 1px solid rgba(200, 200, 200, 0.08);
-  border-radius: var(--radius-md);
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.08));
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
   color: var(--fluent-text-secondary);
   cursor: pointer;
-  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-size: 16px;
   --wails-draggable: no-drag;
   position: relative;
   overflow: hidden;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: 
+    0 3px 8px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Toggle button specific styling */
+.groupToggleBtn {
+  width: 50px;
+  min-width: 50px;
+  height: 50px;
+  flex-direction: column;
+  gap: 1px;
+  padding: 6px 4px;
+}
+
+.groupActionBtn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.groupActionBtn:hover::before {
+  transform: translateX(100%);
 }
 
 .groupActionBtn:hover:not(:disabled) {
-  background: var(--acrylic-bg-dropdown);
-  -webkit-backdrop-filter: blur(var(--blur-subtle));
-  backdrop-filter: blur(var(--blur-subtle));
-  border-color: rgba(200, 200, 200, 0.12);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.15));
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-color: rgba(255, 255, 255, 0.3);
   color: var(--fluent-text-primary);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-acrylic-sm);
+  transform: translateY(-3px) scale(1.08);
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .groupActionBtn:active:not(:disabled) {
-  transform: translateY(0);
-  background: var(--acrylic-accent-deep);
+  transform: translateY(0) scale(1);
+  background: linear-gradient(135deg, rgba(100, 116, 139, 0.2), rgba(148, 163, 184, 0.15));
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
 .groupActionBtn:disabled {
@@ -290,9 +429,170 @@
 }
 
 .groupActionBtn svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.groupActionBtn:hover:not(:disabled) svg {
+  transform: scale(1.1);
+}
+
+.groupToggleBtn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.toggleLabel {
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0.85;
+  transition: all 0.2s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.groupToggleBtn:hover:not(:disabled) .toggleLabel {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* Enhanced Group Action Button Variants */
+.groupActionBtn.startGroup {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(52, 211, 153, 0.08));
+  border-color: rgba(16, 185, 129, 0.25);
+  color: #059669;
+}
+
+.groupToggleBtn.startGroup {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(52, 211, 153, 0.12));
+  border-color: rgba(16, 185, 129, 0.3);
+  color: #059669;
+}
+
+.groupToggleBtn.startGroup:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(52, 211, 153, 0.2));
+  border-color: rgba(16, 185, 129, 0.5);
+  color: #047857;
+  box-shadow: 
+    0 8px 24px rgba(16, 185, 129, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.groupToggleBtn.startGroup:active:not(:disabled) {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(52, 211, 153, 0.22));
+  box-shadow: 
+    0 4px 12px rgba(16, 185, 129, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.groupToggleBtn.stopGroup {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(248, 113, 113, 0.12));
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #dc2626;
+}
+
+.groupToggleBtn.stopGroup:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(248, 113, 113, 0.2));
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #b91c1c;
+  box-shadow: 
+    0 8px 24px rgba(239, 68, 68, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(239, 68, 68, 0.2);
+}
+
+.groupToggleBtn.stopGroup:active:not(:disabled) {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(248, 113, 113, 0.22));
+  box-shadow: 
+    0 4px 12px rgba(239, 68, 68, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Pulse animation for processing states */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
+}
+
+.groupActionBtn.processing {
+  animation: pulse 2s infinite;
+}
+
+/* Glow effect on focus */
+.groupActionBtn:focus-visible {
+  outline: none;
+  box-shadow: 
+    0 0 0 3px rgba(59, 130, 246, 0.4), 
+    0 4px 16px rgba(0, 0, 0, 0.15),
+    0 0 20px rgba(59, 130, 246, 0.2);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.groupToggleBtn.startGroup:focus-visible {
+  box-shadow: 
+    0 0 0 3px rgba(16, 185, 129, 0.4), 
+    0 4px 16px rgba(16, 185, 129, 0.15),
+    0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.groupToggleBtn.stopGroup:focus-visible {
+  box-shadow: 
+    0 0 0 3px rgba(239, 68, 68, 0.4), 
+    0 4px 16px rgba(239, 68, 68, 0.15),
+    0 0 20px rgba(239, 68, 68, 0.2);
+}
+
+/* Subtle breathing animation for group actions container */
+@keyframes breathe {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+  50% { 
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.groupActions:hover {
+  animation: breathe 3s ease-in-out infinite;
+}
+
+/* Toggle state change animation */
+@keyframes togglePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.groupToggleBtn.startGroup {
+  animation: togglePulse 0.3s ease-out;
+}
+
+.groupToggleBtn.stopGroup {
+  animation: togglePulse 0.3s ease-out;
+}
+
+/* Enhanced toggle button states */
+.groupToggleBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: linear-gradient(135deg, rgba(100, 100, 100, 0.1), rgba(120, 120, 120, 0.08));
+  border-color: rgba(100, 100, 100, 0.2);
+  color: var(--fluent-text-disabled);
+}
+
+.groupToggleBtn:disabled .toggleLabel {
+  opacity: 0.3;
 }
 
 /* ============================================

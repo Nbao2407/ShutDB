@@ -13,6 +13,9 @@ interface ServiceTableRowProps {
   onRestart: () => Promise<void>;
   onToggleStartup?: () => Promise<void>;
   onError?: (error: ErrorState) => void;
+  isDisabled?: boolean;
+  isServiceDisabled?: boolean;
+  onToggleServiceDisabled?: () => void;
 }
 
 /**
@@ -41,6 +44,9 @@ const ServiceTableRowComponent = ({
   onRestart,
   onToggleStartup,
   onError,
+  isDisabled = false,
+  isServiceDisabled = false,
+  onToggleServiceDisabled,
 }: ServiceTableRowProps) => {
   const [operationState, setOperationState] = useState<
     "idle" | "starting" | "stopping" | "restarting"
@@ -243,16 +249,22 @@ const ServiceTableRowComponent = ({
   // Check if actions should be disabled
   const isOperationInProgress = operationState !== "idle";
   const isStartDisabled =
+    isDisabled ||
+    isServiceDisabled ||
     service.Status === "running" ||
     service.Status === "starting" ||
     service.StartupType === "disabled" ||
     isOperationInProgress;
   const isStopDisabled =
+    isDisabled ||
+    isServiceDisabled ||
     service.Status === "stopped" ||
     service.Status === "stopping" ||
     service.StartupType === "disabled" ||
     isOperationInProgress;
   const isRestartDisabled =
+    isDisabled ||
+    isServiceDisabled ||
     service.Status !== "running" ||
     service.StartupType === "disabled" ||
     isOperationInProgress;
@@ -338,7 +350,7 @@ const ServiceTableRowComponent = ({
       )}
 
       <tr
-        className={`${styles.tableRow} ${rowError ? styles.errorRow : ""}`}
+        className={`${styles.tableRow} ${rowError ? styles.errorRow : ""} ${isServiceDisabled ? styles.disabledServiceRow : ""}`}
         role="row"
         aria-rowindex={rowIndex}
         aria-describedby={rowError ? `${serviceId}-error` : undefined}
@@ -612,6 +624,49 @@ const ServiceTableRowComponent = ({
                   <circle cx="12" cy="12" r="10" />
                   <path d="M8 12l2 2 4-4" />
                 </svg>
+              </button>
+            )}
+
+            {/* Individual Service Disable/Enable Button */}
+            {onToggleServiceDisabled && (
+              <button
+                type="button"
+                className={`${styles.actionButton} ${styles.serviceToggleButton} ${
+                  isServiceDisabled ? styles.enableServiceButton : styles.disableServiceButton
+                }`}
+                onClick={onToggleServiceDisabled}
+                onKeyDown={(e) =>
+                  handleKeyDown(e, onToggleServiceDisabled, isDisabled)
+                }
+                disabled={isDisabled}
+                title={isServiceDisabled ? `Enable ${service.DisplayName}` : `Disable ${service.DisplayName}`}
+                aria-label={`${isServiceDisabled ? 'Enable' : 'Disable'} ${service.DisplayName}${
+                  isDisabled ? " (table disabled)" : ""
+                }`}
+                aria-describedby={serviceId}
+                tabIndex={isDisabled ? -1 : 0}
+              >
+                {isServiceDisabled ? (
+                  <svg
+                    className={styles.buttonIcon}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M10 3C13.866 3 17 6.134 17 10s-3.134 7-7 7-7-3.134-7-7 3.134-7 7-7zm0 1.5c-3.038 0-5.5 2.462-5.5 5.5s2.462 5.5 5.5 5.5 5.5-2.462 5.5-5.5-2.462-5.5-5.5-5.5zM10 7l.09.008a.5.5 0 01.402.402L10.5 7.5v2h2l.09.008a.5.5 0 010 .984L12.5 10.5h-2v2l-.008.09a.5.5 0 01-.984 0L9.5 12.5v-2h-2l-.09-.008a.5.5 0 010-.984L7.5 9.5h2v-2l.008-.09A.5.5 0 0110 7z" />
+                  </svg>
+                ) : (
+                  <svg
+                    className={styles.buttonIcon}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M10 2c4.418 0 8 3.582 8 8s-3.582 8-8 8-8-3.582-8-8 3.582-8 8-8zm0 1.5c-3.59 0-6.5 2.91-6.5 6.5s2.91 6.5 6.5 6.5 6.5-2.91 6.5-6.5-2.91-6.5-6.5-6.5zM7 9.5h6a.5.5 0 110 1H7a.5.5 0 110-1z" />
+                  </svg>
+                )}
               </button>
             )}
           </div>

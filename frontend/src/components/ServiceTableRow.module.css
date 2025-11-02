@@ -146,28 +146,224 @@ td {
   height: 14px;
 }
 
-/* Button Variants */
+/* Enhanced Button Variants with More Colors */
+.startButton {
+  color: #059669;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(52, 211, 153, 0.1));
+  border-color: rgba(16, 185, 129, 0.3);
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .startButton:hover:not(:disabled) {
-  background: rgba(16, 185, 129, 0.2);
-  color: #10b981;
-  border-color: rgba(16, 185, 129, 0.4);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(52, 211, 153, 0.2));
+  color: #059669;
+  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+  transform: translateY(-1px);
+}
+
+.startButton:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.2);
+}
+
+.stopButton {
+  color: #dc2626;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(248, 113, 113, 0.1));
+  border-color: rgba(239, 68, 68, 0.3);
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .stopButton:hover:not(:disabled) {
-  background: rgba(239, 68, 68, 0.2);
-  color: #ef4444;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(248, 113, 113, 0.2));
+  color: #dc2626;
+  border-color: rgba(239, 68, 68, 0.5);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+  transform: translateY(-1px);
+}
+
+.stopButton:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.2);
+}
+
+.restartButton {
+  color: #2563eb;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(96, 165, 250, 0.1));
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .restartButton:hover:not(:disabled) {
-  background: rgba(59, 130, 246, 0.2);
-  color: #3b82f6;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(96, 165, 250, 0.2));
+  color: #2563eb;
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+  transform: translateY(-1px);
 }
 
+.restartButton:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.2);
+}
 
+.toggleButton {
+  color: #d97706;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(251, 191, 36, 0.1));
+  border-color: rgba(245, 158, 11, 0.3);
+  box-shadow: 0 2px 4px rgba(245, 158, 11, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
 .toggleButton:hover:not(:disabled) {
-  background: rgba(245, 158, 11, 0.2);
-  color: #f59e0b;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(251, 191, 36, 0.2));
+  color: #d97706;
+  border-color: rgba(245, 158, 11, 0.5);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);
+  transform: translateY(-1px);
+}
+
+/* Enhanced Service Toggle Button Variants */
+.serviceToggleButton {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.serviceToggleButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.serviceToggleButton:hover::before {
+  transform: translateX(100%);
+}
+
+.disableServiceButton {
+  color: #ea580c;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(251, 146, 60, 0.1));
+  border-color: rgba(249, 115, 22, 0.3);
+  box-shadow: 0 2px 4px rgba(249, 115, 22, 0.1);
+}
+
+.disableServiceButton:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.25), rgba(251, 146, 60, 0.2));
+  color: #ea580c;
+  border-color: rgba(249, 115, 22, 0.5);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
+  transform: translateY(-1px) scale(1.02);
+}
+
+.disableServiceButton:active:not(:disabled) {
+  transform: translateY(0) scale(1);
+  box-shadow: 0 2px 6px rgba(249, 115, 22, 0.2);
+}
+
+.enableServiceButton {
+  color: #16a34a;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(74, 222, 128, 0.1));
+  border-color: rgba(34, 197, 94, 0.3);
+  box-shadow: 0 2px 4px rgba(34, 197, 94, 0.1);
+}
+
+.enableServiceButton:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(74, 222, 128, 0.2));
+  color: #16a34a;
+  border-color: rgba(34, 197, 94, 0.5);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
+  transform: translateY(-1px) scale(1.02);
+}
+
+.enableServiceButton:active:not(:disabled) {
+  transform: translateY(0) scale(1);
+  box-shadow: 0 2px 6px rgba(34, 197, 94, 0.2);
+}
+
+/* Enhanced Button Effects */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.actionButton::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  width: 8px;
+  height: 8px;
+  top: 50%;
+  left: 50%;
+  margin-left: -4px;
+  margin-top: -4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+
+.actionButton:active::after {
+  animation: ripple 0.6s linear;
+}
+
+/* Enhanced focus states with glow */
+.actionButton:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.startButton:focus-visible {
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3), 0 2px 8px rgba(16, 185, 129, 0.1);
+}
+
+.stopButton:focus-visible {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3), 0 2px 8px rgba(239, 68, 68, 0.1);
+}
+
+.restartButton:focus-visible {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3), 0 2px 8px rgba(59, 130, 246, 0.1);
+}
+
+.serviceToggleButton:focus-visible {
+  outline: none;
+}
+
+.disableServiceButton:focus-visible {
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.3), 0 2px 8px rgba(249, 115, 22, 0.1);
+}
+
+.enableServiceButton:focus-visible {
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3), 0 2px 8px rgba(34, 197, 94, 0.1);
+}
+
+/* Disabled service row styling */
+.disabledServiceRow {
+  opacity: 0.7;
+  background: rgba(128, 128, 128, 0.05);
+}
+
+.disabledServiceRow .displayName {
+  color: var(--fluent-text-secondary);
+  text-decoration: line-through;
+}
+
+.disabledServiceRow .serviceName {
+  color: var(--fluent-text-tertiary);
 }
 
 /* Focus States for Accessibility */
