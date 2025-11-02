@@ -13,6 +13,10 @@ A lightweight desktop application for managing database services on Windows.
 - Simple and intuitive interface with keyboard shortcuts
 - Support for all popular databases
 
+
+
+<img width="600" height="900" alt="image" src="https://github.com/user-attachments/assets/71ff9256-bb7f-48e6-806e-bbfb363e403c" />
+
 ## Supported Databases
 
 ### Relational Databases
