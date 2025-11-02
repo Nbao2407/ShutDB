@@ -9,15 +9,23 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-  },
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: ['./src/test/setup.ts'],
-    css: {
-      modules: {
-        classNameStrategy: 'non-scoped'
-      }
-    }
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+      },
+    },
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+        },
+      },
+    },
+    // Enable CSS minification
+    cssCodeSplit: true,
+    sourcemap: false,
+    // Target modern browsers for better optimization
+    target: 'ES2020',
   },
 })

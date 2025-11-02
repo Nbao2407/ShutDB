@@ -4,10 +4,13 @@ A lightweight desktop application for managing database services on Windows.
 
 ## Features
 
+- ✨ **Modern Fluent Design UI** - Windows 11 inspired dark mode with acrylic effects
+- 🎨 **Vibrant Color-Coded Stats** - Real-time visual indicators (blue/green/orange)
 - Start, Stop, and Restart database services
-- Real-time service status monitoring
+- Real-time service status monitoring with live status badges
+- Hierarchical service filtering and search
 - Minimal resource usage (<50MB RAM)
-- Simple and intuitive interface
+- Simple and intuitive interface with keyboard shortcuts
 - Support for all popular databases
 
 ## Supported Databases
@@ -164,9 +167,27 @@ If you have a database service that isn't detected, it may be using a non-standa
 - **Framework**: Wails v2
 - **Backend**: Go with Windows Service Control Manager APIs
 - **Frontend**: React 18 + TypeScript 5 + Vite
+- **Design System**: Windows 11 Fluent Design with CSS variables
+- **UI Features**: Acrylic backgrounds, smooth animations, color-coded metrics
 - **Target RAM**: <50MB idle usage
 - **Polling Interval**: 5 seconds (2 seconds during operations)
 
-## License
+## UI/UX Design
 
-Copyright 2024
+The application features a modern, dark-mode interface inspired by Windows 11 Fluent Design:
+
+- **Color Palette**: 
+  - Dark grayscale backgrounds (#121212 to #4b4b4b)
+  - Bright blue accent (#2e86de) for primary actions
+  - Color-coded service stats (Blue: Total, Green: Active, Orange: Inactive)
+  
+- **Design Elements**:
+  - Acrylic material effects with blur and saturation
+  - Smooth animations and transitions (100-600ms)
+  - 4px standard border radius
+  - Glass morphism cards and components
+  
+- **Service Stats Display**:
+  - Fixed bottom-right corner for quick reference
+  - Real-time colored indicators with glow effects
+  - Hover animations and transitions

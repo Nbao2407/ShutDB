@@ -1,0 +1,135 @@
+/**
+ * SearchInputWithButton Component Styles
+ * Combines text input with action button
+ */
+
+.container {
+  width: 100%;
+  max-width: 100%;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  background: var(--acrylic-bg-card);
+  -webkit-backdrop-filter: blur(var(--blur-minimal));
+  backdrop-filter: blur(var(--blur-minimal));
+  border: 1px solid rgba(200, 200, 200, 0.08);
+  border-radius: 9999px;
+  height: 40px;
+  overflow: hidden;
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  padding-right: 12px;
+}
+
+.inputWrapper:focus-within {
+  border-color: rgba(200, 200, 200, 0.15);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), var(--shadow-acrylic-sm);
+  background: var(--glass-surface-hover);
+}
+
+.inputWrapper:hover:not(:has(input:disabled)) {
+  border-color: rgba(200, 200, 200, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), var(--shadow-acrylic-sm);
+}
+
+/* Left Icon */
+.leftIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 100%;
+  color: var(--fluent-text-secondary);
+  padding-left: 12px;
+  flex-shrink: 0;
+  font-size: 18px;
+}
+
+.leftIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Input Field */
+.input {
+  flex: 1;
+  height: 100%;
+  border: none;
+  background: transparent;
+  color: var(--fluent-text-primary);
+  font-size: 14px;
+  font-family: inherit;
+  padding: 0 12px;
+  outline: none;
+  transition: color var(--fluent-duration-fast) var(--fluent-easing-standard);
+}
+
+.input::placeholder {
+  color: var(--fluent-text-secondary);
+}
+
+.input:disabled {
+  color: var(--fluent-text-disabled);
+  cursor: not-allowed;
+}
+/* 
+.input:focus {
+  color: var(--fluent-text-primary);
+} */
+
+/* Right Button - REMOVED */
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .inputWrapper {
+    height: 36px;
+    border-radius: 999px;
+  }
+
+  .leftIcon {
+    width: 36px;
+    padding-left: 10px;
+  }
+
+  .leftIcon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .input {
+    font-size: 13px;
+    padding: 0 8px;
+  }
+
+  .button {
+    width: 36px;
+  }
+
+  .buttonIcon svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .inputWrapper,
+  .input,
+  .button,
+  .button::before {
+    transition: none;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .inputWrapper {
+    border-width: 2px;
+  }
+
+  .button {
+    border: 1px solid var(--fluent-text-primary);
+  }
+}

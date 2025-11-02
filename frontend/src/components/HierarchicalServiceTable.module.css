@@ -1,6 +1,6 @@
 /* ============================================
    HierarchicalServiceTable Component
-   Hierarchical table displaying database services grouped by type
+   Using Enhanced Acrylic Design System
    ============================================ */
 
 .hierarchicalTable {
@@ -11,7 +11,7 @@
 }
 
 /* ============================================
-   Table Summary Stats
+   Table Summary Stats - Acrylic Medium Layer
    ============================================ */
 
 .tableSummary {
@@ -19,10 +19,19 @@
   align-items: center;
   gap: var(--space-4);
   padding: var(--space-3) var(--space-4);
-  background: var(--fluent-bg-secondary);
+  background: var(--acrylic-bg-card);
+  -webkit-backdrop-filter: blur(var(--blur-background));
+  backdrop-filter: blur(var(--blur-background));
   border: 1px solid var(--fluent-border-primary);
   border-radius: var(--radius-lg);
   margin-bottom: var(--space-2);
+  box-shadow: var(--shadow-acrylic-md);
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+}
+
+.tableSummary:hover {
+  box-shadow: var(--shadow-acrylic-lg);
+  border-color: var(--fluent-border-secondary);
 }
 
 .summaryItem {
@@ -68,51 +77,95 @@
 }
 
 /* ============================================
-   Database Group
+   Database Group - Acrylic Deep Medium Layer
    ============================================ */
 
 .databaseGroup {
-  border: 1px solid var(--fluent-border-primary);
+  border: 2px solid var(--fluent-border-primary);
   border-radius: var(--radius-lg);
-  background: var(--fluent-bg-secondary);
+  background: var(--acrylic-bg-panel);
+  -webkit-backdrop-filter: blur(var(--blur-background));
+  backdrop-filter: blur(var(--blur-background));
   overflow: hidden;
   transition: all var(--fluent-duration-normal) var(--fluent-easing-standard);
+  box-shadow: var(--shadow-acrylic-md), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  position: relative;
+  margin-bottom: var(--space-2);
+}
+
+.databaseGroup::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  z-index: 1;
 }
 
 .databaseGroup:hover {
-  border-color: var(--fluent-border-secondary);
-  box-shadow: var(--fluent-shadow-hover);
+  border-color: rgba(200, 200, 200, 0.15);
+  box-shadow: var(--shadow-acrylic-lg), inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  transform: translateY(-2px);
 }
 
-/* Group Header */
+/* Group Header - Acrylic Accent Deep Layer */
 .groupHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: var(--space-4) var(--space-4);
-  background: var(--fluent-bg-tertiary);
-  border-bottom: 1px solid var(--fluent-border-subtle);
+  background: var(--acrylic-accent-medium);
+  -webkit-backdrop-filter: blur(var(--blur-strong));
+  backdrop-filter: blur(var(--blur-strong));
+  border-bottom: 2px solid rgba(200, 200, 200, 0.15);
+  border: none;
   cursor: pointer;
   transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
   user-select: none;
-  min-height: 44px;
-  border-radius: 4px;
-  margin: 4px var(--space-2);
+  min-height: 48px;
+  border-radius: 8px;
+  margin: 8px var(--space-2);
+  box-shadow: var(--shadow-acrylic-lg), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.groupHeader::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  border-radius: 8px 8px 0 0;
 }
 
 .groupHeader:hover {
-  background: var(--fluent-bg-hover);
-  transform: translateY(-1px);
+  background: var(--acrylic-accent-light);
+  transform: translateY(-3px);
+  border-color: rgba(200, 200, 200, 0.15);
+  border-bottom-color: rgba(200, 200, 200, 0.15);
+  box-shadow: var(--shadow-acrylic-xl), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .groupHeader:active {
   transform: translateY(0);
-  background: var(--fluent-bg-pressed);
+  background: var(--acrylic-accent-deep);
+  box-shadow: var(--shadow-acrylic-md), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .groupHeader.expanded {
-  background: var(--fluent-bg-hover);
-  border-bottom-color: var(--fluent-border-primary);
+  background: var(--acrylic-accent-light);
+  border-color: rgba(200, 200, 200, 0.15);
+  border-bottom-color: rgba(200, 200, 200, 0.15);
+  box-shadow: var(--shadow-acrylic-lg), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .groupHeaderContent {
@@ -190,8 +243,10 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: var(--fluent-bg-primary);
-  border: 1px solid var(--fluent-border-primary);
+  background: var(--acrylic-bg-card);
+  -webkit-backdrop-filter: blur(var(--blur-minimal));
+  backdrop-filter: blur(var(--blur-minimal));
+  border: 1px solid rgba(200, 200, 200, 0.08);
   border-radius: var(--radius-md);
   color: var(--fluent-text-secondary);
   cursor: pointer;
@@ -200,18 +255,22 @@
   --wails-draggable: no-drag;
   position: relative;
   overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .groupActionBtn:hover:not(:disabled) {
-  background: var(--fluent-bg-hover);
-  border-color: var(--fluent-accent);
+  background: var(--acrylic-bg-dropdown);
+  -webkit-backdrop-filter: blur(var(--blur-subtle));
+  backdrop-filter: blur(var(--blur-subtle));
+  border-color: rgba(200, 200, 200, 0.12);
   color: var(--fluent-text-primary);
   transform: translateY(-1px);
-  box-shadow: var(--fluent-shadow-sm);
+  box-shadow: var(--shadow-acrylic-sm);
 }
 
 .groupActionBtn:active:not(:disabled) {
   transform: translateY(0);
+  background: var(--acrylic-accent-deep);
 }
 
 .groupActionBtn:disabled {
@@ -225,9 +284,9 @@
 .groupActionBtn:focus-visible {
   outline: 2px solid var(--fluent-accent);
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(0, 120, 212, 0.3);
-  background: var(--fluent-bg-hover);
-  border-color: var(--fluent-accent);
+  box-shadow: 0 0 0 4px rgba(200, 200, 200, 0.1);
+  background: var(--acrylic-bg-dropdown);
+  border-color: rgba(200, 200, 200, 0.15);
 }
 
 .groupActionBtn svg {
@@ -241,8 +300,8 @@
    ============================================ */
 
 .groupServices {
-  background: var(--fluent-bg-primary);
-  border-top: 1px solid var(--fluent-border-subtle);
+  background: transparent;
+  border-top: 1px solid rgba(46, 134, 222, 0.2);
 }
 
 .servicesTable {
@@ -253,8 +312,11 @@
 }
 
 .tableHeader {
-  background: var(--fluent-bg-secondary);
+  background: var(--acrylic-bg-dropdown);
+  -webkit-backdrop-filter: blur(var(--blur-subtle));
+  backdrop-filter: blur(var(--blur-subtle));
   border-bottom: 1px solid var(--fluent-border-primary);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .tableHeader th {

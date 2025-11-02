@@ -110,11 +110,10 @@ export const HierarchicalServiceTable: React.FC<HierarchicalServiceTableProps> =
         {databaseGroups.map((group) => (
           <div key={group.type} className={styles.databaseGroup}>
             {/* Group Header */}
-            <div
+            <button
               className={`${styles.groupHeader} ${group.expanded ? styles.expanded : ""}`}
               onClick={() => toggleGroup(group.type)}
-              role="button"
-              tabIndex={0}
+              type="button"
               aria-expanded={group.expanded}
               aria-controls={`group-${group.type}`}
               onKeyDown={(e) => {
@@ -182,7 +181,7 @@ export const HierarchicalServiceTable: React.FC<HierarchicalServiceTableProps> =
                   <FluentIcon iconName="stop" />
                 </button>
               </div>
-            </div>
+            </button>
 
             {/* Group Services */}
             {group.expanded && (

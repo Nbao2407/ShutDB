@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "../hooks/useDebounce";
+import { SearchInputWithButton } from "./SearchInputWithButton";
 import styles from "./SearchAndFilter.module.css";
 
 // Extended ServiceCategory type for filtering (includes "all")
@@ -52,30 +53,15 @@ export const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
   return (
     <div className={styles.searchAndFilter}>
       {/* Search Container */}
-      <div className={styles.searchContainer}>
-        <svg
-          className={styles.searchIcon}
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <circle cx="11" cy="11" r="8" />
-          <path d="m21 21-4.35-4.35" />
-        </svg>
-        <input
-          type="text"
-          className={styles.searchInput}
-          placeholder="Search services..."
-          value={localSearchTerm}
-          onChange={(e) => setLocalSearchTerm(e.target.value)}
-          aria-label="Search services"
-          title="Search services"
-        />
-      </div>
-
+      <SearchInputWithButton
+        placeholder="Search services..."
+        icon="search"
+        value={localSearchTerm}
+        onChange={(e) => setLocalSearchTerm(e.target.value)}
+        onSearch={(value) => onSearchChange(value)}
+        aria-label="Search services"
+        title="Search services"
+      />
     </div>
   );
 };

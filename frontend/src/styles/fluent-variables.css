@@ -13,7 +13,7 @@
   /* ============================================
      CORE BACKGROUND COLORS - Windows 11 Fluent Dark Mode
      ============================================ */
-  /*--fluent-bg-primary: #121212;          
+  /* --fluent-bg-primary: #121212;           */
   --fluent-bg-secondary: #262626;        
   --fluent-bg-tertiary: #3d3d3d;      
   --fluent-bg-elevated: #4b4b4b;         
@@ -22,20 +22,67 @@
   --fluent-bg-active: #373737;            
   --fluent-bg-focus: rgba(46, 134, 222, 0.12); 
 
-  --fluent-bg-selected: #1a4d7a;         
+  /* --fluent-bg-selected: #1a4d7a;         
   --fluent-bg-selected-hover: #205d92;    
-  --fluent-bg-selected-subtle: rgba(46, 134, 222, 0.15); */
+  --fluent-bg-selected-subtle: rgba(46, 134, 222, 0.15);  */
 
-  --acrylic-bg-primary: rgba(18, 18, 18, 0.85);
-  --acrylic-bg-secondary: rgb(0, 0, 0);
- /* --acrylic-bg-secondary: rgba(38, 38, 38, 0.88);
- /* --acrylic-bg-tertiary: rgba(61, 61, 61, 0.82);*/
-  --acrylic-bg-header: rgba(26, 26, 26, 0.92);
-  --acrylic-bg-modal: rgba(75, 75, 75, 0.90);
+  /* ============================================
+     ENHANCED ACRYLIC LAYERS - Multi-Grade System
+     Sophisticated depth layering with varying opacities
+     for immersive, luxurious dark mode experience
+     ============================================ */
 
-  --blur-background: 40px;
-  --blur-subtle: 20px;
-  --blur-strong: 60px;
+  /* LAYER 1: ULTRA-DEEP (Minimal tint, maximum blur) */
+  --acrylic-layer-ultra-deep: rgba(18, 18, 18, 0.95);
+  --acrylic-layer-ultra-deep-alt: rgba(12, 12, 12, 0.98);
+
+  /* LAYER 2: DEEP (Strong base, subtle tint) */
+  --acrylic-bg-primary: rgba(18, 18, 18, 0.90);
+  --acrylic-layer-deep: rgba(18, 18, 18, 0.92);
+  --acrylic-layer-deep-alt: rgba(20, 20, 20, 0.94);
+
+  /* LAYER 3: MEDIUM (Balanced opacity, visible tint) */
+  --acrylic-bg-secondary: rgba(38, 38, 38, 0.88);
+  --acrylic-layer-medium: rgba(38, 38, 38, 0.85);
+  --acrylic-layer-medium-alt: rgba(42, 42, 42, 0.82);
+  --acrylic-layer-medium-light: rgba(48, 48, 48, 0.80);
+
+  /* LAYER 4: LIGHT (Higher transparency, prominent tint) */
+  --acrylic-layer-light: rgba(61, 61, 61, 0.75);
+  --acrylic-layer-light-alt: rgba(66, 66, 66, 0.72);
+  --acrylic-layer-light-elevated: rgba(72, 72, 72, 0.70);
+
+  /* LAYER 5: ULTRA-LIGHT (Minimal opacity, maximum tint visibility) */
+  --acrylic-layer-ultra-light: rgba(85, 85, 85, 0.60);
+  --acrylic-layer-ultra-light-hover: rgba(95, 95, 95, 0.65);
+
+  /* ACCENT TINTED ACRYLICS (Refined teal/slate tint for accent regions) */
+  --acrylic-accent-deep: rgba(15, 25, 35, 0.92);      /* Deep slate-tinted */
+  /* --acrylic-accent-medium: rgba(20, 32, 42, 0.87);    Medium slate-tinted */
+  /* --acrylic-accent-light: rgba(28, 45, 58, 0.78);     Light slate-tinted */
+
+  /* COMPONENT-SPECIFIC ACRYLICS */
+  --acrylic-bg-header: rgba(18, 18, 18, 0.95);        /* Header: Ultra-dark for contrast */
+  --acrylic-bg-modal: rgba(30, 30, 30, 0.90);         /* Modal: Deep with slight tint */
+  /* --acrylic-bg-panel: rgba(45, 45, 45, 0.55);         Panel: Medium for content areas */
+  --acrylic-bg-card: rgba(38, 38, 38, 0.82);          /* Card: Slightly lighter than panel */
+  --acrylic-bg-sidebar: rgba(20, 20, 20, 0.92);       /* Sidebar: Very deep for navigation */
+  --acrylic-bg-overlay: rgba(0, 0, 0, 0.50);          /* Overlay: Semi-transparent black */
+  --acrylic-bg-dropdown: rgba(35, 35, 35, 0.6);      /* Dropdown: Medium-dark with definition */
+  --acrylic-bg-tooltip: rgba(25, 25, 25, 0.95);       /* Tooltip: Ultra-dark for focus */
+  --acrylic-bg-popover: rgba(32, 32, 32, 0.90);       /* Popover: Deep for floating content */
+
+  /* GLASS MORPHISM SURFACES (Enhanced glassmorphic effect) */
+  --glass-surface-primary: rgba(20, 20, 20, 0.40);    /* Subtle glass overlay */
+  --glass-surface-secondary: rgba(30, 30, 30, 0.25);  /* Ultra-subtle for hover states */
+  --glass-surface-hover: rgba(50, 50, 50, 0.35);      /* Interactive glass state */
+
+  /* BLUR AMOUNTS - Calibrated for acrylic depth */
+  --blur-background: 40px;   /* Default blur for standard acrylics */
+  --blur-subtle: 20px;       /* Minimal blur for light acrylics */
+  --blur-strong: 60px;       /* Heavy blur for deep acrylics */
+  --blur-ultra: 80px;        /* Maximum blur for ultra-deep layers */
+  --blur-minimal: 8px;       /* Micro blur for glass morphism */
 
   /* ============================================
      TEXT COLORS - Enhanced Hierarchy
@@ -53,13 +100,12 @@
      Modern, vibrant accent for selections and interactions
      ============================================ */
 
-  /* Primary Accent - Bright Blue */
-  --fluent-accent: #2e86de;               /* Primary bright blue */
-  --fluent-accent-hover: #4a9ae5;         /* Lighter hover state */
-  --fluent-accent-pressed: #2370c4;       /* Darker pressed state */
-  --fluent-accent-muted: rgba(46, 134, 222, 0.5); /* 50% opacity */
+  /* --fluent-accent: #2e86de;             
+  --fluent-accent-hover: #4a9ae5;        
+  --fluent-accent-pressed: #2370c4;     
+  --fluent-accent-muted: rgba(46, 134, 222, 0.5);
   --fluent-accent-secondary: rgba(46, 134, 222, 0.25);
-  --fluent-accent-tertiary: rgba(46, 134, 222, 0.12);
+  --fluent-accent-tertiary: rgba(46, 134, 222, 0.12); */
 
   /* Link color */
   --fluent-text-link: #4a9ae5;
@@ -68,11 +114,6 @@
   /* Alternative Accent - Purple for secondary actions */
   --fluent-accent-alt: #8b5cf6;
   --fluent-accent-alt-hover: #a78bfa;
-
-  /* ============================================
-     STATUS COLORS - Refined for Dark Theme
-     Professional, easier on eyes, WCAG AA compliant
-     ============================================ */
 
   /* Success - Green (Darker, better contrast) */
   --fluent-success: #16a34a;              /* Base green - 7.1:1 contrast */
@@ -113,16 +154,29 @@
 
   /* ============================================
      SHADOWS & DEPTH - Enhanced for layered UI
+     Sophisticated layering with acrylic-aware shadows
      ============================================ */
+  
+  /* ACRYLIC-SPECIFIC SHADOWS (Soft, diffused) */
+  --shadow-acrylic-sm: 0 2px 12px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --shadow-acrylic-md: 0 4px 20px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --shadow-acrylic-lg: 0 8px 32px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --shadow-acrylic-xl: 0 12px 48px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+  /* STANDARD SHADOWS (Previous system, maintained) */
   --fluent-shadow-flyout: 0 12px 40px rgba(0, 0, 0, 0.7), 0 4px 16px rgba(0, 0, 0, 0.5);
   --fluent-shadow-popup: 0 8px 32px rgba(0, 0, 0, 0.6), 0 2px 12px rgba(0, 0, 0, 0.4);
   --fluent-shadow-card: 0 4px 20px rgba(0, 0, 0, 0.5), 0 1px 8px rgba(0, 0, 0, 0.3);
   --fluent-shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.4);
 
-  /* Interactive shadows - blue glow on hover/focus */
+  /* INTERACTIVE SHADOWS - Blue glow on hover/focus */
   --fluent-shadow-hover: 0 6px 16px rgba(46, 134, 222, 0.25), 0 2px 8px rgba(46, 134, 222, 0.15);
   --fluent-shadow-active: 0 2px 8px rgba(46, 134, 222, 0.2), 0 1px 4px rgba(46, 134, 222, 0.1);
   --fluent-shadow-focus: 0 0 0 3px rgba(46, 134, 222, 0.3);
+
+  /* ELEVATED INTERACTION SHADOWS (For layered acrylic) */
+  --shadow-hover-acrylic: 0 8px 24px rgba(46, 134, 222, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --shadow-active-acrylic: 0 4px 16px rgba(46, 134, 222, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 
   /* ============================================
      BORDER RADIUS
@@ -268,6 +322,125 @@
 
   /* Overlay */
   --fluent-overlay-bg: rgba(0, 0, 0, 0.6);
+}
+
+/* ============================================
+   ACRYLIC LAYER USAGE GUIDE
+   ============================================ */
+
+/* LAYER APPLICATIONS */
+/* 
+  ULTRA-DEEP (95-98% opacity):
+  - Background fills for entire application
+  - Sidebar navigation containers
+  - Header/titlebar areas
+  - Creates maximum depth and focus
+
+  DEEP (90-94% opacity):
+  - Modal dialogs
+  - Primary content panels
+  - Cards with important information
+  - Hover states on deep layers
+
+  MEDIUM (80-88% opacity):
+  - Secondary panels
+  - Dropdown menus
+  - Popover containers
+  - Balanced visibility with depth
+
+  LIGHT (70-75% opacity):
+  - Hover overlays
+  - Accent-tinted sections
+  - Secondary UI elements
+  - Floating elements
+
+  ULTRA-LIGHT (60-65% opacity):
+  - Glass morphism effects
+  - Subtle overlays
+  - Accent highlighting
+  - Minimal opacity for maximum tint visibility
+*/
+
+/* COMPONENT-SPECIFIC IMPLEMENTATIONS */
+
+/* Header/Titlebar - Ultra-dark for maximum focus */
+.header, .titlebar, .navbar {
+  background: var(--acrylic-bg-header);
+  -webkit-backdrop-filter: blur(var(--blur-ultra));
+  backdrop-filter: blur(var(--blur-ultra));
+  box-shadow: var(--shadow-acrylic-md);
+}
+
+/* Sidebar - Deep acrylic for navigation */
+.sidebar, .navigation-panel {
+  background: var(--acrylic-bg-sidebar);
+  -webkit-backdrop-filter: blur(var(--blur-strong));
+  backdrop-filter: blur(var(--blur-strong));
+  border-right: 1px solid var(--fluent-border-primary);
+}
+
+/* Modal Dialogs - Deep with prominent shadow */
+.modal, .dialog {
+  background: var(--acrylic-bg-modal);
+  -webkit-backdrop-filter: blur(var(--blur-background));
+  backdrop-filter: blur(var(--blur-background));
+  box-shadow: var(--shadow-acrylic-xl);
+}
+
+/* Content Cards - Medium opacity for visual hierarchy */
+.card, .panel, .content-box {
+  background: var(--acrylic-bg-card);
+  -webkit-backdrop-filter: blur(var(--blur-background));
+  backdrop-filter: blur(var(--blur-background));
+  box-shadow: var(--shadow-acrylic-md);
+  border: 1px solid var(--fluent-border-primary);
+}
+
+/* Dropdown/Select Menus - Medium-dark for distinction */
+.dropdown, .select-menu, .context-menu {
+  background: var(--acrylic-bg-dropdown);
+  -webkit-backdrop-filter: blur(var(--blur-background));
+  backdrop-filter: blur(var(--blur-background));
+  box-shadow: var(--shadow-acrylic-lg);
+  border: 1px solid var(--fluent-border-secondary);
+}
+
+/* Popover/Floating Elements - Medium with accent tint option */
+.popover, .tooltip, .floating-element {
+  background: var(--acrylic-bg-popover);
+  -webkit-backdrop-filter: blur(var(--blur-background));
+  backdrop-filter: blur(var(--blur-background));
+  box-shadow: var(--shadow-acrylic-lg);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Glass Morphism Overlay - Ultra-light for subtle effects */
+.glass-overlay, .glass-surface {
+  background: var(--glass-surface-primary);
+  -webkit-backdrop-filter: blur(var(--blur-minimal));
+  backdrop-filter: blur(var(--blur-minimal));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Overlay/Backdrop - Black semi-transparent */
+.overlay, .modal-backdrop {
+  background: var(--acrylic-bg-overlay);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+/* Interactive Hover State - Acrylic-aware */
+.interactive-element:hover {
+  background: var(--acrylic-layer-light);
+  box-shadow: var(--shadow-hover-acrylic);
+  transition: all 150ms var(--fluent-easing-standard);
+}
+
+/* Active/Selected State - With accent */
+.interactive-element:active,
+.interactive-element.active {
+  background: var(--acrylic-accent-medium);
+  box-shadow: var(--shadow-active-acrylic);
 }
 
 /* ============================================

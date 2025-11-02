@@ -22,8 +22,11 @@ export interface StatusBadgeProps {
  * - High contrast mode support
  * - Reduced motion support for animations
  * - Focus indicators for keyboard navigation
+ * 
+ * PERFORMANCE:
+ * - Memoized to prevent unnecessary re-renders when props haven't changed
  */
-export const StatusBadge: React.FC<StatusBadgeProps> = ({
+const StatusBadgeComponent: React.FC<StatusBadgeProps> = ({
   status,
   isTransitioning = false,
   className = "",
@@ -77,5 +80,8 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
     </div>
   );
 };
+
+// Memoized export prevents re-renders when props are identical
+export const StatusBadge = React.memo(StatusBadgeComponent);
 
 export default StatusBadge;
