@@ -1,22 +1,26 @@
 {
   "$schema": "https://wails.io/schemas/config.v2.json",
-  "name": "service-db-dashboard",
-  "outputfilename": "service-db-dashboard",
+  "name": "ShutDB",
+  "outputfilename": "ShutDB",
   "frontend:install": "npm install",
   "frontend:build": "npm run build",
   "frontend:dev:watcher": "npm run dev",
   "frontend:dev:serverUrl": "auto",
   "author": {
-    "name": "Developer",
-    "email": "dev@example.com"
+    "name": "Rudy",
+    "email": "RudyNGB@proton.me"
   },
   "info": {
-    "companyName": "DevTools",
-    "productName": "Service Database Dashboard",
-    "productVersion": "1.0.0",
-    "copyright": "Copyright 2024",
+    "companyName": "Rudy",
+    "productName": "ShutDB",
+    "productVersion": "0.6.0",
+    "copyright": "Copyright 2025",
+    "license": "MIT",
     "comments": "Lightweight database service manager"
   },
   "wailsjsdir": "./frontend/src",
-  "version": "2"
+  "version": "2",
+  "icons": {
+    "windows": "./build/windows/icon.ico"
+  }
 }
