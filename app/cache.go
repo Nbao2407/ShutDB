@@ -90,6 +90,40 @@ func (sc *ServiceCache) Clear() {
 	sc.mu.Lock()
 	defer sc.mu.Unlock()
 
+	// Clear references to help garbage collection
+	for k := range sc.services {
+		delete(sc.services, k)
+	}
 	sc.services = make(map[string]*Service)
 	sc.lastUpdate = time.Time{}
+}
+
+// Cleanup removes expired entries and optimizes memory usage
+func (sc *ServiceCache) Cleanup() {
+	sc.mu.Lock()
+	defer sc.mu.Unlock()
+
+	if sc.IsExpiredInternal() {
+		// Clear all entries if cache is completely expired
+		for k := range sc.services {
+			delete(sc.services, k)
+		}
+		sc.services = make(map[string]*Service)
+		sc.lastUpdate = time.Time{}
+	}
+}
+
+// IsExpiredInternal checks expiration without locking (for internal use)
+func (sc *ServiceCache) IsExpiredInternal() bool {
+	if sc.lastUpdate.IsZero() {
+		return true
+	}
+	return time.Since(sc.lastUpdate) > sc.ttl
+}
+
+// Size returns the number of cached services
+func (sc *ServiceCache) Size() int {
+	sc.mu.RLock()
+	defer sc.mu.RUnlock()
+	return len(sc.services)
 }

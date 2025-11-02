@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"os"
+	"time"
 
 	"github.com/getlantern/systray"
 	"github.com/wailsapp/wails/v2/pkg/menu"
@@ -16,13 +17,14 @@ var iconData []byte
 
 // TrayManager manages system tray icon, context menu, and tray-related operations
 type TrayManager struct {
-	ctx           context.Context
-	configManager *ConfigManager
+	ctx            context.Context
+	configManager  *ConfigManager
 	serviceManager *ServiceManager
 	windowManager  *WindowManager
-	trayMenu      *menu.Menu
-	isInitialized bool
+	trayMenu       *menu.Menu
+	isInitialized  bool
 	systrayRunning bool
+	forceExit      bool // Flag to bypass minimize-to-tray on exit
 }
 
 // NewTrayManager creates a new TrayManager instance with dependency injection
@@ -37,12 +39,12 @@ func NewTrayManager(configManager *ConfigManager, serviceManager *ServiceManager
 // OnStartup initializes the tray icon on application start
 func (tm *TrayManager) OnStartup(ctx context.Context) error {
 	tm.ctx = ctx
-	
+
 	// Initialize tray icon
 	if err := tm.InitializeTray(); err != nil {
 		return err
 	}
-	
+
 	tm.isInitialized = true
 	return nil
 }
@@ -51,10 +53,10 @@ func (tm *TrayManager) OnStartup(ctx context.Context) error {
 func (tm *TrayManager) OnShutdown(ctx context.Context) {
 	// Clean up tray icon and system resources
 	tm.CleanupTray()
-	
+
 	// Reset initialization state
 	tm.isInitialized = false
-	
+
 	// Clear context reference
 	tm.ctx = nil
 }
@@ -65,7 +67,7 @@ func (tm *TrayManager) InitializeTray() error {
 	tm.trayMenu = menu.NewMenu()
 	tm.trayMenu.AddText("Show ShutDB", keys.CmdOrCtrl("o"), tm.HandleOpenApp)
 	tm.trayMenu.AddSeparator()
-	
+
 	serviceEnabled := tm.configManager.GetServiceState()
 	var serviceToggleText string
 	if serviceEnabled {
@@ -76,22 +78,22 @@ func (tm *TrayManager) InitializeTray() error {
 	tm.trayMenu.AddText(serviceToggleText, nil, tm.HandleToggleService)
 	tm.trayMenu.AddSeparator()
 	tm.trayMenu.AddText("Exit", keys.CmdOrCtrl("q"), tm.HandleExit)
-	
+
 	// Set as application menu (fallback)
 	runtime.MenuSetApplicationMenu(tm.ctx, tm.trayMenu)
-	
+
 	// Initialize real system tray using systray library
 	if !tm.systrayRunning {
 		go tm.runSystray()
 	}
-	
+
 	return nil
 }
 
 // runSystray initializes and runs the system tray
 func (tm *TrayManager) runSystray() {
 	tm.systrayRunning = true
-	
+
 	systray.Run(tm.onSystrayReady, tm.onSystrayExit)
 }
 
@@ -99,14 +101,14 @@ func (tm *TrayManager) runSystray() {
 func (tm *TrayManager) onSystrayReady() {
 	// Load and set icon
 	tm.loadAndSetIcon()
-	
+
 	systray.SetTitle("ShutDB")
 	systray.SetTooltip("ShutDB")
-	
+
 	// Create menu items
 	mShow := systray.AddMenuItem("Open ShutDB", "Show the application window")
 	systray.AddSeparator()
-	
+
 	// Service toggle menu item
 	serviceEnabled := tm.configManager.GetServiceState()
 	var serviceToggleText string
@@ -116,10 +118,10 @@ func (tm *TrayManager) onSystrayReady() {
 		serviceToggleText = "Enable Service"
 	}
 	mToggleService := systray.AddMenuItem(serviceToggleText, "Toggle service state")
-	
+
 	systray.AddSeparator()
 	mQuit := systray.AddMenuItem("End Task", "Exit the application")
-	
+
 	// Handle menu clicks in separate goroutines
 	go func() {
 		for {
@@ -130,6 +132,7 @@ func (tm *TrayManager) onSystrayReady() {
 				tm.handleSystrayToggleService(mToggleService)
 			case <-mQuit.ClickedCh:
 				tm.HandleExit(nil)
+				// Force exit the systray goroutine
 				return
 			}
 		}
@@ -145,10 +148,10 @@ func (tm *TrayManager) onSystrayExit() {
 func (tm *TrayManager) handleSystrayToggleService(menuItem *systray.MenuItem) {
 	// Get current service state
 	currentState := tm.configManager.GetServiceState()
-	
+
 	// Toggle the state
 	newState := !currentState
-	
+
 	// Update the configuration
 	if err := tm.configManager.SetServiceState(newState); err != nil {
 		// Show error notification using Wails runtime
@@ -161,7 +164,7 @@ func (tm *TrayManager) handleSystrayToggleService(menuItem *systray.MenuItem) {
 		}
 		return
 	}
-	
+
 	// Update menu item text
 	var newText string
 	if newState {
@@ -172,7 +175,7 @@ func (tm *TrayManager) handleSystrayToggleService(menuItem *systray.MenuItem) {
 		systray.SetTooltip("ShutDB - Service Disabled")
 	}
 	menuItem.SetTitle(newText)
-	
+
 	// Show success notification if enabled
 	if tm.configManager.GetTrayNotifications() && tm.ctx != nil {
 		var message string
@@ -181,7 +184,7 @@ func (tm *TrayManager) handleSystrayToggleService(menuItem *systray.MenuItem) {
 		} else {
 			message = "Service disabled successfully"
 		}
-		
+
 		runtime.MessageDialog(tm.ctx, runtime.MessageDialogOptions{
 			Type:    runtime.InfoDialog,
 			Title:   "Service Status",
@@ -201,7 +204,7 @@ func (tm *TrayManager) UpdateTrayIcon() error {
 			systray.SetTooltip("ShutDB - Service Disabled")
 		}
 	}
-	
+
 	// Recreate the Wails menu to update the service toggle text
 	if tm.ctx != nil {
 		return tm.InitializeTray()
@@ -220,10 +223,10 @@ func (tm *TrayManager) HandleOpenApp(data *menu.CallbackData) {
 func (tm *TrayManager) HandleToggleService(data *menu.CallbackData) {
 	// Get current service state
 	currentState := tm.configManager.GetServiceState()
-	
+
 	// Toggle the state
 	newState := !currentState
-	
+
 	// Update the configuration
 	if err := tm.configManager.SetServiceState(newState); err != nil {
 		// Show error notification using Wails runtime
@@ -234,13 +237,13 @@ func (tm *TrayManager) HandleToggleService(data *menu.CallbackData) {
 		})
 		return
 	}
-	
+
 	// Update the tray icon to reflect new state
 	if err := tm.UpdateTrayIcon(); err != nil {
 		// Log error but don't show dialog for tray update failures
 		// The state change was successful, just the UI update failed
 	}
-	
+
 	// Show success notification
 	var message string
 	if newState {
@@ -248,7 +251,7 @@ func (tm *TrayManager) HandleToggleService(data *menu.CallbackData) {
 	} else {
 		message = "Service disabled successfully"
 	}
-	
+
 	// Show notification if enabled in config
 	if tm.configManager.GetTrayNotifications() {
 		runtime.MessageDialog(tm.ctx, runtime.MessageDialogOptions{
@@ -261,7 +264,22 @@ func (tm *TrayManager) HandleToggleService(data *menu.CallbackData) {
 
 // HandleExit handles the "Exit" context menu action
 func (tm *TrayManager) HandleExit(data *menu.CallbackData) {
+	// Set force exit flag to bypass minimize-to-tray behavior
+	tm.forceExit = true
+
+	// Clean up tray first
+	tm.CleanupTray()
+
+	// Force quit the application
 	runtime.Quit(tm.ctx)
+
+	// As a backup, if runtime.Quit doesn't work, use os.Exit after a delay
+	go func() {
+		// Give 2 seconds for graceful shutdown
+		time.Sleep(2 * time.Second)
+		// Force exit as last resort
+		os.Exit(0)
+	}()
 }
 
 // MinimizeToTray minimizes the application to the system tray
@@ -272,7 +290,7 @@ func (tm *TrayManager) MinimizeToTray() error {
 		tm.windowManager.Minimize()
 		return nil
 	}
-	
+
 	// Use WindowManager's MinimizeToTray method
 	return tm.windowManager.MinimizeToTray()
 }
@@ -288,15 +306,23 @@ func (tm *TrayManager) CleanupTray() {
 	// Quit the system tray
 	if tm.systrayRunning {
 		systray.Quit()
+		tm.systrayRunning = false
 	}
-	
+
 	if tm.isInitialized && tm.ctx != nil {
 		// Clear the application menu
 		runtime.MenuSetApplicationMenu(tm.ctx, nil)
-		
+
 		// Clear menu reference
 		tm.trayMenu = nil
 	}
+
+	tm.isInitialized = false
+}
+
+// IsForceExit returns true if the application should force exit (bypass minimize to tray)
+func (tm *TrayManager) IsForceExit() bool {
+	return tm.forceExit
 }
 
 // GetServiceStatus returns the current service status for tray icon updates
@@ -305,7 +331,7 @@ func (tm *TrayManager) GetServiceStatus() ServiceStatus {
 	if !tm.configManager.GetServiceState() {
 		return StatusStopped
 	}
-	
+
 	// For now, return running if enabled
 	// This could be enhanced to check actual service status
 	return StatusRunning
@@ -316,7 +342,7 @@ func (tm *TrayManager) RefreshContextMenu() error {
 	if tm.ctx == nil {
 		return nil
 	}
-	
+
 	// Recreate the menu to ensure fresh state
 	return tm.InitializeTray()
 }
@@ -340,13 +366,13 @@ func (tm *TrayManager) loadAndSetIcon() {
 		"app.ico",
 		"icon.ico",
 	}
-	
+
 	for _, path := range iconPaths {
 		if data, err := os.ReadFile(path); err == nil {
 			systray.SetIcon(data)
 			return
 		}
 	}
-	
+
 	// If no icon file found, systray will use a default icon
 }

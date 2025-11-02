@@ -64,7 +64,7 @@
   /* COMPONENT-SPECIFIC ACRYLICS */
   --acrylic-bg-header: rgba(18, 18, 18, 0.95);        /* Header: Ultra-dark for contrast */
   --acrylic-bg-modal: rgba(30, 30, 30, 0.90);         /* Modal: Deep with slight tint */
-  /* --acrylic-bg-panel: rgba(45, 45, 45, 0.55);         Panel: Medium for content areas */
+   --acrylic-bg-panel: rgba(45, 45, 45, 0.55);        
   --acrylic-bg-card: rgba(38, 38, 38, 0.82);          /* Card: Slightly lighter than panel */
   --acrylic-bg-sidebar: rgba(20, 20, 20, 0.92);       /* Sidebar: Very deep for navigation */
   --acrylic-bg-overlay: rgba(0, 0, 0, 0.50);          /* Overlay: Semi-transparent black */

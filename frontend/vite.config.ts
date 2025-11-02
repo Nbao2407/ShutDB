@@ -13,18 +13,25 @@ export default defineConfig({
     terserOptions: {
       compress: {
         drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug'],
+      },
+      mangle: {
+        toplevel: true,
       },
     },
     rollupOptions: {
       output: {
         manualChunks: {
           'react-vendor': ['react', 'react-dom'],
+          'framer-motion': ['framer-motion'],
         },
       },
     },
-    // Enable CSS minification
+    // Enable CSS minification and smaller chunks
     cssCodeSplit: true,
     sourcemap: false,
+    chunkSizeWarningLimit: 500,
     // Target modern browsers for better optimization
     target: 'ES2020',
   },

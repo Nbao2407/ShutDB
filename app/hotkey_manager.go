@@ -394,14 +394,13 @@ func (hm *HotkeyManager) startMessageLoop() {
 			)
 
 			if ret == 0 { // No message available
-				// Small sleep to prevent busy waiting while allowing responsive shutdown
+				// Proper sleep to prevent busy waiting and reduce CPU usage
 				select {
 				case <-hm.stopMessageLoop:
 					return
 				case <-hm.ctx.Done():
 					return
-				default:
-					// Brief pause to prevent excessive CPU usage
+				case <-time.After(50 * time.Millisecond): // Sleep for 50ms to reduce CPU usage
 					continue
 				}
 			}

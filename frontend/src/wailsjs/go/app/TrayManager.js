@@ -26,6 +26,10 @@ export function InitializeTray() {
   return window['go']['app']['TrayManager']['InitializeTray']();
 }
 
+export function IsForceExit() {
+  return window['go']['app']['TrayManager']['IsForceExit']();
+}
+
 export function IsSystemTraySupported() {
   return window['go']['app']['TrayManager']['IsSystemTraySupported']();
 }

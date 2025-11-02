@@ -22,5 +22,8 @@
   "version": "2",
   "icons": {
     "windows": "./build/windows/icon.ico"
+  },
+  "windows": {
+    "requiredExecutionLevel": "requireAdministrator"
   }
 }

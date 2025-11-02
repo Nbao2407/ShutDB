@@ -16,6 +16,8 @@ export function HandleToggleService(arg1:menu.CallbackData):Promise<void>;
 
 export function InitializeTray():Promise<void>;
 
+export function IsForceExit():Promise<boolean>;
+
 export function IsSystemTraySupported():Promise<boolean>;
 
 export function IsTrayIconVisible():Promise<boolean>;

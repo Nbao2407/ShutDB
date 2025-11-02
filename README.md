@@ -1,6 +1,6 @@
 # Service Database Dashboard
 
-A lightweight desktop application for managing database services on Windows.
+A ~~lightweight~~ desktop application for managing database services on Windows.
 
 ## Features
 
@@ -9,9 +9,36 @@ A lightweight desktop application for managing database services on Windows.
 - Start, Stop, and Restart database services
 - Real-time service status monitoring with live status badges
 - Hierarchical service filtering and search
-- Minimal resource usage (<50MB RAM)
+~~Minimal resource usage (<50MB RAM)~~
 - Simple and intuitive interface with keyboard shortcuts
 - Support for all popular databases
+
+### ⚠️ System Requirements & Resource Cautions:
+
+**Minimum Resource Requirements:**
+- **RAM**: At least 30MB available (WebView2 requires ~400MB alone)
+- **CPU**: Modern processor (2010+)
+- **Storage**: ~400MB for application and WebView2 runtime
+- **OS**: Windows 10/11 with WebView2 runtime
+
+**⚠️ Caution for Lower-End Systems:**
+- On systems with **<2GB RAM**, this application may still consume noticeable resources
+- WebView2 runtime is **mandatory** and uses a baseline of 25-30MB
+- Running alongside other heavy applications may cause performance degradation
+- If system has **<1GB available RAM**, consider closing other applications first
+- On older processors (pre-2010), UI rendering may be slower
+
+**GPU Considerations:**
+- Acrylic effects use GPU resources; disable them in `main.go` if you have an older/integrated GPU
+- Systems with **no dedicated GPU** may experience slight lag with visual effects enabled
+
+### Trade-offs:
+- Service status updates are cached and may not reflect real-time changes immediately
+- Search filtering is debounced for performance (slight delay before results update)
+- Acrylic/visual effects are enabled by default; disable them in `main.go` for even lower GPU usage
+- Some UI transitions are optimized away for faster load times
+
+**Note**: These optimizations prioritize system efficiency. If you need real-time service status updates, you may want to reduce the cache TTL in `app/service_manager.go` (currently set to 30 seconds).
 
 ## Supported Databases
 
@@ -191,3 +218,68 @@ The application features a modern, dark-mode interface inspired by Windows 11 Fl
   - Fixed bottom-right corner for quick reference
   - Real-time colored indicators with glow effects
   - Hover animations and transitions
+
+## Performance Configuration
+
+### Tuning for Your Needs
+
+If you want to adjust the performance vs. responsiveness balance, here are the key configuration options:
+
+#### 1. Service Cache TTL (File: `app/service_manager.go`)
+
+```go
+cache := NewServiceCache(30 * time.Second) // Adjust this value
+```
+
+- **Current**: 30 seconds (optimized for low resource usage)
+- **More Responsive**: 5-10 seconds (increases API calls)
+- **Less Responsive**: 60+ seconds (reduces API calls further)
+
+#### 2. Frontend Search Debouncing (File: `frontend/src/App.tsx`)
+
+```tsx
+const debouncedSearchTerm = useDebounce(searchTerm, 300); // Adjust delay
+```
+
+- **Current**: 300ms (good balance)
+- **Faster Response**: 100-150ms (uses more CPU)
+- **More Efficient**: 500ms+ (reduces CPU usage)
+
+#### 3. Service Refresh Throttling (File: `frontend/src/App.tsx`)
+
+```go
+if (!force && now - lastRefresh < 2000) {
+  return; // Adjust 2000 (milliseconds)
+}
+```
+
+- **Current**: 2 seconds (optimized)
+- **More Responsive**: 500-1000ms
+- **Less Responsive**: 5000+ ms
+
+#### 4. WebView2 Visual Effects (File: `main.go`)
+
+For even lower GPU usage, change:
+
+```go
+Windows: &windows.Options{
+  WebviewIsTransparent: false,  // Set to false for opaque window
+  WindowIsTranslucent:  false,  // Set to false for no translucency
+  BackdropType:         windows.None, // Changed from windows.Acrylic
+},
+```
+
+
+### Rebuilding After Configuration Changes
+
+After modifying performance settings:
+
+```bash
+wails build --clean
+```
+
+Or for development:
+
+```bash
+wails dev
+```

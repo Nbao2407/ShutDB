@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import {
   GetServices,
   StartService,
@@ -11,6 +11,7 @@ import {
   ErrorState,
 } from "./types/service";
 import { parseServiceError } from "./utils/errorHandler";
+import { useDebounce } from "./hooks/useDebounce";
 import ErrorNotification from "./components/ErrorNotification";
 import { HierarchicalServiceTable } from "./components/HierarchicalServiceTable";
 import { SearchAndFilter } from "./components/SearchAndFilter";
@@ -36,8 +37,9 @@ function App() {
     error: null,
   });
 
-  // Search state
+  // Search state with debouncing
   const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 300); 
   const [isProcessing, setIsProcessing] = useState(false);
   
   // Table state
@@ -47,10 +49,19 @@ function App() {
   // Settings modal state
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   
+  // Service refresh optimization
+  const [lastRefresh, setLastRefresh] = useState<number>(0);
+  
 
 
-  // Load services function
-  const loadServices = async () => {
+  // Optimized load services function with throttling
+  const loadServices = useCallback(async (force = false) => {
+    const now = Date.now();
+    // Throttle service refresh to prevent excessive API calls (minimum 2 seconds between calls)
+    if (!force && now - lastRefresh < 2000) {
+      return;
+    }
+    
     try {
       setState((prev) => ({ ...prev, loading: true, error: null }));
       const services = await GetServices();
@@ -59,6 +70,7 @@ function App() {
         loading: false,
         error: null,
       });
+      setLastRefresh(now);
     } catch (err) {
       const errorState = parseServiceError(err);
       setState({
@@ -66,8 +78,9 @@ function App() {
         loading: false,
         error: errorState,
       });
+      setLastRefresh(now);
     }
-  };
+  }, [lastRefresh]);
 
   // Dismiss error notification
   const dismissError = () => {
@@ -103,8 +116,8 @@ function App() {
       // Call backend
       await StartService(serviceName);
 
-      // Refresh service list after operation completes
-      await loadServices();
+      // Refresh service list after operation completes (forced refresh)
+      await loadServices(true);
     } catch (err) {
       // Parse error and show user-friendly message
       const errorState = parseServiceError(err, serviceName);
@@ -113,8 +126,8 @@ function App() {
         error: errorState,
       }));
 
-      // Refresh to get actual state
-      await loadServices();
+      // Refresh to get actual state (forced refresh)
+      await loadServices(true);
     }
   };
 
@@ -132,8 +145,8 @@ function App() {
       // Call backend
       await StopService(serviceName);
 
-      // Refresh service list after operation completes
-      await loadServices();
+      // Refresh service list after operation completes (forced refresh)
+      await loadServices(true);
     } catch (err) {
       // Parse error and show user-friendly message
       const errorState = parseServiceError(err, serviceName);
@@ -142,8 +155,8 @@ function App() {
         error: errorState,
       }));
 
-      // Refresh to get actual state
-      await loadServices();
+      // Refresh to get actual state (forced refresh)
+      await loadServices(true);
     }
   };
 
@@ -161,8 +174,8 @@ function App() {
       // Call backend
       await RestartService(serviceName);
 
-      // Refresh service list after operation completes
-      await loadServices();
+      // Refresh service list after operation completes (forced refresh)
+      await loadServices(true);
     } catch (err) {
       // Parse error and show user-friendly message
       const errorState = parseServiceError(err, serviceName);
@@ -171,8 +184,8 @@ function App() {
         error: errorState,
       }));
 
-      // Refresh to get actual state
-      await loadServices();
+      // Refresh to get actual state (forced refresh)
+      await loadServices(true);
     }
   };
 
@@ -231,13 +244,13 @@ function App() {
 
 
 
-  // Filter services based on search term only
+  // Filter services based on debounced search term for better performance
   const filteredServices = useMemo(() => {
     let filtered = state.services;
 
-    // Filter by search term
-    if (searchTerm.trim()) {
-      const searchLower = searchTerm.toLowerCase();
+    // Filter by debounced search term to reduce frequent filtering
+    if (debouncedSearchTerm.trim()) {
+      const searchLower = debouncedSearchTerm.toLowerCase();
       filtered = filtered.filter(
         (service) =>
           service.DisplayName.toLowerCase().includes(searchLower) ||
@@ -247,7 +260,7 @@ function App() {
     }
 
     return filtered;
-  }, [state.services, searchTerm]);
+  }, [state.services, debouncedSearchTerm]);
 
   return (
     <div className="app">

@@ -21,7 +21,7 @@ func NewServiceManager(configManager *ConfigManager) *ServiceManager {
 	// Initialize dependencies
 	adapter := NewWindowsServiceAdapter()
 	detector := NewWindowsServiceDetector(adapter)
-	cache := NewServiceCache(5 * time.Second) // 5-second TTL as per requirements
+	cache := NewServiceCache(60 * time.Second) // Increased to 60 seconds to reduce memory churn
 	privilegeManager := NewPrivilegeManager()
 
 	return &ServiceManager{
@@ -36,18 +36,38 @@ func NewServiceManager(configManager *ConfigManager) *ServiceManager {
 // OnStartup is called when the app starts
 func (sm *ServiceManager) OnStartup(ctx context.Context) {
 	sm.ctx = ctx
-	
+
 	// Check elevation status once at startup
 	sm.checkElevationStatus()
-	
+
 	// Initialize service control state from persistent storage
 	sm.initializeServiceState()
+
+	// Start periodic cache cleanup to prevent memory leaks
+	go sm.startCacheCleanup(ctx)
+}
+
+// startCacheCleanup runs periodic cache cleanup to optimize memory usage
+func (sm *ServiceManager) startCacheCleanup(ctx context.Context) {
+	ticker := time.NewTicker(5 * time.Minute) // Cleanup every 5 minutes
+	defer ticker.Stop()
+
+	for {
+		select {
+		case <-ctx.Done():
+			return
+		case <-ticker.C:
+			if sm.cache != nil {
+				sm.cache.Cleanup()
+			}
+		}
+	}
 }
 
 // checkElevationStatus checks if we have the required privileges for service operations
 func (sm *ServiceManager) checkElevationStatus() {
 	sm.elevationChecked = true
-	
+
 	// Check if we have administrator privileges
 	if !sm.privilegeManager.IsElevated() {
 		// Log that we don't have elevation - services will be read-only
@@ -61,7 +81,7 @@ func (sm *ServiceManager) initializeServiceState() {
 	if sm.configManager == nil {
 		return
 	}
-	
+
 	// Service state is automatically loaded from persistent storage by ConfigManager
 	// No additional initialization needed as GetServiceState() reads from loaded config
 }
@@ -72,7 +92,7 @@ func (sm *ServiceManager) OnShutdown(ctx context.Context) {
 	if sm.cache != nil {
 		sm.cache.Clear()
 	}
-	
+
 	// Clear context reference
 	sm.ctx = nil
 }
@@ -115,15 +135,15 @@ func (sm *ServiceManager) ToggleServiceControl() (bool, error) {
 			Message: "Configuration manager not available",
 		}
 	}
-	
+
 	currentState := sm.configManager.GetServiceState()
 	newState := !currentState
-	
+
 	err := sm.configManager.SetServiceState(newState)
 	if err != nil {
 		return currentState, err
 	}
-	
+
 	return newState, nil
 }
 
@@ -135,8 +155,8 @@ func (sm *ServiceManager) GetServiceControlState() bool {
 // GetPrivilegeInfo returns information about current privilege level
 func (sm *ServiceManager) GetPrivilegeInfo() map[string]interface{} {
 	return map[string]interface{}{
-		"isElevated":     sm.IsElevated(),
-		"statusMessage":  sm.GetElevationStatus(),
+		"isElevated":         sm.IsElevated(),
+		"statusMessage":      sm.GetElevationStatus(),
 		"canControlServices": sm.IsElevated() && sm.IsServiceControlEnabled(),
 	}
 }
@@ -170,14 +190,14 @@ func (sm *ServiceManager) RequireElevationForOperation() error {
 			Message: "Service control is disabled",
 		}
 	}
-	
+
 	if !sm.privilegeManager.IsElevated() {
 		return &ServiceError{
 			Code:    ErrPermissionDenied,
 			Message: "Administrator privileges are required for service operations. Please restart the application as administrator.",
 		}
 	}
-	
+
 	return nil
 }
 

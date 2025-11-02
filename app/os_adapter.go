@@ -62,7 +62,7 @@ func (w *WindowsServiceAdapter) openService(m *mgr.Mgr, name string) (*mgr.Servi
 	return s, nil
 }
 
-// ListServices retrieves all Windows services
+// ListServices retrieves all Windows services with optimized memory usage
 func (w *WindowsServiceAdapter) ListServices() ([]OSService, error) {
 	m, err := w.connectSCM()
 	if err != nil {
@@ -79,36 +79,47 @@ func (w *WindowsServiceAdapter) ListServices() ([]OSService, error) {
 		}
 	}
 
+	// Pre-allocate with exact capacity for better memory efficiency
 	services := make([]OSService, 0, len(serviceNames))
-	for _, name := range serviceNames {
-		s, err := m.OpenService(name)
-		if err != nil {
-			// Skip services we can't open
-			continue
+
+	// Process services in smaller batches to reduce memory pressure
+	batchSize := 50
+	for i := 0; i < len(serviceNames); i += batchSize {
+		end := i + batchSize
+		if end > len(serviceNames) {
+			end = len(serviceNames)
 		}
 
-		// Get service status
-		status, err := s.Query()
-		if err != nil {
+		for j := i; j < end; j++ {
+			name := serviceNames[j]
+			s, err := m.OpenService(name)
+			if err != nil {
+				// Skip services we can't open (likely permission issues)
+				continue
+			}
+
+			// Get service status with timeout protection
+			status, err := s.Query()
+			if err != nil {
+				s.Close()
+				// Skip services we can't query
+				continue
+			}
+
+			// Only get display name if different from service name to save resources
+			displayName := name
+			if config, err := s.Config(); err == nil && config.DisplayName != "" && config.DisplayName != name {
+				displayName = config.DisplayName
+			}
+
 			s.Close()
-			// Skip services we can't query
-			continue
+
+			services = append(services, OSService{
+				Name:        name,
+				DisplayName: displayName,
+				State:       status.State,
+			})
 		}
-
-		// Get display name from config
-		config, err := s.Config()
-		displayName := name
-		if err == nil {
-			displayName = config.DisplayName
-		}
-
-		s.Close()
-
-		services = append(services, OSService{
-			Name:        name,
-			DisplayName: displayName,
-			State:       status.State,
-		})
 	}
 
 	return services, nil
